@@ -1,0 +1,49 @@
+{# ============================================================ #}
+{# TIME AND RESOLUTION SERVICES                                 #}
+{# DNS and NTP are sourced through the OOB management VRF.       #}
+{# ============================================================ #}
+
+{% set dns = env.global_services.dns | default({}) %}
+{% set ntp_data = ntp | default({}) %}
+{% set mgmt_vrf = dns.vrf | default(env.mgmt_vrf | default('management')) %}
+{% set domain_name = dns_domain | default(system.domain_name, true) %}
+
+! ======================================================
+! Time and Resolution Services
+! ======================================================
+{% if dns.domain_lookup | default(true) %}
+ip domain-lookup
+{% else %}
+no ip domain-lookup
+{% endif %}
+
+vrf context {{ mgmt_vrf }}
+  ip domain-name {{ domain_name }}
+{% if dns.servers is defined and dns.servers.primary is defined %}
+  ip name-server {{ dns.servers.primary }}
+{% endif %}
+{% if dns.servers is defined and dns.servers.secondary is defined %}
+  ip name-server {{ dns.servers.secondary }}
+{% endif %}
+{% for domain in dns.search_domains | default([]) %}
+  ip domain-list {{ domain }}
+{% endfor %}
+
+{% if ntp_data.servers is defined and ntp_data.servers %}
+{% for srv in ntp_data.servers %}
+ntp server {{ srv.ip }} use-vrf {{ srv.vrf | default(mgmt_vrf) }}{% if srv.prefer | default(false) %} prefer{% endif %}{{ "\n" }}
+{% endfor %}
+{% endif %}
+{% if ntp_data.source_interface is defined %}
+ntp source-interface {{ ntp_data.source_interface }}{{ "\n" }}
+{% else %}
+ntp source-interface mgmt0{{ "\n" }}
+{% endif %}
+{% if ntp_data.authentication_key is defined %}
+ntp authentication-key {{ ntp_data.authentication_key.id }} {{ ntp_data.authentication_key.algorithm }} {{ ntp_data.authentication_key.value }}{{ "\n" }}
+ntp authenticate{{ "\n" }}
+ntp trusted-key {{ ntp_data.authentication_key.id }}{{ "\n" }}
+{% endif %}
+{% if ntp_data.logging | default(false) %}
+ntp logging
+{% endif %}

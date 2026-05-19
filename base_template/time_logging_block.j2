@@ -1,30 +1,6 @@
 {# ============================================================ #}
-{# NTP + LOGGING CONFIGURATION BLOCK                            #}
+{# LOGGING CONFIGURATION BLOCK                                  #}
 {# ============================================================ #}
-
-{% if ntp is defined %}
-! ---------- NTP CONFIGURATION ----------
-{% if ntp.servers is defined and ntp.servers %}
-  {% for srv in ntp.servers %}
-ntp server {{ srv.ip }}{% if srv.vrf is defined %} use-vrf {{ srv.vrf }}{% endif %}{% if srv.prefer | default(false) %} prefer{% endif %}{{ "\n" }}
-  {% endfor %}
-{% endif %}
-
-{% if ntp.source_interface is defined %}
-ntp source-interface {{ ntp.source_interface }}
-{% endif %}
-
-{% if ntp.authentication_key is defined %}
-ntp authentication-key {{ ntp.authentication_key.id }} {{ ntp.authentication_key.algorithm }} {{ ntp.authentication_key.value }}
-ntp authenticate
-ntp trusted-key {{ ntp.authentication_key.id }}
-{% endif %}
-
-{% if ntp.logging %}
-ntp logging
-{% endif %}
-{% endif %}
-
 
 {% if logging is defined %}
 ! ---------- LOGGING CONFIGURATION ----------

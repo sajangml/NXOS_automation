@@ -3,7 +3,7 @@ global_services:
   domain_name: "corp.dc.fabric"
 
   ntp:
-    source_interface: "loopback0"
+    source_interface: "mgmt0"
     servers:
       - ip: "10.255.250.10"
         prefer: true

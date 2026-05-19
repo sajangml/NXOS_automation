@@ -17,6 +17,7 @@
 hostname {{ device.hostname }}
 
 {% include 'global_block.j2' -%}
+{% include 'time_resolution_block.j2' -%}
 {% include 'aaa_block.j2' ignore missing with context -%}
 {% include 'snmp.j2' -%}
 {% include 'time_logging_block.j2' -%}
