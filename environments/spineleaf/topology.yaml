@@ -1,0 +1,28 @@
+fabric_name: NXOS-MULTISITE-FABRIC
+spines_per_pod: 2
+leaves_per_pod: 8
+sites:
+  - name: DC1
+    site_id: 1
+    management_subnet: 192.0.2.0/24
+    pods:
+      - name: pod1
+        pod_id: 1
+      - name: pod2
+        pod_id: 2
+  - name: DC2
+    site_id: 2
+    management_subnet: 198.51.100.0/24
+    pods:
+      - name: pod1
+        pod_id: 1
+      - name: pod2
+        pod_id: 2
+  - name: DC3
+    site_id: 3
+    management_subnet: 203.0.113.0/24
+    pods:
+      - name: pod1
+        pod_id: 1
+      - name: pod2
+        pod_id: 2
