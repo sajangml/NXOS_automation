@@ -60,6 +60,8 @@ def build_topology(topology: dict, env_vars: dict | None = None):
     spines_per_pod = int(topology.get("spines_per_pod", 4))
     leaves_per_pod = int(topology.get("leaves_per_pod", 8))
     servers_per_leaf = int(topology.get("servers_per_leaf", 10))
+    hardware = topology.get("hardware", {})
+    speeds = topology.get("speeds", {})
 
     for site in topology.get("sites", []):
         site_id = int(site["site_id"])
@@ -93,6 +95,9 @@ def build_topology(topology: dict, env_vars: dict | None = None):
                     "pod_id": pod_id,
                     "type": "super_spine",
                     "role": "super_spine",
+                    "platform": hardware.get("super_spine", "Cisco Nexus 9364C-GX"),
+                    "asic": "CloudScale GX",
+                    "rack_role": "Network spine row",
                     "mgmt_ip": mgmt_ip(management_subnet, pod_offset + 10 + ss_id),
                     "mgmt_gw": mgmt_ip(management_subnet, 1).split("/", 1)[0],
                     "loopback0": subnet_ip(loopbacks.get("super_spine", f"10.{site_id}.{pod_id}.10/24"), pod_offset + ss_id),
@@ -118,6 +123,9 @@ def build_topology(topology: dict, env_vars: dict | None = None):
                     "pod_id": pod_id,
                     "type": "spine",
                     "role": "spine",
+                    "platform": hardware.get("spine", "Cisco Nexus 9364C-GX"),
+                    "asic": "CloudScale GX",
+                    "rack_role": "End-of-row",
                     "mgmt_ip": mgmt_ip(management_subnet, pod_offset + 20 + spine_id),
                     "mgmt_gw": mgmt_ip(management_subnet, 1).split("/", 1)[0],
                     "loopback0": subnet_ip(loopbacks.get("spine", f"10.{site_id}.{pod_id}.20/24"), pod_offset + spine_id),
@@ -146,6 +154,9 @@ def build_topology(topology: dict, env_vars: dict | None = None):
                     "pod_id": pod_id,
                     "type": "leaf",
                     "role": "border_leaf" if is_border else "leaf",
+                    "platform": hardware.get("border_leaf" if is_border else "leaf", "Cisco Nexus 93180YC-FX3"),
+                    "asic": "CloudScale FX3",
+                    "rack_role": "Dedicated border rack pair" if is_border else "Top-of-rack",
                     "border_gateway": is_border,
                     "mgmt_ip": mgmt_ip(management_subnet, pod_offset + 30 + leaf_id),
                     "mgmt_gw": mgmt_ip(management_subnet, 1).split("/", 1)[0],
@@ -170,6 +181,7 @@ def build_topology(topology: dict, env_vars: dict | None = None):
                     leaf_eth.append({
                         "name": f"Ethernet1/{server_port}",
                         "description": f"{leaf['hostname']} to {site_name}-{pod_code}-SRV{server_number:03d} NIC1",
+                        "speed": speeds.get("server_to_leaf", "25000"),
                         "mode": "access",
                         "access_vlan": 100 + int(leaf["leaf_id"]),
                         "peer_name": f"{site_name}-{pod_code}-SRV{server_number:03d}",
@@ -186,6 +198,7 @@ def build_topology(topology: dict, env_vars: dict | None = None):
                     leaf_eth.append({
                         "name": leaf_port,
                         "description": f"{leaf['hostname']} to {spine['hostname']} fabric uplink",
+                        "speed": speeds.get("leaf_to_spine", "100000"),
                         "mode": "routed",
                         "peer_name": spine["hostname"],
                         "peer_port": spine_port,
@@ -220,6 +233,7 @@ def build_topology(topology: dict, env_vars: dict | None = None):
                         leaf_eth.append({
                             "name": local_port,
                             "description": f"{leaf['hostname']} border/core uplink to {xr_name} {xr_port}",
+                            "speed": speeds.get("border_leaf_to_xr", "100000"),
                             "mode": "routed",
                             "peer_name": xr_name,
                             "peer_port": xr_port,
@@ -261,6 +275,7 @@ def build_topology(topology: dict, env_vars: dict | None = None):
                     spine_eth.append({
                         "name": link["local_port"],
                         "description": f"{spine['hostname']} to {link['peer']} fabric downlink",
+                        "speed": speeds.get("leaf_to_spine", "100000"),
                         "mode": "routed",
                         "peer_name": link["peer"],
                         "peer_port": link["peer_port"],
@@ -278,6 +293,7 @@ def build_topology(topology: dict, env_vars: dict | None = None):
                     spine_eth.append({
                         "name": spine_port,
                         "description": f"{spine['hostname']} to {ss['hostname']} super-spine uplink",
+                        "speed": speeds.get("spine_to_super_spine", "100000"),
                         "mode": "routed",
                         "peer_name": ss["hostname"],
                         "peer_port": ss_port,
@@ -304,6 +320,7 @@ def build_topology(topology: dict, env_vars: dict | None = None):
                     interfaces.setdefault(ss["hostname"], {"ethernet": []})["ethernet"].append({
                         "name": ss_port,
                         "description": f"{ss['hostname']} to {spine['hostname']} spine downlink",
+                        "speed": speeds.get("spine_to_super_spine", "100000"),
                         "mode": "routed",
                         "peer_name": spine["hostname"],
                         "peer_port": spine_port,
@@ -335,6 +352,7 @@ def build_topology(topology: dict, env_vars: dict | None = None):
                     interfaces.setdefault(left["hostname"], {"ethernet": []})["ethernet"].append({
                         "name": left_port,
                         "description": f"{left['hostname']} pod-to-pod link to {right['hostname']}",
+                        "speed": speeds.get("pod_to_pod_super_spine", "100000"),
                         "mode": "routed",
                         "peer_name": right["hostname"],
                         "peer_port": right_port,
@@ -345,6 +363,7 @@ def build_topology(topology: dict, env_vars: dict | None = None):
                     interfaces.setdefault(right["hostname"], {"ethernet": []})["ethernet"].append({
                         "name": right_port,
                         "description": f"{right['hostname']} pod-to-pod link to {left['hostname']}",
+                        "speed": speeds.get("pod_to_pod_super_spine", "100000"),
                         "mode": "routed",
                         "peer_name": left["hostname"],
                         "peer_port": left_port,
@@ -401,6 +420,9 @@ def write_inventory_hosts(path: Path, devices: list[dict], env_name: str):
                 "pod": device["pod"],
                 "fabric_id": device["fabric_id"],
                 "border_gateway": device.get("border_gateway", False),
+                "platform_model": device.get("platform"),
+                "asic": device.get("asic"),
+                "rack_role": device.get("rack_role"),
             },
         }
     path.write_text(yaml.safe_dump(hosts, sort_keys=False), encoding="utf-8")

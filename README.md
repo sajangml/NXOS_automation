@@ -49,6 +49,85 @@ Border Leaf 7 and Leaf 8 connect to XR/core.
 | Servers         |     160 |
 | XR/Core Routers |       2 |
 
+## Fabric Hardware Recommendation
+
+Recommended production hierarchy:
+
+| Layer       | Platform             | ASIC           | Rack Role                  |
+| ----------- | -------------------- | -------------- | -------------------------- |
+| Leaf        | Nexus 93180YC-FX3    | CloudScale FX3 | Top-of-rack                |
+| Border Leaf | Nexus 93180YC-FX3    | CloudScale FX3 | Dedicated border rack pair |
+| Spine       | Nexus 9364C-GX       | CloudScale GX  | End-of-row                 |
+| Super-Spine | Nexus 9364C-GX       | CloudScale GX  | Network spine row          |
+| DCI/Core    | Cisco IOS-XR routers | Platform-based | Core/DCI rack              |
+
+The Nexus 93180YC-FX3 fits the leaf and border leaf design because it provides 1/10/25G server-facing ports plus 40/100G QSFP28 uplinks for spine and XR/core connectivity. The Nexus 9364C-GX is recommended for spine and super-spine roles because it provides high radix 100/400G capability, better EVPN scale, larger ECMP headroom, and a longer lifecycle for future AI/HPC or high-throughput workloads.
+
+## Hardware Port Alignment
+
+Leaf and border leaf platform: `Cisco Nexus 93180YC-FX3`.
+
+| Port Range | Speed Capability | Design Usage               |
+| ---------- | ---------------- | -------------------------- |
+| Eth1/1-48  | 1/10/25G         | Server-facing ports        |
+| Eth1/49-54 | 40/100G QSFP28   | Spine uplinks + XR uplinks |
+
+Standard compute leafs `LF01-LF06`:
+
+| Port Range | Usage                     |
+| ---------- | ------------------------- |
+| Eth1/1-10  | Servers                   |
+| Eth1/49-52 | Spine uplinks             |
+| Eth1/53-54 | Reserved/Future expansion |
+
+Border leafs `LF07-LF08`:
+
+| Port Range | Usage           |
+| ---------- | --------------- |
+| Eth1/1-10  | Servers         |
+| Eth1/49-52 | Spine uplinks   |
+| Eth1/53-54 | XR/Core uplinks |
+
+## Recommended Speeds
+
+| Link Type              | Speed        |
+| ---------------------- | ------------ |
+| Server-to-Leaf         | 10/25G       |
+| Leaf-to-Spine          | 100G         |
+| Spine-to-Super-Spine   | 100G or 400G |
+| Pod-to-Pod Super-Spine | 100G or 400G |
+| Border Leaf-to-XR      | 100G         |
+| XR-to-XR DCI           | 100G or 400G |
+
+Current leaf oversubscription is favorable:
+
+```text
+10 x 25G servers = 250G southbound
+4 x 100G uplinks = 400G northbound
+250G : 400G = 1 : 1.6
+```
+
+This means the leaf layer is under-subscribed, which is useful for east-west traffic, VXLAN EVPN, storage fabrics, Kubernetes, VM mobility, multicast, and future RDMA/RoCE adoption.
+
+## Design Summary
+
+| Item                 | Design                  |
+| -------------------- | ----------------------- |
+| Data Centres         | DC1, DC2, DC3           |
+| Pods per DC          | 2                       |
+| Super-Spines per Pod | 2                       |
+| Spines per Pod       | 4                       |
+| Leafs per Pod        | 8                       |
+| Border Leafs per Pod | LF07 and LF08           |
+| Servers per Leaf     | 10                      |
+| Servers per Pod      | 80                      |
+| Servers per DC       | 160                     |
+| Server Leaf Platform | Cisco Nexus 93180YC-FX3 |
+| Border Leaf Platform | Cisco Nexus 93180YC-FX3 |
+| Spine Platform       | Cisco Nexus 9364C-GX    |
+| Super-Spine Platform | Cisco Nexus 9364C-GX    |
+| DCI/Core Platform    | Cisco IOS-XR routers    |
+
 ## DC1 Server-to-Leaf
 
 | Pod    | Leaf        | Leaf Ports   | Servers           |
@@ -241,6 +320,39 @@ Leaf 7 and Leaf 8 are border gateway leafs.
 | Core/XR uplinks          | Eth1/53-Eth1/54 |
 
 This gives each data centre a clean physical design where compute traffic, fabric uplinks, and external DCI/core handoff are separated by port range.
+
+## Per-DC Hardware Count
+
+| Device Type  | Per Pod | Per DC | 3 DC Total |
+| ------------ | ------: | -----: | ---------: |
+| Super-Spines |       2 |      4 |         12 |
+| Spines       |       4 |      8 |         24 |
+| Leafs        |       8 |     16 |         48 |
+| Border Leafs |       2 |      4 |         12 |
+| XR Routers   |     N/A |      2 |          6 |
+| Servers      |      80 |    160 |        480 |
+
+## Link Count Summary
+
+| Link Type              |   Per Pod | Per DC | 3 DC Total |
+| ---------------------- | --------: | -----: | ---------: |
+| Server-to-Leaf         |        80 |    160 |        480 |
+| Leaf-to-Spine          |        32 |     64 |        192 |
+| Spine-to-Super-Spine   |         8 |     16 |         48 |
+| Pod-to-Pod Super-Spine |       N/A |      4 |         12 |
+| Border Leaf-to-XR      |         4 |      8 |         24 |
+| Inter-DC XR Links      |       N/A | Shared |          6 |
+
+## Final Design Position
+
+This is a clean 3-DC, 2-pod-per-DC, spine-leaf-super-spine architecture with dedicated border leaf handoff to the XR core.
+
+```text
+Compute/server traffic terminates on leafs.
+Fabric aggregation happens through spines and super-spines.
+External/DCI routing terminates on LF07/LF08 border leafs.
+DC-to-DC routing is handled by Cisco XR routers.
+```
 
 ## Generated Output
 

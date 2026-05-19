@@ -10,6 +10,9 @@ DC1-P1-SS01:
     pod: pod1
     fabric_id: DC1-P1-SS01
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: Network spine row
 DC1-P1-SS02:
   hostname: 10.1.0.12
   platform: nxos
@@ -22,6 +25,9 @@ DC1-P1-SS02:
     pod: pod1
     fabric_id: DC1-P1-SS02
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: Network spine row
 DC1-P1-SP01:
   hostname: 10.1.0.21
   platform: nxos
@@ -34,6 +40,9 @@ DC1-P1-SP01:
     pod: pod1
     fabric_id: DC1-P1-SP01
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC1-P1-SP02:
   hostname: 10.1.0.22
   platform: nxos
@@ -46,6 +55,9 @@ DC1-P1-SP02:
     pod: pod1
     fabric_id: DC1-P1-SP02
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC1-P1-SP03:
   hostname: 10.1.0.23
   platform: nxos
@@ -58,6 +70,9 @@ DC1-P1-SP03:
     pod: pod1
     fabric_id: DC1-P1-SP03
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC1-P1-SP04:
   hostname: 10.1.0.24
   platform: nxos
@@ -70,6 +85,9 @@ DC1-P1-SP04:
     pod: pod1
     fabric_id: DC1-P1-SP04
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC1-P1-LF01:
   hostname: 10.1.0.31
   platform: nxos
@@ -82,6 +100,9 @@ DC1-P1-LF01:
     pod: pod1
     fabric_id: DC1-P1-LF01
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC1-P1-LF02:
   hostname: 10.1.0.32
   platform: nxos
@@ -94,6 +115,9 @@ DC1-P1-LF02:
     pod: pod1
     fabric_id: DC1-P1-LF02
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC1-P1-LF03:
   hostname: 10.1.0.33
   platform: nxos
@@ -106,6 +130,9 @@ DC1-P1-LF03:
     pod: pod1
     fabric_id: DC1-P1-LF03
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC1-P1-LF04:
   hostname: 10.1.0.34
   platform: nxos
@@ -118,6 +145,9 @@ DC1-P1-LF04:
     pod: pod1
     fabric_id: DC1-P1-LF04
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC1-P1-LF05:
   hostname: 10.1.0.35
   platform: nxos
@@ -130,6 +160,9 @@ DC1-P1-LF05:
     pod: pod1
     fabric_id: DC1-P1-LF05
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC1-P1-LF06:
   hostname: 10.1.0.36
   platform: nxos
@@ -142,6 +175,9 @@ DC1-P1-LF06:
     pod: pod1
     fabric_id: DC1-P1-LF06
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC1-P1-LF07:
   hostname: 10.1.0.37
   platform: nxos
@@ -154,6 +190,9 @@ DC1-P1-LF07:
     pod: pod1
     fabric_id: DC1-P1-LF07
     border_gateway: true
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Dedicated border rack pair
 DC1-P1-LF08:
   hostname: 10.1.0.38
   platform: nxos
@@ -166,6 +205,9 @@ DC1-P1-LF08:
     pod: pod1
     fabric_id: DC1-P1-LF08
     border_gateway: true
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Dedicated border rack pair
 DC1-P2-SS01:
   hostname: 10.1.0.111
   platform: nxos
@@ -178,6 +220,9 @@ DC1-P2-SS01:
     pod: pod2
     fabric_id: DC1-P2-SS01
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: Network spine row
 DC1-P2-SS02:
   hostname: 10.1.0.112
   platform: nxos
@@ -190,6 +235,9 @@ DC1-P2-SS02:
     pod: pod2
     fabric_id: DC1-P2-SS02
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: Network spine row
 DC1-P2-SP01:
   hostname: 10.1.0.121
   platform: nxos
@@ -202,6 +250,9 @@ DC1-P2-SP01:
     pod: pod2
     fabric_id: DC1-P2-SP01
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC1-P2-SP02:
   hostname: 10.1.0.122
   platform: nxos
@@ -214,6 +265,9 @@ DC1-P2-SP02:
     pod: pod2
     fabric_id: DC1-P2-SP02
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC1-P2-SP03:
   hostname: 10.1.0.123
   platform: nxos
@@ -226,6 +280,9 @@ DC1-P2-SP03:
     pod: pod2
     fabric_id: DC1-P2-SP03
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC1-P2-SP04:
   hostname: 10.1.0.124
   platform: nxos
@@ -238,6 +295,9 @@ DC1-P2-SP04:
     pod: pod2
     fabric_id: DC1-P2-SP04
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC1-P2-LF01:
   hostname: 10.1.0.131
   platform: nxos
@@ -250,6 +310,9 @@ DC1-P2-LF01:
     pod: pod2
     fabric_id: DC1-P2-LF01
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC1-P2-LF02:
   hostname: 10.1.0.132
   platform: nxos
@@ -262,6 +325,9 @@ DC1-P2-LF02:
     pod: pod2
     fabric_id: DC1-P2-LF02
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC1-P2-LF03:
   hostname: 10.1.0.133
   platform: nxos
@@ -274,6 +340,9 @@ DC1-P2-LF03:
     pod: pod2
     fabric_id: DC1-P2-LF03
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC1-P2-LF04:
   hostname: 10.1.0.134
   platform: nxos
@@ -286,6 +355,9 @@ DC1-P2-LF04:
     pod: pod2
     fabric_id: DC1-P2-LF04
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC1-P2-LF05:
   hostname: 10.1.0.135
   platform: nxos
@@ -298,6 +370,9 @@ DC1-P2-LF05:
     pod: pod2
     fabric_id: DC1-P2-LF05
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC1-P2-LF06:
   hostname: 10.1.0.136
   platform: nxos
@@ -310,6 +385,9 @@ DC1-P2-LF06:
     pod: pod2
     fabric_id: DC1-P2-LF06
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC1-P2-LF07:
   hostname: 10.1.0.137
   platform: nxos
@@ -322,6 +400,9 @@ DC1-P2-LF07:
     pod: pod2
     fabric_id: DC1-P2-LF07
     border_gateway: true
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Dedicated border rack pair
 DC1-P2-LF08:
   hostname: 10.1.0.138
   platform: nxos
@@ -334,6 +415,9 @@ DC1-P2-LF08:
     pod: pod2
     fabric_id: DC1-P2-LF08
     border_gateway: true
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Dedicated border rack pair
 DC2-P1-SS01:
   hostname: 10.2.0.11
   platform: nxos
@@ -346,6 +430,9 @@ DC2-P1-SS01:
     pod: pod1
     fabric_id: DC2-P1-SS01
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: Network spine row
 DC2-P1-SS02:
   hostname: 10.2.0.12
   platform: nxos
@@ -358,6 +445,9 @@ DC2-P1-SS02:
     pod: pod1
     fabric_id: DC2-P1-SS02
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: Network spine row
 DC2-P1-SP01:
   hostname: 10.2.0.21
   platform: nxos
@@ -370,6 +460,9 @@ DC2-P1-SP01:
     pod: pod1
     fabric_id: DC2-P1-SP01
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC2-P1-SP02:
   hostname: 10.2.0.22
   platform: nxos
@@ -382,6 +475,9 @@ DC2-P1-SP02:
     pod: pod1
     fabric_id: DC2-P1-SP02
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC2-P1-SP03:
   hostname: 10.2.0.23
   platform: nxos
@@ -394,6 +490,9 @@ DC2-P1-SP03:
     pod: pod1
     fabric_id: DC2-P1-SP03
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC2-P1-SP04:
   hostname: 10.2.0.24
   platform: nxos
@@ -406,6 +505,9 @@ DC2-P1-SP04:
     pod: pod1
     fabric_id: DC2-P1-SP04
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC2-P1-LF01:
   hostname: 10.2.0.31
   platform: nxos
@@ -418,6 +520,9 @@ DC2-P1-LF01:
     pod: pod1
     fabric_id: DC2-P1-LF01
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC2-P1-LF02:
   hostname: 10.2.0.32
   platform: nxos
@@ -430,6 +535,9 @@ DC2-P1-LF02:
     pod: pod1
     fabric_id: DC2-P1-LF02
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC2-P1-LF03:
   hostname: 10.2.0.33
   platform: nxos
@@ -442,6 +550,9 @@ DC2-P1-LF03:
     pod: pod1
     fabric_id: DC2-P1-LF03
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC2-P1-LF04:
   hostname: 10.2.0.34
   platform: nxos
@@ -454,6 +565,9 @@ DC2-P1-LF04:
     pod: pod1
     fabric_id: DC2-P1-LF04
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC2-P1-LF05:
   hostname: 10.2.0.35
   platform: nxos
@@ -466,6 +580,9 @@ DC2-P1-LF05:
     pod: pod1
     fabric_id: DC2-P1-LF05
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC2-P1-LF06:
   hostname: 10.2.0.36
   platform: nxos
@@ -478,6 +595,9 @@ DC2-P1-LF06:
     pod: pod1
     fabric_id: DC2-P1-LF06
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC2-P1-LF07:
   hostname: 10.2.0.37
   platform: nxos
@@ -490,6 +610,9 @@ DC2-P1-LF07:
     pod: pod1
     fabric_id: DC2-P1-LF07
     border_gateway: true
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Dedicated border rack pair
 DC2-P1-LF08:
   hostname: 10.2.0.38
   platform: nxos
@@ -502,6 +625,9 @@ DC2-P1-LF08:
     pod: pod1
     fabric_id: DC2-P1-LF08
     border_gateway: true
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Dedicated border rack pair
 DC2-P2-SS01:
   hostname: 10.2.0.111
   platform: nxos
@@ -514,6 +640,9 @@ DC2-P2-SS01:
     pod: pod2
     fabric_id: DC2-P2-SS01
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: Network spine row
 DC2-P2-SS02:
   hostname: 10.2.0.112
   platform: nxos
@@ -526,6 +655,9 @@ DC2-P2-SS02:
     pod: pod2
     fabric_id: DC2-P2-SS02
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: Network spine row
 DC2-P2-SP01:
   hostname: 10.2.0.121
   platform: nxos
@@ -538,6 +670,9 @@ DC2-P2-SP01:
     pod: pod2
     fabric_id: DC2-P2-SP01
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC2-P2-SP02:
   hostname: 10.2.0.122
   platform: nxos
@@ -550,6 +685,9 @@ DC2-P2-SP02:
     pod: pod2
     fabric_id: DC2-P2-SP02
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC2-P2-SP03:
   hostname: 10.2.0.123
   platform: nxos
@@ -562,6 +700,9 @@ DC2-P2-SP03:
     pod: pod2
     fabric_id: DC2-P2-SP03
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC2-P2-SP04:
   hostname: 10.2.0.124
   platform: nxos
@@ -574,6 +715,9 @@ DC2-P2-SP04:
     pod: pod2
     fabric_id: DC2-P2-SP04
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC2-P2-LF01:
   hostname: 10.2.0.131
   platform: nxos
@@ -586,6 +730,9 @@ DC2-P2-LF01:
     pod: pod2
     fabric_id: DC2-P2-LF01
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC2-P2-LF02:
   hostname: 10.2.0.132
   platform: nxos
@@ -598,6 +745,9 @@ DC2-P2-LF02:
     pod: pod2
     fabric_id: DC2-P2-LF02
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC2-P2-LF03:
   hostname: 10.2.0.133
   platform: nxos
@@ -610,6 +760,9 @@ DC2-P2-LF03:
     pod: pod2
     fabric_id: DC2-P2-LF03
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC2-P2-LF04:
   hostname: 10.2.0.134
   platform: nxos
@@ -622,6 +775,9 @@ DC2-P2-LF04:
     pod: pod2
     fabric_id: DC2-P2-LF04
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC2-P2-LF05:
   hostname: 10.2.0.135
   platform: nxos
@@ -634,6 +790,9 @@ DC2-P2-LF05:
     pod: pod2
     fabric_id: DC2-P2-LF05
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC2-P2-LF06:
   hostname: 10.2.0.136
   platform: nxos
@@ -646,6 +805,9 @@ DC2-P2-LF06:
     pod: pod2
     fabric_id: DC2-P2-LF06
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC2-P2-LF07:
   hostname: 10.2.0.137
   platform: nxos
@@ -658,6 +820,9 @@ DC2-P2-LF07:
     pod: pod2
     fabric_id: DC2-P2-LF07
     border_gateway: true
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Dedicated border rack pair
 DC2-P2-LF08:
   hostname: 10.2.0.138
   platform: nxos
@@ -670,6 +835,9 @@ DC2-P2-LF08:
     pod: pod2
     fabric_id: DC2-P2-LF08
     border_gateway: true
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Dedicated border rack pair
 DC3-P1-SS01:
   hostname: 10.3.0.11
   platform: nxos
@@ -682,6 +850,9 @@ DC3-P1-SS01:
     pod: pod1
     fabric_id: DC3-P1-SS01
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: Network spine row
 DC3-P1-SS02:
   hostname: 10.3.0.12
   platform: nxos
@@ -694,6 +865,9 @@ DC3-P1-SS02:
     pod: pod1
     fabric_id: DC3-P1-SS02
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: Network spine row
 DC3-P1-SP01:
   hostname: 10.3.0.21
   platform: nxos
@@ -706,6 +880,9 @@ DC3-P1-SP01:
     pod: pod1
     fabric_id: DC3-P1-SP01
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC3-P1-SP02:
   hostname: 10.3.0.22
   platform: nxos
@@ -718,6 +895,9 @@ DC3-P1-SP02:
     pod: pod1
     fabric_id: DC3-P1-SP02
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC3-P1-SP03:
   hostname: 10.3.0.23
   platform: nxos
@@ -730,6 +910,9 @@ DC3-P1-SP03:
     pod: pod1
     fabric_id: DC3-P1-SP03
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC3-P1-SP04:
   hostname: 10.3.0.24
   platform: nxos
@@ -742,6 +925,9 @@ DC3-P1-SP04:
     pod: pod1
     fabric_id: DC3-P1-SP04
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC3-P1-LF01:
   hostname: 10.3.0.31
   platform: nxos
@@ -754,6 +940,9 @@ DC3-P1-LF01:
     pod: pod1
     fabric_id: DC3-P1-LF01
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC3-P1-LF02:
   hostname: 10.3.0.32
   platform: nxos
@@ -766,6 +955,9 @@ DC3-P1-LF02:
     pod: pod1
     fabric_id: DC3-P1-LF02
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC3-P1-LF03:
   hostname: 10.3.0.33
   platform: nxos
@@ -778,6 +970,9 @@ DC3-P1-LF03:
     pod: pod1
     fabric_id: DC3-P1-LF03
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC3-P1-LF04:
   hostname: 10.3.0.34
   platform: nxos
@@ -790,6 +985,9 @@ DC3-P1-LF04:
     pod: pod1
     fabric_id: DC3-P1-LF04
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC3-P1-LF05:
   hostname: 10.3.0.35
   platform: nxos
@@ -802,6 +1000,9 @@ DC3-P1-LF05:
     pod: pod1
     fabric_id: DC3-P1-LF05
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC3-P1-LF06:
   hostname: 10.3.0.36
   platform: nxos
@@ -814,6 +1015,9 @@ DC3-P1-LF06:
     pod: pod1
     fabric_id: DC3-P1-LF06
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC3-P1-LF07:
   hostname: 10.3.0.37
   platform: nxos
@@ -826,6 +1030,9 @@ DC3-P1-LF07:
     pod: pod1
     fabric_id: DC3-P1-LF07
     border_gateway: true
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Dedicated border rack pair
 DC3-P1-LF08:
   hostname: 10.3.0.38
   platform: nxos
@@ -838,6 +1045,9 @@ DC3-P1-LF08:
     pod: pod1
     fabric_id: DC3-P1-LF08
     border_gateway: true
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Dedicated border rack pair
 DC3-P2-SS01:
   hostname: 10.3.0.111
   platform: nxos
@@ -850,6 +1060,9 @@ DC3-P2-SS01:
     pod: pod2
     fabric_id: DC3-P2-SS01
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: Network spine row
 DC3-P2-SS02:
   hostname: 10.3.0.112
   platform: nxos
@@ -862,6 +1075,9 @@ DC3-P2-SS02:
     pod: pod2
     fabric_id: DC3-P2-SS02
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: Network spine row
 DC3-P2-SP01:
   hostname: 10.3.0.121
   platform: nxos
@@ -874,6 +1090,9 @@ DC3-P2-SP01:
     pod: pod2
     fabric_id: DC3-P2-SP01
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC3-P2-SP02:
   hostname: 10.3.0.122
   platform: nxos
@@ -886,6 +1105,9 @@ DC3-P2-SP02:
     pod: pod2
     fabric_id: DC3-P2-SP02
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC3-P2-SP03:
   hostname: 10.3.0.123
   platform: nxos
@@ -898,6 +1120,9 @@ DC3-P2-SP03:
     pod: pod2
     fabric_id: DC3-P2-SP03
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC3-P2-SP04:
   hostname: 10.3.0.124
   platform: nxos
@@ -910,6 +1135,9 @@ DC3-P2-SP04:
     pod: pod2
     fabric_id: DC3-P2-SP04
     border_gateway: false
+    platform_model: Cisco Nexus 9364C-GX
+    asic: CloudScale GX
+    rack_role: End-of-row
 DC3-P2-LF01:
   hostname: 10.3.0.131
   platform: nxos
@@ -922,6 +1150,9 @@ DC3-P2-LF01:
     pod: pod2
     fabric_id: DC3-P2-LF01
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC3-P2-LF02:
   hostname: 10.3.0.132
   platform: nxos
@@ -934,6 +1165,9 @@ DC3-P2-LF02:
     pod: pod2
     fabric_id: DC3-P2-LF02
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC3-P2-LF03:
   hostname: 10.3.0.133
   platform: nxos
@@ -946,6 +1180,9 @@ DC3-P2-LF03:
     pod: pod2
     fabric_id: DC3-P2-LF03
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC3-P2-LF04:
   hostname: 10.3.0.134
   platform: nxos
@@ -958,6 +1195,9 @@ DC3-P2-LF04:
     pod: pod2
     fabric_id: DC3-P2-LF04
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC3-P2-LF05:
   hostname: 10.3.0.135
   platform: nxos
@@ -970,6 +1210,9 @@ DC3-P2-LF05:
     pod: pod2
     fabric_id: DC3-P2-LF05
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC3-P2-LF06:
   hostname: 10.3.0.136
   platform: nxos
@@ -982,6 +1225,9 @@ DC3-P2-LF06:
     pod: pod2
     fabric_id: DC3-P2-LF06
     border_gateway: false
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Top-of-rack
 DC3-P2-LF07:
   hostname: 10.3.0.137
   platform: nxos
@@ -994,6 +1240,9 @@ DC3-P2-LF07:
     pod: pod2
     fabric_id: DC3-P2-LF07
     border_gateway: true
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Dedicated border rack pair
 DC3-P2-LF08:
   hostname: 10.3.0.138
   platform: nxos
@@ -1006,3 +1255,6 @@ DC3-P2-LF08:
     pod: pod2
     fabric_id: DC3-P2-LF08
     border_gateway: true
+    platform_model: Cisco Nexus 93180YC-FX3
+    asic: CloudScale FX3
+    rack_role: Dedicated border rack pair

@@ -59,6 +59,9 @@ interface {{ pc.name }}
 {% for eth in ethernet %}
 interface {{ eth.name }}
   description {{ eth.description | default(device.hostname ~ '_to_' ~ eth.peer_name | default('peer') ~ '_' ~ eth.peer_port | default('port')) }}
+{% if eth.speed is defined %}
+  speed {{ eth.speed }}
+{% endif %}
 {% if eth.mode | default('access') == 'routed' %}
   no switchport
   ip address {{ eth.ip_address }}

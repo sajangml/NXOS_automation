@@ -5,6 +5,19 @@ leaves_per_pod: 8
 servers_per_leaf: 10
 xr_routers_per_site: 2
 border_leaf_ids: [7, 8]
+hardware:
+  leaf: Cisco Nexus 93180YC-FX3
+  border_leaf: Cisco Nexus 93180YC-FX3
+  spine: Cisco Nexus 9364C-GX
+  super_spine: Cisco Nexus 9364C-GX
+  dci_core: Cisco IOS-XR routers
+speeds:
+  server_to_leaf: "25000"
+  leaf_to_spine: "100000"
+  spine_to_super_spine: "100000"
+  pod_to_pod_super_spine: "100000"
+  border_leaf_to_xr: "100000"
+  xr_to_xr_dci: "100000 or 400000"
 sites:
   - name: DC1
     site_id: 1

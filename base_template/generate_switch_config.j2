@@ -3,6 +3,9 @@
 ! Hostname: {{ device.hostname }}
 ! Fabric ID: {{ device.fabric_id }}
 ! Role: {{ device.role | upper }}
+! Platform: {{ device.platform | default('NX-OS switch') }}
+! ASIC Family: {{ device.asic | default('Not specified') }}
+! Rack Role: {{ device.rack_role | default('Not specified') }}
 ! Site: {{ device.site }} / {{ device.pod }}
 ! Management IP: {{ device.mgmt_ip }}
 ! Design Note: {{ device.design_note | default('NX-OS fabric device') }}
