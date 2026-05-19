@@ -1,0 +1,14 @@
+username: "{{ env.NETWORK_USERNAME | default('demo-user') }}"
+password: "{{ env.NETWORK_PASSWORD | default('demo-password') }}"
+port: 22
+
+connection_options:
+  scrapli:
+    port: 22
+    platform: cisco_nxos
+    extras:
+      transport: paramiko
+      auth_strict_key: false
+      ssh_config_file: false
+      timeout_socket: 30
+      timeout_transport: 30

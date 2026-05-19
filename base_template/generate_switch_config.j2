@@ -1,0 +1,30 @@
+! ======================================================
+! AUTO-GENERATED NX-OS CONFIGURATION - DO NOT EDIT
+! Hostname: {{ device.hostname }}
+! Fabric ID: {{ device.fabric_id }}
+! Role: {{ device.role | upper }}
+! Management IP: {{ device.mgmt_ip }}
+! ======================================================
+
+hostname {{ device.hostname }}
+
+{% include 'global_block.j2' -%}
+{% include 'aaa_block.j2' ignore missing with context -%}
+{% include 'snmp.j2' -%}
+{% include 'time_logging_block.j2' -%}
+{% include 'tcam_block.j2' -%}
+{% include 'qos_block.j2' -%}
+{% include 'stp_block.j2' -%}
+{% include 'mgmt_interface_block.j2' -%}
+{% include 'interfaces_block.j2' -%}
+{% include 'fabric_bgp_block.j2' -%}
+{% include 'acl_block.j2' -%}
+
+boot nxos bootflash:/{{ boot.image }}
+{% if copp_profile %}
+copp profile {{ copp_profile }}
+{% endif %}
+
+! ======================================================
+! END OF CONFIG FOR {{ device.hostname }}
+! ======================================================

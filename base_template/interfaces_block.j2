@@ -1,0 +1,100 @@
+{# Generic NX-OS interface renderer for spine/leaf demo fabrics. #}
+{% set default_iface_set = interfaces.get(device.type|lower, {}) %}
+{% set host_iface_set = interfaces.get(device.hostname, {}) %}
+{% set merge = namespace(port_channels_map={}, ethernet_map={}) %}
+
+{% if default_iface_set.port_channels is defined %}
+  {% for pc in default_iface_set.port_channels %}
+    {% set _ = merge.port_channels_map.update({pc.name: pc}) %}
+  {% endfor %}
+{% endif %}
+{% if host_iface_set.port_channels is defined %}
+  {% for pc in host_iface_set.port_channels %}
+    {% set _ = merge.port_channels_map.update({pc.name: pc}) %}
+  {% endfor %}
+{% endif %}
+{% if default_iface_set.ethernet is defined %}
+  {% for eth in default_iface_set.ethernet %}
+    {% set _ = merge.ethernet_map.update({eth.name: eth}) %}
+  {% endfor %}
+{% endif %}
+{% if host_iface_set.ethernet is defined %}
+  {% for eth in host_iface_set.ethernet %}
+    {% set _ = merge.ethernet_map.update({eth.name: eth}) %}
+  {% endfor %}
+{% endif %}
+
+{% set port_channels = merge.port_channels_map.values() | list %}
+{% set ethernet = merge.ethernet_map.values() | list %}
+{% set pc_members = [] %}
+{% for pc in port_channels %}
+  {% for member in pc.channel_members | default([]) %}
+    {% set _ = pc_members.append(member) %}
+  {% endfor %}
+{% endfor %}
+
+# ============================
+# PORT-CHANNEL INTERFACES
+# ============================
+{% for pc in port_channels %}
+interface {{ pc.name }}
+  description {{ pc.description | default(device.hostname ~ '_to_' ~ pc.peer_name | default('peer')) }}
+  switchport
+  switchport mode {{ pc.mode | default('trunk') }}
+{% if pc.trunk_allowed_vlans is defined %}
+  switchport trunk allowed vlan {{ pc.trunk_allowed_vlans }}
+{% endif %}
+{% if pc.mtu is defined %}
+  mtu {{ pc.mtu }}
+{% endif %}
+{% if pc.no_shutdown | default(true) %}
+  no shutdown
+{% endif %}
+
+{% endfor %}
+
+# ============================
+# ETHERNET INTERFACES
+# ============================
+{% for eth in ethernet %}
+interface {{ eth.name }}
+  description {{ eth.description | default(device.hostname ~ '_to_' ~ eth.peer_name | default('peer') ~ '_' ~ eth.peer_port | default('port')) }}
+{% if eth.mode | default('access') == 'routed' %}
+  no switchport
+  ip address {{ eth.ip_address }}
+{% else %}
+  switchport
+  switchport mode {{ eth.mode | default('access') }}
+{% if eth.mode | default('access') == 'access' and eth.access_vlan is defined %}
+  switchport access vlan {{ eth.access_vlan }}
+{% endif %}
+{% if eth.mode | default('access') == 'trunk' and eth.trunk_allowed_vlans is defined %}
+  switchport trunk allowed vlan {{ eth.trunk_allowed_vlans }}
+{% endif %}
+{% endif %}
+{% if eth.mtu is defined %}
+  mtu {{ eth.mtu }}
+{% endif %}
+{% if eth.channel_group is defined %}
+  channel-group {{ eth.channel_group }} mode active
+{% endif %}
+{% if eth.no_shutdown | default(true) %}
+  no shutdown
+{% endif %}
+
+{% endfor %}
+
+# ============================
+# AUTO-DISABLE UNUSED PORTS
+# ============================
+{% set defined_eth = ethernet | map(attribute='name') | list %}
+{% set total_ports = 54 %}
+{% for i in range(1, total_ports + 1) %}
+  {% set iface = 'Ethernet1/' ~ i %}
+  {% if iface not in defined_eth %}
+interface {{ iface }}
+  description UNUSED
+  no switchport
+  shutdown
+  {% endif %}
+{% endfor %}

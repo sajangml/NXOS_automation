@@ -1,0 +1,53 @@
+local_password_type: 9
+local_admin_hash: "<demo_type9_admin_hash>"
+local_netops_hash: "<demo_type9_netops_hash>"
+
+radius_server: "198.51.100.10"
+radius_key: "<demo_radius_key>"
+
+snmp_trap_primary: "198.51.100.20"
+snmp_trap_secondary: "198.51.100.21"
+snmp_snmpmon_auth_key: "<demo_snmp_auth_key>"
+snmp_snmpmon_priv_key: "<demo_snmp_priv_key>"
+snmp_snmptraps_auth_key: "<demo_snmptraps_auth_key>"
+snmp_snmptraps_priv_key: "<demo_snmp_priv_key>"
+
+ntp_server: "198.51.100.30"
+ntp_key: "<demo_ntp_key>"
+syslog_server: "198.51.100.40"
+
+dns_primary: "198.51.100.53"
+dns_servers: ["198.51.100.53", "198.51.100.54"]
+dns_domain: "nxos-fabric.example.net"
+
+mgmt_vrf: "management"
+mgmt_source_interface: "mgmt0"
+copp_profile: "strict"
+allowed_vlans: "10-99,100-199,300-399"
+
+fabric:
+  name: NXOS-DEMO-FABRIC
+  underlay_asn: 65000
+  overlay_anycast_gateway_mac: "0001.0001.0001"
+  vlan_range: "10-99,100-199,300-399"
+
+security:
+  apply_mgmt_interface_acls: true
+  use_mgmt_acl_on_vty: false
+  allow_outbound_ssh: false
+  ssh_sources:
+    - subnet: "198.51.100.50/32"
+      comment: "Demo jump host"
+    - subnet: "198.51.100.51/32"
+      comment: "Demo automation runner"
+  monitoring_sources:
+    - subnet: "198.51.100.60/32"
+      comment: "Demo monitoring collector"
+  vty_source_prefix: "198.51.100.0/24"
+
+smart_licensing:
+  transport: cslu
+  cslu_url: "https://licensing.demo.example.net/cslu/v1/pi/demo"
+  vrf: management
+  transport_host: "licensing.demo.example.net"
+  transport_ip: "198.51.100.70"

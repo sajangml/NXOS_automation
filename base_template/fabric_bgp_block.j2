@@ -1,0 +1,32 @@
+! ---------- FABRIC LOOPBACKS ----------
+interface loopback0
+  description {{ device.fabric_id }} router-id
+  ip address {{ device.loopback0 }}
+
+{% if device.loopback1 is defined %}
+interface loopback1
+  description {{ device.fabric_id }} VTEP source
+  ip address {{ device.loopback1 }}
+
+interface nve1
+  no shutdown
+  source-interface loopback1
+  host-reachability protocol bgp
+{% endif %}
+
+! ---------- BGP UNDERLAY / EVPN OVERLAY ----------
+router bgp {{ device.bgp_asn }}
+  router-id {{ device.router_id }}
+  address-family ipv4 unicast
+    maximum-paths 8
+  address-family l2vpn evpn
+    retain route-target all
+{% for nbr in device.bgp_neighbors | default([]) %}
+  neighbor {{ nbr.ip }}
+    description {{ nbr.description }}
+    remote-as {{ nbr.remote_as }}
+    update-source {{ nbr.update_source }}
+    address-family ipv4 unicast
+    address-family l2vpn evpn
+      send-community both
+{% endfor %}

@@ -1,0 +1,24 @@
+{# ============================================================ #}
+{# MANAGEMENT INTERFACE CONFIGURATION (mgmt0 + VRF Route)       #}
+{# ============================================================ #}
+# ============================
+# mgmt VRF and Gateway
+# ============================
+interface mgmt0
+  description {{ mgmt.description | default('OOB Management') }}
+  vrf member {{ mgmt.vrf | default(env.mgmt_vrf | default('management')) }}
+  ip address {{ device.mgmt_ip }}
+{% if common_data.security.apply_mgmt_interface_acls | default(true) %}
+  ip access-group mgmt_acl_in in
+  ip access-group mgmt_acl_out out
+{% endif %}
+  no shutdown
+
+vrf context {{ mgmt.vrf | default(env.mgmt_vrf | default('management')) }}
+  ip route 0.0.0.0/0 {{ device.mgmt_gw | default('0.0.0.0') }}
+
+{% if dns_servers is defined and dns_servers %}
+ip name-server {{ dns_servers | join(' ') }} use-vrf {{ mgmt.vrf | default(env.mgmt_vrf | default('management')) }}
+{% elif dns_primary is defined and dns_primary %}
+ip name-server {{ dns_primary }}{% if dns_secondary is defined and dns_secondary %} {{ dns_secondary }}{% endif %} use-vrf {{ mgmt.vrf | default(env.mgmt_vrf | default('management')) }}
+{% endif %}

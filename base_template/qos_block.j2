@@ -1,0 +1,64 @@
+{# ============================================================ #}
+{# QoS CONFIGURATION — Ingress (Trust DSCP) + Egress Queuing    #}
+{# ============================================================ #}
+
+{% if qos.enable %}
+! ---------- Ingress QoS ----------
+{% if qos.ingress_mapping is defined and qos.ingress_mapping %}
+  {% for m in qos.ingress_mapping %}
+    {% if m.class != 'class-default' %}
+      {% if m.class == 'NETWORK-CONTROL' %}
+class-map type qos match-any NETWORK-CONTROL
+  match dscp 48
+  match dscp 56
+      {% elif m.class in ['REALTIME', 'REALTIME-OPERATIONAL'] %}
+class-map type qos match-any {{ m.class }}
+  match dscp 46
+      {% elif m.class == 'CRITICAL-OPERATIONAL' %}
+class-map type qos match-any CRITICAL-OPERATIONAL
+  match dscp 36
+      {% elif m.class == 'REGULAR-OPERATIONAL' %}
+class-map type qos match-any REGULAR-OPERATIONAL
+  match dscp 34
+      {% elif m.class == 'MULTIMEDIA-CONFERENCING' %}
+class-map type qos match-any MULTIMEDIA-CONFERENCING
+  match dscp 32
+      {% elif m.class == 'MULTIMEDIA-STREAMING' %}
+class-map type qos match-any MULTIMEDIA-STREAMING
+  match dscp 26
+      {% elif m.class == 'TRANSACTIONAL-DATA' %}
+class-map type qos match-any TRANSACTIONAL-DATA
+  match dscp 18
+      {% elif m.class == 'SIGNALLING' %}
+class-map type qos match-any SIGNALLING
+  match dscp 24
+      {% elif m.class == 'BEST-EFFORT' %}
+class-map type qos match-any BEST-EFFORT
+  match dscp 0
+      {% elif m.class == 'SCAVENGER' %}
+class-map type qos match-any SCAVENGER
+  match dscp 8
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+policy-map type qos {{ qos.ingress_policy }}
+  {% for m in qos.ingress_mapping %}
+  class {{ m.class }}
+    set qos-group {{ m.set_qos_group }}
+  {% endfor %}
+{% endif %}
+
+! ---------- Egress Queuing Policy ----------
+{% if qos.egress_classes is defined and qos.egress_classes %}
+policy-map type queuing {{ qos.egress_policy }}
+  {% for c in qos.egress_classes %}
+  class type queuing {{ c.name }}
+    {% if c.priority_level is defined %}
+    priority level {{ c.priority_level }}
+    {% elif c.bw_rem_pct is defined %}
+    bandwidth remaining percent {{ c.bw_rem_pct }}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+{% endif %}

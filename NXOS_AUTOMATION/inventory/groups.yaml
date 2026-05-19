@@ -1,0 +1,25 @@
+all:
+  connection_options:
+    netmiko:
+      platform: cisco_nxos
+      username: "{{ env.NETWORK_USERNAME | default('demo-user') }}"
+      password: "{{ env.NETWORK_PASSWORD | default('demo-password') }}"
+
+spineleaf:
+  data:
+    environment: SPINELEAF
+    baseline_path: "output_builds/SPINELEAF/"
+
+spine:
+  groups: [spineleaf]
+  data:
+    role: spine
+    topology_tier: spine
+    expected_leaf_count: 8
+
+leaf:
+  groups: [spineleaf]
+  data:
+    role: leaf
+    topology_tier: leaf
+    expected_spine_count: 2

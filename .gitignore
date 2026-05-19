@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+venv39/
+.env
+.env.*
+*.log
+logs/
+results/
+sanity_results/
+Packages/
+pip_offline/
+*.zip
+output_builds/*
+!output_builds/SPINELEAF/
+!output_builds/SPINELEAF/*.cfg

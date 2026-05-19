@@ -1,0 +1,133 @@
+system:
+  memory_thresholds: { minor: 96, severe: 97, critical: 98 }
+  ssh_login_attempts: 5
+  domain_name: "{{ env.dns_domain }}"
+  disable_ip_domain_lookup: true
+
+local_users:
+  - username: admin
+    password_hash: "{{ env.local_admin_hash }}"
+    role: network-admin
+    passphrase: { lifetime_days: 45, warn_days: 14, grace_days: 3 }
+  - username: netops
+    password_hash: "{{ env.local_netops_hash }}"
+    role: network-operator
+    passphrase: { lifetime_days: 99999, warn_days: 14, grace_days: 3 }
+
+banner: |
+      Demo NX-OS fabric automation prototype.
+      This configuration uses synthetic values and documentation IP ranges only.
+
+radius:
+  servers:
+    - ip: "{{ env.radius_server }}"
+      key: "{{ env.radius_key }}"
+      vrf: management
+  timeout: 3
+  retransmit: 3
+  deadtime: 1
+  group_name: RadServer
+  source_interface: mgmt0
+
+aaa:
+  authentication: { login_default: RadServer, login_console: RadServer }
+  accounting_default: RadServer
+  on_success_log: true
+  on_failure_log: true
+  login_error_enable: true
+  user_default_role_disabled: true
+
+certificates:
+  trustpoint: DEMO-CA
+  rsa_label: NXOS-FABRIC-DEMO
+  modulus: 2048
+  enrollment: terminal
+  revocation_check: none
+
+mgmt_object_group:
+  name: mgmt_nets
+  networks: ["192.0.2.0/24", "198.51.100.0/24", "203.0.113.0/24"]
+
+acls:
+  mgmt_in:
+    - { seq: 10, remark: "Permit demo management networks" }
+    - { seq: 20, permit: "ip addrgroup mgmt_nets any" }
+    - { seq: 30, permit: "tcp any any established" }
+    - { seq: 50, deny: "ip any any log" }
+  mgmt_out:
+    - { seq: 10, remark: "Permit return traffic to demo management networks" }
+    - { seq: 20, permit: "ip any addrgroup mgmt_nets" }
+    - { seq: 50, deny: "ip any any" }
+
+acl_logging: { enabled: true, cache_interval: 300, cache_entries: 8000, detailed: true, rate_limiter_pps: 50 }
+
+qos:
+  enable: true
+  ingress_policy: FABRIC-TRUST-DSCP
+  egress_policy: FABRIC-8Q-OUT
+  ingress_mapping:
+    - { class: NETWORK-CONTROL, set_qos_group: 7 }
+    - { class: REALTIME, set_qos_group: 6 }
+    - { class: CRITICAL-OPERATIONAL, set_qos_group: 5 }
+    - { class: TRANSACTIONAL-DATA, set_qos_group: 2 }
+    - { class: BEST-EFFORT, set_qos_group: 1 }
+    - { class: class-default, set_qos_group: 1 }
+  egress_classes:
+    - { name: c-out-8q-q7, priority_level: 1 }
+    - { name: c-out-8q-q6, bw_rem_pct: 20 }
+    - { name: c-out-8q-q5, bw_rem_pct: 20 }
+    - { name: c-out-8q-q2, bw_rem_pct: 20 }
+    - { name: c-out-8q-q1, bw_rem_pct: 20 }
+    - { name: c-out-8q-q-default, bw_rem_pct: 20 }
+
+copp_profile: strict
+bfd: { interval: 100, min_rx: 150, multiplier: 3 }
+
+snmp:
+  users:
+    - { name: snmpmon, role: network-operator, auth: sha-256, priv: aes-128 }
+    - { name: snmptraps, role: network-operator, auth: sha-256, priv: aes-128 }
+  traps:
+    - { host: "{{ env.snmp_trap_primary }}", version: 3, vrf: management, user: snmptraps }
+    - { host: "{{ env.snmp_trap_secondary }}", version: 3, vrf: management, user: snmptraps }
+  enable_traps:
+    - config ccmCLIRunningConfigChanged
+    - snmp authentication
+    - lldp lldpRemTablesChange
+    - syslog message-generated
+
+ntp:
+  servers:
+    - { ip: "{{ env.ntp_server }}", vrf: management }
+  source_interface: mgmt0
+  logging: true
+  master_stratum: 8
+
+logging:
+  console: 5
+  monitor: 6
+  buffered: { size: 4096000, level: warnings }
+  logfile: { name: log_file, severity: 6, size: 4096000 }
+  servers:
+    - { ip: "{{ env.syslog_server }}", severity: 6, vrf: management, secure: true }
+  source_interface: mgmt0
+  timestamp: milliseconds
+  module: 3
+  secure_ocsp_strict: false
+  login_on_success: true
+  aaa_error_enable: true
+
+boot: { image: nxos64-cs.10.3.6.M.bin, source_interface: mgmt0 }
+storm_control: { broadcast_level: 5.0, unicast_level: 5.0, action: trap }
+
+stp:
+  mode: rapid-pvst
+  edge_default: true
+  bpduguard_default: true
+  priorities: { spine: 4096, leaf: 24576, default: 32768 }
+
+vlans: { tag_native: true }
+features: [scp-server, lacp, lldp, bfd, bgp, interface-vlan, vn-segment-vlan-based, nv overlay]
+password_encryption_aes: true
+password_strength_check: true
+password_minimum_length: 14

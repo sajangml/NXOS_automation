@@ -1,0 +1,68 @@
+spine:
+  ethernet:
+    - { name: Ethernet1/1, description: "spine01 to leaf01 fabric uplink", mode: routed, peer_name: leaf01, peer_port: Ethernet1/49, ip_address: 10.0.1.0/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/2, description: "spine01 to leaf02 fabric uplink", mode: routed, peer_name: leaf02, peer_port: Ethernet1/49, ip_address: 10.0.2.0/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/3, description: "spine01 to leaf03 fabric uplink", mode: routed, peer_name: leaf03, peer_port: Ethernet1/49, ip_address: 10.0.3.0/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/4, description: "spine01 to leaf04 fabric uplink", mode: routed, peer_name: leaf04, peer_port: Ethernet1/49, ip_address: 10.0.4.0/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/5, description: "spine01 to leaf05 fabric uplink", mode: routed, peer_name: leaf05, peer_port: Ethernet1/49, ip_address: 10.0.5.0/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/6, description: "spine01 to leaf06 fabric uplink", mode: routed, peer_name: leaf06, peer_port: Ethernet1/49, ip_address: 10.0.6.0/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/7, description: "spine01 to leaf07 fabric uplink", mode: routed, peer_name: leaf07, peer_port: Ethernet1/49, ip_address: 10.0.7.0/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/8, description: "spine01 to leaf08 fabric uplink", mode: routed, peer_name: leaf08, peer_port: Ethernet1/49, ip_address: 10.0.8.0/31, mtu: 9216, no_shutdown: true }
+
+spine02:
+  ethernet:
+    - { name: Ethernet1/1, description: "spine02 to leaf01 fabric uplink", mode: routed, peer_name: leaf01, peer_port: Ethernet1/50, ip_address: 10.0.101.0/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/2, description: "spine02 to leaf02 fabric uplink", mode: routed, peer_name: leaf02, peer_port: Ethernet1/50, ip_address: 10.0.102.0/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/3, description: "spine02 to leaf03 fabric uplink", mode: routed, peer_name: leaf03, peer_port: Ethernet1/50, ip_address: 10.0.103.0/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/4, description: "spine02 to leaf04 fabric uplink", mode: routed, peer_name: leaf04, peer_port: Ethernet1/50, ip_address: 10.0.104.0/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/5, description: "spine02 to leaf05 fabric uplink", mode: routed, peer_name: leaf05, peer_port: Ethernet1/50, ip_address: 10.0.105.0/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/6, description: "spine02 to leaf06 fabric uplink", mode: routed, peer_name: leaf06, peer_port: Ethernet1/50, ip_address: 10.0.106.0/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/7, description: "spine02 to leaf07 fabric uplink", mode: routed, peer_name: leaf07, peer_port: Ethernet1/50, ip_address: 10.0.107.0/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/8, description: "spine02 to leaf08 fabric uplink", mode: routed, peer_name: leaf08, peer_port: Ethernet1/50, ip_address: 10.0.108.0/31, mtu: 9216, no_shutdown: true }
+
+leaf:
+  ethernet:
+    - { name: Ethernet1/1, description: "server access port 01", mode: access, access_vlan: 101, peer_name: app-host-01, peer_port: Eth0, no_shutdown: true }
+    - { name: Ethernet1/2, description: "server access port 02", mode: access, access_vlan: 102, peer_name: app-host-02, peer_port: Eth0, no_shutdown: true }
+    - { name: Ethernet1/47, description: "border/firewall trunk A", mode: trunk, trunk_allowed_vlans: "101-120", peer_name: firewall-a, peer_port: Eth1, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/48, description: "border/firewall trunk B", mode: trunk, trunk_allowed_vlans: "101-120", peer_name: firewall-b, peer_port: Eth1, mtu: 9216, no_shutdown: true }
+
+leaf01:
+  ethernet:
+    - { name: Ethernet1/49, description: "leaf01 to spine01 fabric uplink", mode: routed, peer_name: spine01, peer_port: Ethernet1/1, ip_address: 10.0.1.1/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/50, description: "leaf01 to spine02 fabric uplink", mode: routed, peer_name: spine02, peer_port: Ethernet1/1, ip_address: 10.0.101.1/31, mtu: 9216, no_shutdown: true }
+
+leaf02:
+  ethernet:
+    - { name: Ethernet1/49, description: "leaf02 to spine01 fabric uplink", mode: routed, peer_name: spine01, peer_port: Ethernet1/2, ip_address: 10.0.2.1/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/50, description: "leaf02 to spine02 fabric uplink", mode: routed, peer_name: spine02, peer_port: Ethernet1/2, ip_address: 10.0.102.1/31, mtu: 9216, no_shutdown: true }
+
+leaf03:
+  ethernet:
+    - { name: Ethernet1/49, description: "leaf03 to spine01 fabric uplink", mode: routed, peer_name: spine01, peer_port: Ethernet1/3, ip_address: 10.0.3.1/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/50, description: "leaf03 to spine02 fabric uplink", mode: routed, peer_name: spine02, peer_port: Ethernet1/3, ip_address: 10.0.103.1/31, mtu: 9216, no_shutdown: true }
+
+leaf04:
+  ethernet:
+    - { name: Ethernet1/49, description: "leaf04 to spine01 fabric uplink", mode: routed, peer_name: spine01, peer_port: Ethernet1/4, ip_address: 10.0.4.1/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/50, description: "leaf04 to spine02 fabric uplink", mode: routed, peer_name: spine02, peer_port: Ethernet1/4, ip_address: 10.0.104.1/31, mtu: 9216, no_shutdown: true }
+
+leaf05:
+  ethernet:
+    - { name: Ethernet1/49, description: "leaf05 to spine01 fabric uplink", mode: routed, peer_name: spine01, peer_port: Ethernet1/5, ip_address: 10.0.5.1/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/50, description: "leaf05 to spine02 fabric uplink", mode: routed, peer_name: spine02, peer_port: Ethernet1/5, ip_address: 10.0.105.1/31, mtu: 9216, no_shutdown: true }
+
+leaf06:
+  ethernet:
+    - { name: Ethernet1/49, description: "leaf06 to spine01 fabric uplink", mode: routed, peer_name: spine01, peer_port: Ethernet1/6, ip_address: 10.0.6.1/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/50, description: "leaf06 to spine02 fabric uplink", mode: routed, peer_name: spine02, peer_port: Ethernet1/6, ip_address: 10.0.106.1/31, mtu: 9216, no_shutdown: true }
+
+leaf07:
+  ethernet:
+    - { name: Ethernet1/49, description: "leaf07 to spine01 fabric uplink", mode: routed, peer_name: spine01, peer_port: Ethernet1/7, ip_address: 10.0.7.1/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/50, description: "leaf07 to spine02 fabric uplink", mode: routed, peer_name: spine02, peer_port: Ethernet1/7, ip_address: 10.0.107.1/31, mtu: 9216, no_shutdown: true }
+
+leaf08:
+  ethernet:
+    - { name: Ethernet1/49, description: "leaf08 to spine01 fabric uplink", mode: routed, peer_name: spine01, peer_port: Ethernet1/8, ip_address: 10.0.8.1/31, mtu: 9216, no_shutdown: true }
+    - { name: Ethernet1/50, description: "leaf08 to spine02 fabric uplink", mode: routed, peer_name: spine02, peer_port: Ethernet1/8, ip_address: 10.0.108.1/31, mtu: 9216, no_shutdown: true }

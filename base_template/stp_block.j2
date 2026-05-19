@@ -1,0 +1,13 @@
+! ---------- STP ----------
+spanning-tree mode {{ stp.mode }}
+{% if stp.edge_default %}
+spanning-tree port type edge default
+{% endif %}
+{% if stp.bpduguard_default %}
+spanning-tree port type edge bpduguard default
+{% endif %}
+{% if device.role | lower == 'spine' %}
+spanning-tree vlan {{ env.fabric.vlan_range }} priority {{ stp.priorities.spine }}
+{% else %}
+spanning-tree vlan {{ env.fabric.vlan_range }} priority {{ device.stp_priority | default(stp.priorities.leaf) }}
+{% endif %}

@@ -1,0 +1,22 @@
+! ---------- MANAGEMENT ACLS ----------
+ip access-list MGMT-IN
+{% for entry in acls.mgmt_in %}
+{% if entry.remark is defined %}
+  {{ entry.seq }} remark {{ entry.remark }}
+{% elif entry.permit is defined %}
+  {{ entry.seq }} permit {{ entry.permit }}
+{% elif entry.deny is defined %}
+  {{ entry.seq }} deny {{ entry.deny }}
+{% endif %}
+{% endfor %}
+
+ip access-list MGMT-OUT
+{% for entry in acls.mgmt_out %}
+{% if entry.remark is defined %}
+  {{ entry.seq }} remark {{ entry.remark }}
+{% elif entry.permit is defined %}
+  {{ entry.seq }} permit {{ entry.permit }}
+{% elif entry.deny is defined %}
+  {{ entry.seq }} deny {{ entry.deny }}
+{% endif %}
+{% endfor %}

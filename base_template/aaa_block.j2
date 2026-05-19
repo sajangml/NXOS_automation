@@ -1,0 +1,57 @@
+{# ============================================================ #}
+{# AAA / RADIUS CONFIGURATION — Uses vars_common + env_vars     #}
+{# ============================================================ #}
+
+{% if radius is defined and aaa is defined %}
+
+! ---------- RADIUS SERVER CONFIG ----------
+{% if radius.servers is defined and radius.servers %}
+{% for srv in radius.servers %}
+radius-server host {{ srv.ip }} key {{ srv.key }} authentication accounting
+{% endfor %}
+{% endif %}
+
+radius-server timeout {{ radius.timeout }}
+radius-server retransmit {{ radius.retransmit }}
+radius-server deadtime {{ radius.deadtime }}
+
+
+{% if radius.source_interface is defined %}
+ip radius source-interface {{ radius.source_interface }}
+{% endif %}
+
+! ---------- RADIUS GROUP ----------
+aaa group server radius {{ radius.group_name }}
+{% for srv in radius.servers %}
+  server {{ srv.ip }}
+{% endfor %}
+{% if radius.servers and radius.servers[0].vrf is defined %}
+  use-vrf {{ radius.servers[0].vrf }}
+{% endif %}
+
+! ---------- AAA AUTHENTICATION / ACCOUNTING ----------
+aaa authentication login default group {{ aaa.authentication.login_default }}
+aaa authentication login console group {{ aaa.authentication.login_console }}
+aaa accounting default group {{ aaa.accounting_default }}
+
+{% if aaa.on_success_log -%}
+login on-success log
+{% endif -%}
+{% if aaa.on_failure_log -%}
+login on-failure log
+{% endif -%}
+{% if aaa.login_error_enable -%}
+aaa authentication login error-enable
+{% endif -%}
+{% if aaa.user_default_role_disabled -%}
+no aaa user default-role
+{% endif %}
+
+! ---------- COMMAND ACCOUNTING ----------
+aaa accounting commands all default start-stop group {{ aaa.accounting_default }}
+
+{% if password_encryption_aes %}
+feature password encryption aes
+{% endif %}
+
+{% endif %}

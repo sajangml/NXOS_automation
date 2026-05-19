@@ -1,0 +1,51 @@
+{# ============================================================ #}
+{# SNMP CONFIGURATION BLOCK — USERS, TRAPS & GLOBAL SETTINGS    #}
+{# ============================================================ #}
+
+{% if snmp is defined %}
+! ---------- SNMP Engine & Global Settings ----------
+no snmp-server community public
+no snmp-server community private
+
+snmp ifmib ifalias long
+
+{% set effective_engine_id = device.snmp_engine_id | default(snmp.engine_id | default('')) %}
+{% if effective_engine_id %}
+snmp-server engineID local {{ effective_engine_id }}
+{% endif %}
+snmp-server globalEnforcePriv
+{% if snmp.contact is defined %}snmp-server contact {{ snmp.contact }}{% endif %}
+{% if snmp.location is defined %}snmp-server location {{ snmp.location }}{% endif %}
+
+! ---------- SNMP USERS ----------
+{% if snmp.users is defined %}
+{% for user in snmp.users %}
+snmp-server user {{ user.name }} {{ user.role }} auth {{ user.auth }} {{ env['snmp_' + user.name + '_auth_key'] | default('***') }} priv {{ user.priv }} {{ env['snmp_' + user.name + '_priv_key'] | default('***') }} {{ user.secret_suffix | default('localizedV2key') }}
+{% endfor %}
+{% endif %}
+
+! ---------- SNMP HOST TRAPS ----------
+{% if snmp.traps is defined %}
+{% for trap in snmp.traps %}
+snmp-server host {{ trap.host }} traps version {{ trap.version }} priv {{ trap.user }}
+{% if trap.vrf is defined %}
+snmp-server host {{ trap.host }} use-vrf {{ trap.vrf }}
+{% endif %}
+snmp-server host {{ trap.host }} source-interface {{ trap.source_interface | default('mgmt0') }}
+{% endfor %}
+{% endif %}
+
+! ---------- RMON EVENTS ----------
+rmon event 1 log trap snmptraps description FATAL(1) owner PMON@FATAL
+rmon event 2 log trap snmptraps description CRITICAL(2) owner PMON@CRITICAL
+rmon event 3 log trap snmptraps description ERROR(3) owner PMON@ERROR
+rmon event 4 log trap snmptraps description WARNING(4) owner PMON@WARNING
+rmon event 5 log trap snmptraps description INFORMATION(5) owner PMON@INFO
+
+! ---------- SNMP TRAP ENABLEMENTS ----------
+{% if snmp.enable_traps is defined %}
+{% for trap in snmp.enable_traps %}
+snmp-server enable traps {{ trap }}
+{% endfor %}
+{% endif %}
+{% endif %}
