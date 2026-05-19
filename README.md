@@ -260,6 +260,17 @@ Each DC has 28 NX-OS configs:
 
 Across all three sites, the generator creates 84 NX-OS configs.
 
+## Global Services Variables
+
+Global services are defined in `environments/spineleaf/env_vars.yaml` under `global_services`. The rendered configs include the shared baseline for:
+
+- timezone, DNS, NTP, SSH, AAA/RADIUS, SNMPv3, syslog
+- management ACL source subnets
+- smart licensing, telemetry, netflow, and config archive
+- the shared MOTD banner
+
+Per-DC override variables are defined in the same file under `dc_overrides`. DC1, DC2, and DC3 each have their own management subnet and role-based loopback pools for spines, leafs, super-spines, and XR/core planning.
+
 ## Quick Start
 
 ```powershell

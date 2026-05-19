@@ -1,8 +1,10 @@
+{% set gs = env.global_services %}
 system:
   memory_thresholds: { minor: 96, severe: 97, critical: 98 }
-  ssh_login_attempts: 5
-  domain_name: "{{ env.dns_domain }}"
-  disable_ip_domain_lookup: true
+  ssh_login_attempts: "{{ gs.ssh.authentication_retries }}"
+  domain_name: "{{ gs.domain_name }}"
+  disable_ip_domain_lookup: {{ not gs.dns.domain_lookup }}
+  timezone: "{{ gs.timezone }}"
 
 local_users:
   - username: admin
@@ -15,23 +17,33 @@ local_users:
     passphrase: { lifetime_days: 99999, warn_days: 14, grace_days: 3 }
 
 banner: |
-      Demo NX-OS fabric automation prototype.
-      This configuration uses synthetic values and documentation IP ranges only.
+{{ gs.banner.motd | indent(6, true) }}
 
 radius:
   servers:
-    - ip: "{{ env.radius_server }}"
-      key: "{{ env.radius_key }}"
+{% for server in gs.aaa.radius.servers %}
+    - name: "{{ server.name }}"
+      ip: "{{ server.ip }}"
+      key: "{{ server.key }}"
       vrf: management
-  timeout: 3
-  retransmit: 3
-  deadtime: 1
-  group_name: RadServer
-  source_interface: mgmt0
+{% endfor %}
+  timeout: {{ gs.aaa.radius.timeout }}
+  retransmit: {{ gs.aaa.radius.retransmit }}
+  deadtime: {{ gs.aaa.radius.deadtime }}
+  group_name: RadiusServers
+  source_interface: "{{ gs.aaa.radius.source_interface }}"
 
 aaa:
-  authentication: { login_default: RadServer, login_console: RadServer }
-  accounting_default: RadServer
+  authentication:
+    login_default: RadiusServers local
+    login_console: RadiusServers local
+    enable_default: RadiusServers local
+  authorization:
+    exec_default: RadiusServers local
+    commands_default: RadiusServers local
+  accounting_default: RadiusServers
+  accounting_exec: {{ gs.aaa.accounting.exec }}
+  accounting_commands: {{ gs.aaa.accounting.commands }}
   on_success_log: true
   on_failure_log: true
   login_error_enable: true
@@ -46,16 +58,19 @@ certificates:
 
 mgmt_object_group:
   name: mgmt_nets
-  networks: ["192.0.2.0/24", "198.51.100.0/24", "203.0.113.0/24"]
+  networks:
+{% for subnet in gs.management_acl.allowed_subnets %}
+    - "{{ subnet }}"
+{% endfor %}
 
 acls:
   mgmt_in:
-    - { seq: 10, remark: "Permit demo management networks" }
+    - { seq: 10, remark: "Permit approved management networks" }
     - { seq: 20, permit: "ip addrgroup mgmt_nets any" }
     - { seq: 30, permit: "tcp any any established" }
     - { seq: 50, deny: "ip any any log" }
   mgmt_out:
-    - { seq: 10, remark: "Permit return traffic to demo management networks" }
+    - { seq: 10, remark: "Permit return traffic to approved management networks" }
     - { seq: 20, permit: "ip any addrgroup mgmt_nets" }
     - { seq: 50, deny: "ip any any" }
 
@@ -84,12 +99,26 @@ copp_profile: strict
 bfd: { interval: 100, min_rx: 150, multiplier: 3 }
 
 snmp:
+  contact: "{{ gs.snmp.contact }}"
+  location: "{{ gs.snmp.location }}"
+  source_interface: "{{ gs.snmp.source_interface }}"
   users:
-    - { name: snmpmon, role: network-operator, auth: sha-256, priv: aes-128 }
-    - { name: snmptraps, role: network-operator, auth: sha-256, priv: aes-128 }
+{% for user in gs.snmp.users %}
+    - name: "{{ user.username }}"
+      role: network-operator
+      auth: "{{ user.auth_protocol }}"
+      auth_password: "{{ user.auth_password }}"
+      priv: "{{ user.priv_protocol }}"
+      priv_password: "{{ user.priv_password }}"
+{% endfor %}
   traps:
-    - { host: "{{ env.snmp_trap_primary }}", version: 3, vrf: management, user: snmptraps }
-    - { host: "{{ env.snmp_trap_secondary }}", version: 3, vrf: management, user: snmptraps }
+{% for trap in gs.snmp.trap_receivers %}
+    - host: "{{ trap.ip }}"
+      version: 3
+      vrf: management
+      user: "{{ gs.snmp.users[0].username }}"
+      source_interface: "{{ gs.snmp.source_interface }}"
+{% endfor %}
   enable_traps:
     - config ccmCLIRunningConfigChanged
     - snmp authentication
@@ -98,10 +127,21 @@ snmp:
 
 ntp:
   servers:
-    - { ip: "{{ env.ntp_server }}", vrf: management }
-  source_interface: mgmt0
+{% for server in gs.ntp.servers %}
+    - ip: "{{ server.ip }}"
+      vrf: management
+{% if server.prefer | default(false) %}
+      prefer: true
+{% endif %}
+{% endfor %}
+  source_interface: "{{ gs.ntp.source_interface }}"
   logging: true
-  master_stratum: 8
+{% if gs.ntp.authentication.enabled %}
+  authentication_key:
+    id: {{ gs.ntp.authentication.key_id }}
+    algorithm: "{{ gs.ntp.authentication.algorithm }}"
+    value: "{{ gs.ntp.authentication.secret }}"
+{% endif %}
 
 logging:
   console: 5
@@ -109,8 +149,15 @@ logging:
   buffered: { size: 4096000, level: warnings }
   logfile: { name: log_file, severity: 6, size: 4096000 }
   servers:
-    - { ip: "{{ env.syslog_server }}", severity: 6, vrf: management, secure: true }
-  source_interface: mgmt0
+{% for server in gs.syslog.servers %}
+    - ip: "{{ server.ip }}"
+      severity: "{{ server.severity }}"
+      vrf: management
+      secure: true
+      protocol: "{{ server.protocol }}"
+      port: {{ server.port }}
+{% endfor %}
+  source_interface: "{{ gs.syslog.source_interface }}"
   timestamp: milliseconds
   module: 3
   secure_ocsp_strict: false

@@ -1,5 +1,5 @@
 DC1-P1-SS01:
-  hostname: 192.0.2.11
+  hostname: 10.1.0.11
   platform: nxos
   groups:
   - super_spine
@@ -11,7 +11,7 @@ DC1-P1-SS01:
     fabric_id: DC1-P1-SS01
     border_gateway: false
 DC1-P1-SS02:
-  hostname: 192.0.2.12
+  hostname: 10.1.0.12
   platform: nxos
   groups:
   - super_spine
@@ -23,7 +23,7 @@ DC1-P1-SS02:
     fabric_id: DC1-P1-SS02
     border_gateway: false
 DC1-P1-SP01:
-  hostname: 192.0.2.21
+  hostname: 10.1.0.21
   platform: nxos
   groups:
   - spine
@@ -35,7 +35,7 @@ DC1-P1-SP01:
     fabric_id: DC1-P1-SP01
     border_gateway: false
 DC1-P1-SP02:
-  hostname: 192.0.2.22
+  hostname: 10.1.0.22
   platform: nxos
   groups:
   - spine
@@ -47,7 +47,7 @@ DC1-P1-SP02:
     fabric_id: DC1-P1-SP02
     border_gateway: false
 DC1-P1-SP03:
-  hostname: 192.0.2.23
+  hostname: 10.1.0.23
   platform: nxos
   groups:
   - spine
@@ -59,7 +59,7 @@ DC1-P1-SP03:
     fabric_id: DC1-P1-SP03
     border_gateway: false
 DC1-P1-SP04:
-  hostname: 192.0.2.24
+  hostname: 10.1.0.24
   platform: nxos
   groups:
   - spine
@@ -71,7 +71,7 @@ DC1-P1-SP04:
     fabric_id: DC1-P1-SP04
     border_gateway: false
 DC1-P1-LF01:
-  hostname: 192.0.2.31
+  hostname: 10.1.0.31
   platform: nxos
   groups:
   - leaf
@@ -83,7 +83,7 @@ DC1-P1-LF01:
     fabric_id: DC1-P1-LF01
     border_gateway: false
 DC1-P1-LF02:
-  hostname: 192.0.2.32
+  hostname: 10.1.0.32
   platform: nxos
   groups:
   - leaf
@@ -95,7 +95,7 @@ DC1-P1-LF02:
     fabric_id: DC1-P1-LF02
     border_gateway: false
 DC1-P1-LF03:
-  hostname: 192.0.2.33
+  hostname: 10.1.0.33
   platform: nxos
   groups:
   - leaf
@@ -107,7 +107,7 @@ DC1-P1-LF03:
     fabric_id: DC1-P1-LF03
     border_gateway: false
 DC1-P1-LF04:
-  hostname: 192.0.2.34
+  hostname: 10.1.0.34
   platform: nxos
   groups:
   - leaf
@@ -119,7 +119,7 @@ DC1-P1-LF04:
     fabric_id: DC1-P1-LF04
     border_gateway: false
 DC1-P1-LF05:
-  hostname: 192.0.2.35
+  hostname: 10.1.0.35
   platform: nxos
   groups:
   - leaf
@@ -131,7 +131,7 @@ DC1-P1-LF05:
     fabric_id: DC1-P1-LF05
     border_gateway: false
 DC1-P1-LF06:
-  hostname: 192.0.2.36
+  hostname: 10.1.0.36
   platform: nxos
   groups:
   - leaf
@@ -143,7 +143,7 @@ DC1-P1-LF06:
     fabric_id: DC1-P1-LF06
     border_gateway: false
 DC1-P1-LF07:
-  hostname: 192.0.2.37
+  hostname: 10.1.0.37
   platform: nxos
   groups:
   - border_leaf
@@ -155,7 +155,7 @@ DC1-P1-LF07:
     fabric_id: DC1-P1-LF07
     border_gateway: true
 DC1-P1-LF08:
-  hostname: 192.0.2.38
+  hostname: 10.1.0.38
   platform: nxos
   groups:
   - border_leaf
@@ -167,7 +167,7 @@ DC1-P1-LF08:
     fabric_id: DC1-P1-LF08
     border_gateway: true
 DC1-P2-SS01:
-  hostname: 192.0.2.111
+  hostname: 10.1.0.111
   platform: nxos
   groups:
   - super_spine
@@ -179,7 +179,7 @@ DC1-P2-SS01:
     fabric_id: DC1-P2-SS01
     border_gateway: false
 DC1-P2-SS02:
-  hostname: 192.0.2.112
+  hostname: 10.1.0.112
   platform: nxos
   groups:
   - super_spine
@@ -191,7 +191,7 @@ DC1-P2-SS02:
     fabric_id: DC1-P2-SS02
     border_gateway: false
 DC1-P2-SP01:
-  hostname: 192.0.2.121
+  hostname: 10.1.0.121
   platform: nxos
   groups:
   - spine
@@ -203,7 +203,7 @@ DC1-P2-SP01:
     fabric_id: DC1-P2-SP01
     border_gateway: false
 DC1-P2-SP02:
-  hostname: 192.0.2.122
+  hostname: 10.1.0.122
   platform: nxos
   groups:
   - spine
@@ -215,7 +215,7 @@ DC1-P2-SP02:
     fabric_id: DC1-P2-SP02
     border_gateway: false
 DC1-P2-SP03:
-  hostname: 192.0.2.123
+  hostname: 10.1.0.123
   platform: nxos
   groups:
   - spine
@@ -227,7 +227,7 @@ DC1-P2-SP03:
     fabric_id: DC1-P2-SP03
     border_gateway: false
 DC1-P2-SP04:
-  hostname: 192.0.2.124
+  hostname: 10.1.0.124
   platform: nxos
   groups:
   - spine
@@ -239,7 +239,7 @@ DC1-P2-SP04:
     fabric_id: DC1-P2-SP04
     border_gateway: false
 DC1-P2-LF01:
-  hostname: 192.0.2.131
+  hostname: 10.1.0.131
   platform: nxos
   groups:
   - leaf
@@ -251,7 +251,7 @@ DC1-P2-LF01:
     fabric_id: DC1-P2-LF01
     border_gateway: false
 DC1-P2-LF02:
-  hostname: 192.0.2.132
+  hostname: 10.1.0.132
   platform: nxos
   groups:
   - leaf
@@ -263,7 +263,7 @@ DC1-P2-LF02:
     fabric_id: DC1-P2-LF02
     border_gateway: false
 DC1-P2-LF03:
-  hostname: 192.0.2.133
+  hostname: 10.1.0.133
   platform: nxos
   groups:
   - leaf
@@ -275,7 +275,7 @@ DC1-P2-LF03:
     fabric_id: DC1-P2-LF03
     border_gateway: false
 DC1-P2-LF04:
-  hostname: 192.0.2.134
+  hostname: 10.1.0.134
   platform: nxos
   groups:
   - leaf
@@ -287,7 +287,7 @@ DC1-P2-LF04:
     fabric_id: DC1-P2-LF04
     border_gateway: false
 DC1-P2-LF05:
-  hostname: 192.0.2.135
+  hostname: 10.1.0.135
   platform: nxos
   groups:
   - leaf
@@ -299,7 +299,7 @@ DC1-P2-LF05:
     fabric_id: DC1-P2-LF05
     border_gateway: false
 DC1-P2-LF06:
-  hostname: 192.0.2.136
+  hostname: 10.1.0.136
   platform: nxos
   groups:
   - leaf
@@ -311,7 +311,7 @@ DC1-P2-LF06:
     fabric_id: DC1-P2-LF06
     border_gateway: false
 DC1-P2-LF07:
-  hostname: 192.0.2.137
+  hostname: 10.1.0.137
   platform: nxos
   groups:
   - border_leaf
@@ -323,7 +323,7 @@ DC1-P2-LF07:
     fabric_id: DC1-P2-LF07
     border_gateway: true
 DC1-P2-LF08:
-  hostname: 192.0.2.138
+  hostname: 10.1.0.138
   platform: nxos
   groups:
   - border_leaf
@@ -335,7 +335,7 @@ DC1-P2-LF08:
     fabric_id: DC1-P2-LF08
     border_gateway: true
 DC2-P1-SS01:
-  hostname: 198.51.100.11
+  hostname: 10.2.0.11
   platform: nxos
   groups:
   - super_spine
@@ -347,7 +347,7 @@ DC2-P1-SS01:
     fabric_id: DC2-P1-SS01
     border_gateway: false
 DC2-P1-SS02:
-  hostname: 198.51.100.12
+  hostname: 10.2.0.12
   platform: nxos
   groups:
   - super_spine
@@ -359,7 +359,7 @@ DC2-P1-SS02:
     fabric_id: DC2-P1-SS02
     border_gateway: false
 DC2-P1-SP01:
-  hostname: 198.51.100.21
+  hostname: 10.2.0.21
   platform: nxos
   groups:
   - spine
@@ -371,7 +371,7 @@ DC2-P1-SP01:
     fabric_id: DC2-P1-SP01
     border_gateway: false
 DC2-P1-SP02:
-  hostname: 198.51.100.22
+  hostname: 10.2.0.22
   platform: nxos
   groups:
   - spine
@@ -383,7 +383,7 @@ DC2-P1-SP02:
     fabric_id: DC2-P1-SP02
     border_gateway: false
 DC2-P1-SP03:
-  hostname: 198.51.100.23
+  hostname: 10.2.0.23
   platform: nxos
   groups:
   - spine
@@ -395,7 +395,7 @@ DC2-P1-SP03:
     fabric_id: DC2-P1-SP03
     border_gateway: false
 DC2-P1-SP04:
-  hostname: 198.51.100.24
+  hostname: 10.2.0.24
   platform: nxos
   groups:
   - spine
@@ -407,7 +407,7 @@ DC2-P1-SP04:
     fabric_id: DC2-P1-SP04
     border_gateway: false
 DC2-P1-LF01:
-  hostname: 198.51.100.31
+  hostname: 10.2.0.31
   platform: nxos
   groups:
   - leaf
@@ -419,7 +419,7 @@ DC2-P1-LF01:
     fabric_id: DC2-P1-LF01
     border_gateway: false
 DC2-P1-LF02:
-  hostname: 198.51.100.32
+  hostname: 10.2.0.32
   platform: nxos
   groups:
   - leaf
@@ -431,7 +431,7 @@ DC2-P1-LF02:
     fabric_id: DC2-P1-LF02
     border_gateway: false
 DC2-P1-LF03:
-  hostname: 198.51.100.33
+  hostname: 10.2.0.33
   platform: nxos
   groups:
   - leaf
@@ -443,7 +443,7 @@ DC2-P1-LF03:
     fabric_id: DC2-P1-LF03
     border_gateway: false
 DC2-P1-LF04:
-  hostname: 198.51.100.34
+  hostname: 10.2.0.34
   platform: nxos
   groups:
   - leaf
@@ -455,7 +455,7 @@ DC2-P1-LF04:
     fabric_id: DC2-P1-LF04
     border_gateway: false
 DC2-P1-LF05:
-  hostname: 198.51.100.35
+  hostname: 10.2.0.35
   platform: nxos
   groups:
   - leaf
@@ -467,7 +467,7 @@ DC2-P1-LF05:
     fabric_id: DC2-P1-LF05
     border_gateway: false
 DC2-P1-LF06:
-  hostname: 198.51.100.36
+  hostname: 10.2.0.36
   platform: nxos
   groups:
   - leaf
@@ -479,7 +479,7 @@ DC2-P1-LF06:
     fabric_id: DC2-P1-LF06
     border_gateway: false
 DC2-P1-LF07:
-  hostname: 198.51.100.37
+  hostname: 10.2.0.37
   platform: nxos
   groups:
   - border_leaf
@@ -491,7 +491,7 @@ DC2-P1-LF07:
     fabric_id: DC2-P1-LF07
     border_gateway: true
 DC2-P1-LF08:
-  hostname: 198.51.100.38
+  hostname: 10.2.0.38
   platform: nxos
   groups:
   - border_leaf
@@ -503,7 +503,7 @@ DC2-P1-LF08:
     fabric_id: DC2-P1-LF08
     border_gateway: true
 DC2-P2-SS01:
-  hostname: 198.51.100.111
+  hostname: 10.2.0.111
   platform: nxos
   groups:
   - super_spine
@@ -515,7 +515,7 @@ DC2-P2-SS01:
     fabric_id: DC2-P2-SS01
     border_gateway: false
 DC2-P2-SS02:
-  hostname: 198.51.100.112
+  hostname: 10.2.0.112
   platform: nxos
   groups:
   - super_spine
@@ -527,7 +527,7 @@ DC2-P2-SS02:
     fabric_id: DC2-P2-SS02
     border_gateway: false
 DC2-P2-SP01:
-  hostname: 198.51.100.121
+  hostname: 10.2.0.121
   platform: nxos
   groups:
   - spine
@@ -539,7 +539,7 @@ DC2-P2-SP01:
     fabric_id: DC2-P2-SP01
     border_gateway: false
 DC2-P2-SP02:
-  hostname: 198.51.100.122
+  hostname: 10.2.0.122
   platform: nxos
   groups:
   - spine
@@ -551,7 +551,7 @@ DC2-P2-SP02:
     fabric_id: DC2-P2-SP02
     border_gateway: false
 DC2-P2-SP03:
-  hostname: 198.51.100.123
+  hostname: 10.2.0.123
   platform: nxos
   groups:
   - spine
@@ -563,7 +563,7 @@ DC2-P2-SP03:
     fabric_id: DC2-P2-SP03
     border_gateway: false
 DC2-P2-SP04:
-  hostname: 198.51.100.124
+  hostname: 10.2.0.124
   platform: nxos
   groups:
   - spine
@@ -575,7 +575,7 @@ DC2-P2-SP04:
     fabric_id: DC2-P2-SP04
     border_gateway: false
 DC2-P2-LF01:
-  hostname: 198.51.100.131
+  hostname: 10.2.0.131
   platform: nxos
   groups:
   - leaf
@@ -587,7 +587,7 @@ DC2-P2-LF01:
     fabric_id: DC2-P2-LF01
     border_gateway: false
 DC2-P2-LF02:
-  hostname: 198.51.100.132
+  hostname: 10.2.0.132
   platform: nxos
   groups:
   - leaf
@@ -599,7 +599,7 @@ DC2-P2-LF02:
     fabric_id: DC2-P2-LF02
     border_gateway: false
 DC2-P2-LF03:
-  hostname: 198.51.100.133
+  hostname: 10.2.0.133
   platform: nxos
   groups:
   - leaf
@@ -611,7 +611,7 @@ DC2-P2-LF03:
     fabric_id: DC2-P2-LF03
     border_gateway: false
 DC2-P2-LF04:
-  hostname: 198.51.100.134
+  hostname: 10.2.0.134
   platform: nxos
   groups:
   - leaf
@@ -623,7 +623,7 @@ DC2-P2-LF04:
     fabric_id: DC2-P2-LF04
     border_gateway: false
 DC2-P2-LF05:
-  hostname: 198.51.100.135
+  hostname: 10.2.0.135
   platform: nxos
   groups:
   - leaf
@@ -635,7 +635,7 @@ DC2-P2-LF05:
     fabric_id: DC2-P2-LF05
     border_gateway: false
 DC2-P2-LF06:
-  hostname: 198.51.100.136
+  hostname: 10.2.0.136
   platform: nxos
   groups:
   - leaf
@@ -647,7 +647,7 @@ DC2-P2-LF06:
     fabric_id: DC2-P2-LF06
     border_gateway: false
 DC2-P2-LF07:
-  hostname: 198.51.100.137
+  hostname: 10.2.0.137
   platform: nxos
   groups:
   - border_leaf
@@ -659,7 +659,7 @@ DC2-P2-LF07:
     fabric_id: DC2-P2-LF07
     border_gateway: true
 DC2-P2-LF08:
-  hostname: 198.51.100.138
+  hostname: 10.2.0.138
   platform: nxos
   groups:
   - border_leaf
@@ -671,7 +671,7 @@ DC2-P2-LF08:
     fabric_id: DC2-P2-LF08
     border_gateway: true
 DC3-P1-SS01:
-  hostname: 203.0.113.11
+  hostname: 10.3.0.11
   platform: nxos
   groups:
   - super_spine
@@ -683,7 +683,7 @@ DC3-P1-SS01:
     fabric_id: DC3-P1-SS01
     border_gateway: false
 DC3-P1-SS02:
-  hostname: 203.0.113.12
+  hostname: 10.3.0.12
   platform: nxos
   groups:
   - super_spine
@@ -695,7 +695,7 @@ DC3-P1-SS02:
     fabric_id: DC3-P1-SS02
     border_gateway: false
 DC3-P1-SP01:
-  hostname: 203.0.113.21
+  hostname: 10.3.0.21
   platform: nxos
   groups:
   - spine
@@ -707,7 +707,7 @@ DC3-P1-SP01:
     fabric_id: DC3-P1-SP01
     border_gateway: false
 DC3-P1-SP02:
-  hostname: 203.0.113.22
+  hostname: 10.3.0.22
   platform: nxos
   groups:
   - spine
@@ -719,7 +719,7 @@ DC3-P1-SP02:
     fabric_id: DC3-P1-SP02
     border_gateway: false
 DC3-P1-SP03:
-  hostname: 203.0.113.23
+  hostname: 10.3.0.23
   platform: nxos
   groups:
   - spine
@@ -731,7 +731,7 @@ DC3-P1-SP03:
     fabric_id: DC3-P1-SP03
     border_gateway: false
 DC3-P1-SP04:
-  hostname: 203.0.113.24
+  hostname: 10.3.0.24
   platform: nxos
   groups:
   - spine
@@ -743,7 +743,7 @@ DC3-P1-SP04:
     fabric_id: DC3-P1-SP04
     border_gateway: false
 DC3-P1-LF01:
-  hostname: 203.0.113.31
+  hostname: 10.3.0.31
   platform: nxos
   groups:
   - leaf
@@ -755,7 +755,7 @@ DC3-P1-LF01:
     fabric_id: DC3-P1-LF01
     border_gateway: false
 DC3-P1-LF02:
-  hostname: 203.0.113.32
+  hostname: 10.3.0.32
   platform: nxos
   groups:
   - leaf
@@ -767,7 +767,7 @@ DC3-P1-LF02:
     fabric_id: DC3-P1-LF02
     border_gateway: false
 DC3-P1-LF03:
-  hostname: 203.0.113.33
+  hostname: 10.3.0.33
   platform: nxos
   groups:
   - leaf
@@ -779,7 +779,7 @@ DC3-P1-LF03:
     fabric_id: DC3-P1-LF03
     border_gateway: false
 DC3-P1-LF04:
-  hostname: 203.0.113.34
+  hostname: 10.3.0.34
   platform: nxos
   groups:
   - leaf
@@ -791,7 +791,7 @@ DC3-P1-LF04:
     fabric_id: DC3-P1-LF04
     border_gateway: false
 DC3-P1-LF05:
-  hostname: 203.0.113.35
+  hostname: 10.3.0.35
   platform: nxos
   groups:
   - leaf
@@ -803,7 +803,7 @@ DC3-P1-LF05:
     fabric_id: DC3-P1-LF05
     border_gateway: false
 DC3-P1-LF06:
-  hostname: 203.0.113.36
+  hostname: 10.3.0.36
   platform: nxos
   groups:
   - leaf
@@ -815,7 +815,7 @@ DC3-P1-LF06:
     fabric_id: DC3-P1-LF06
     border_gateway: false
 DC3-P1-LF07:
-  hostname: 203.0.113.37
+  hostname: 10.3.0.37
   platform: nxos
   groups:
   - border_leaf
@@ -827,7 +827,7 @@ DC3-P1-LF07:
     fabric_id: DC3-P1-LF07
     border_gateway: true
 DC3-P1-LF08:
-  hostname: 203.0.113.38
+  hostname: 10.3.0.38
   platform: nxos
   groups:
   - border_leaf
@@ -839,7 +839,7 @@ DC3-P1-LF08:
     fabric_id: DC3-P1-LF08
     border_gateway: true
 DC3-P2-SS01:
-  hostname: 203.0.113.111
+  hostname: 10.3.0.111
   platform: nxos
   groups:
   - super_spine
@@ -851,7 +851,7 @@ DC3-P2-SS01:
     fabric_id: DC3-P2-SS01
     border_gateway: false
 DC3-P2-SS02:
-  hostname: 203.0.113.112
+  hostname: 10.3.0.112
   platform: nxos
   groups:
   - super_spine
@@ -863,7 +863,7 @@ DC3-P2-SS02:
     fabric_id: DC3-P2-SS02
     border_gateway: false
 DC3-P2-SP01:
-  hostname: 203.0.113.121
+  hostname: 10.3.0.121
   platform: nxos
   groups:
   - spine
@@ -875,7 +875,7 @@ DC3-P2-SP01:
     fabric_id: DC3-P2-SP01
     border_gateway: false
 DC3-P2-SP02:
-  hostname: 203.0.113.122
+  hostname: 10.3.0.122
   platform: nxos
   groups:
   - spine
@@ -887,7 +887,7 @@ DC3-P2-SP02:
     fabric_id: DC3-P2-SP02
     border_gateway: false
 DC3-P2-SP03:
-  hostname: 203.0.113.123
+  hostname: 10.3.0.123
   platform: nxos
   groups:
   - spine
@@ -899,7 +899,7 @@ DC3-P2-SP03:
     fabric_id: DC3-P2-SP03
     border_gateway: false
 DC3-P2-SP04:
-  hostname: 203.0.113.124
+  hostname: 10.3.0.124
   platform: nxos
   groups:
   - spine
@@ -911,7 +911,7 @@ DC3-P2-SP04:
     fabric_id: DC3-P2-SP04
     border_gateway: false
 DC3-P2-LF01:
-  hostname: 203.0.113.131
+  hostname: 10.3.0.131
   platform: nxos
   groups:
   - leaf
@@ -923,7 +923,7 @@ DC3-P2-LF01:
     fabric_id: DC3-P2-LF01
     border_gateway: false
 DC3-P2-LF02:
-  hostname: 203.0.113.132
+  hostname: 10.3.0.132
   platform: nxos
   groups:
   - leaf
@@ -935,7 +935,7 @@ DC3-P2-LF02:
     fabric_id: DC3-P2-LF02
     border_gateway: false
 DC3-P2-LF03:
-  hostname: 203.0.113.133
+  hostname: 10.3.0.133
   platform: nxos
   groups:
   - leaf
@@ -947,7 +947,7 @@ DC3-P2-LF03:
     fabric_id: DC3-P2-LF03
     border_gateway: false
 DC3-P2-LF04:
-  hostname: 203.0.113.134
+  hostname: 10.3.0.134
   platform: nxos
   groups:
   - leaf
@@ -959,7 +959,7 @@ DC3-P2-LF04:
     fabric_id: DC3-P2-LF04
     border_gateway: false
 DC3-P2-LF05:
-  hostname: 203.0.113.135
+  hostname: 10.3.0.135
   platform: nxos
   groups:
   - leaf
@@ -971,7 +971,7 @@ DC3-P2-LF05:
     fabric_id: DC3-P2-LF05
     border_gateway: false
 DC3-P2-LF06:
-  hostname: 203.0.113.136
+  hostname: 10.3.0.136
   platform: nxos
   groups:
   - leaf
@@ -983,7 +983,7 @@ DC3-P2-LF06:
     fabric_id: DC3-P2-LF06
     border_gateway: false
 DC3-P2-LF07:
-  hostname: 203.0.113.137
+  hostname: 10.3.0.137
   platform: nxos
   groups:
   - border_leaf
@@ -995,7 +995,7 @@ DC3-P2-LF07:
     fabric_id: DC3-P2-LF07
     border_gateway: true
 DC3-P2-LF08:
-  hostname: 203.0.113.138
+  hostname: 10.3.0.138
   platform: nxos
   groups:
   - border_leaf

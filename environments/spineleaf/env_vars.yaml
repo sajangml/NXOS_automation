@@ -1,24 +1,167 @@
+global_services:
+  timezone: "Australia/Melbourne"
+  domain_name: "corp.dc.fabric"
+
+  ntp:
+    source_interface: "loopback0"
+    servers:
+      - ip: "10.255.250.10"
+        prefer: true
+      - ip: "10.255.250.11"
+      - ip: "10.255.250.12"
+    authentication:
+      enabled: true
+      key_id: 10
+      algorithm: "md5"
+      secret: "NTP_SECRET"
+
+  dns:
+    vrf: "management"
+    domain_lookup: true
+    servers:
+      primary: "10.255.251.10"
+      secondary: "10.255.251.11"
+    search_domains:
+      - "corp.dc.fabric"
+      - "mgmt.dc.fabric"
+
+  aaa:
+    authentication:
+      login: "group radius local"
+      enable: "group radius local"
+    authorization:
+      exec: "group radius local"
+      commands: "group radius local"
+    accounting:
+      exec: true
+      commands: true
+    radius:
+      source_interface: "loopback0"
+      deadtime: 15
+      retransmit: 3
+      timeout: 5
+      servers:
+        - name: "ISE-01"
+          ip: "10.255.252.10"
+          key: "RADIUS_SECRET"
+        - name: "ISE-02"
+          ip: "10.255.252.11"
+          key: "RADIUS_SECRET"
+    tacacs:
+      enabled: false
+      source_interface: "loopback0"
+      servers:
+        - name: "TACACS-01"
+          ip: "10.255.253.10"
+          key: "TACACS_SECRET"
+
+  snmp:
+    location: "Global Data Center Fabric"
+    contact: "noc@corp.dc.fabric"
+    source_interface: "loopback0"
+    version: "v3"
+    communities:
+      readonly: "DISABLED"
+      readwrite: "DISABLED"
+    users:
+      - username: "snmpv3user"
+        auth_protocol: "sha"
+        auth_password: "SNMP_AUTH_SECRET"
+        priv_protocol: "aes-128"
+        priv_password: "SNMP_PRIV_SECRET"
+    trap_receivers:
+      - ip: "10.255.254.10"
+        version: "v3"
+      - ip: "10.255.254.11"
+        version: "v3"
+
+  syslog:
+    source_interface: "loopback0"
+    servers:
+      - ip: "10.255.240.10"
+        protocol: "tcp"
+        port: 6514
+        severity: "informational"
+      - ip: "10.255.240.11"
+        protocol: "tcp"
+        port: 6514
+        severity: "informational"
+
+  netflow:
+    enabled: true
+    exporter_ip: "10.255.241.10"
+    exporter_port: 2055
+    source_interface: "loopback0"
+
+  telemetry:
+    enabled: true
+    gnmi_collectors:
+      - ip: "10.255.242.10"
+        port: 57400
+      - ip: "10.255.242.11"
+        port: 57400
+
+  ssh:
+    version: 2
+    source_interface: "loopback0"
+    idle_timeout: 15
+    authentication_retries: 3
+
+  management_acl:
+    enabled: true
+    allowed_subnets:
+      - "10.10.10.0/24"
+      - "10.20.20.0/24"
+      - "10.30.30.0/24"
+
+  smart_licensing:
+    enabled: true
+    transport: "cslu"
+    server: "10.255.243.10"
+    vrf: "management"
+
+  backup:
+    config_archive:
+      enabled: true
+      protocol: "scp"
+      destination: "10.255.244.10"
+      path: "/network-backups"
+      username: "backupuser"
+
+  banner:
+    motd: |
+      **************************************************
+      AUTHORIZED ACCESS ONLY
+      Enterprise DC Fabric Infrastructure
+      Activity may be monitored and logged
+      **************************************************
+
+dc_overrides:
+  dc1:
+    management_subnet: "10.1.0.0/16"
+    loopbacks:
+      spine: "10.1.1.0/24"
+      leaf: "10.1.2.0/24"
+      super_spine: "10.1.3.0/24"
+      xr: "10.1.4.0/24"
+  dc2:
+    management_subnet: "10.2.0.0/16"
+    loopbacks:
+      spine: "10.2.1.0/24"
+      leaf: "10.2.2.0/24"
+      super_spine: "10.2.3.0/24"
+      xr: "10.2.4.0/24"
+  dc3:
+    management_subnet: "10.3.0.0/16"
+    loopbacks:
+      spine: "10.3.1.0/24"
+      leaf: "10.3.2.0/24"
+      super_spine: "10.3.3.0/24"
+      xr: "10.3.4.0/24"
+
 local_password_type: 9
 local_admin_hash: "<demo_type9_admin_hash>"
 local_netops_hash: "<demo_type9_netops_hash>"
-
-radius_server: "198.51.100.10"
-radius_key: "<demo_radius_key>"
-
-snmp_trap_primary: "198.51.100.20"
-snmp_trap_secondary: "198.51.100.21"
-snmp_snmpmon_auth_key: "<demo_snmp_auth_key>"
-snmp_snmpmon_priv_key: "<demo_snmp_priv_key>"
-snmp_snmptraps_auth_key: "<demo_snmptraps_auth_key>"
-snmp_snmptraps_priv_key: "<demo_snmp_priv_key>"
-
-ntp_server: "198.51.100.30"
-ntp_key: "<demo_ntp_key>"
-syslog_server: "198.51.100.40"
-
-dns_primary: "198.51.100.53"
-dns_servers: ["198.51.100.53", "198.51.100.54"]
-dns_domain: "nxos-fabric.example.net"
 
 mgmt_vrf: "management"
 mgmt_source_interface: "mgmt0"
@@ -36,18 +179,11 @@ security:
   use_mgmt_acl_on_vty: false
   allow_outbound_ssh: false
   ssh_sources:
-    - subnet: "198.51.100.50/32"
-      comment: "Demo jump host"
-    - subnet: "198.51.100.51/32"
-      comment: "Demo automation runner"
+    - subnet: "10.10.10.0/24"
+      comment: "Management jump hosts"
+    - subnet: "10.20.20.0/24"
+      comment: "Automation runners"
   monitoring_sources:
-    - subnet: "198.51.100.60/32"
-      comment: "Demo monitoring collector"
-  vty_source_prefix: "198.51.100.0/24"
-
-smart_licensing:
-  transport: cslu
-  cslu_url: "https://licensing.demo.example.net/cslu/v1/pi/demo"
-  vrf: management
-  transport_host: "licensing.demo.example.net"
-  transport_ip: "198.51.100.70"
+    - subnet: "10.30.30.0/24"
+      comment: "Monitoring collectors"
+  vty_source_prefix: "10.10.10.0/24"

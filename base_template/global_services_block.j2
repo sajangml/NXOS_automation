@@ -1,0 +1,29 @@
+{% set gs = env.global_services | default({}) %}
+{% if gs %}
+! ---------- GLOBAL BASIC SERVICES ----------
+{% if gs.smart_licensing is defined and gs.smart_licensing.enabled %}
+license smart transport {{ gs.smart_licensing.transport }}
+license smart url cslu http://{{ gs.smart_licensing.server }}
+{% endif %}
+
+{% if gs.netflow is defined and gs.netflow.enabled %}
+flow exporter FABRIC-NETFLOW
+  destination {{ gs.netflow.exporter_ip }} use-vrf {{ env.mgmt_vrf | default('management') }}
+  transport udp {{ gs.netflow.exporter_port }}
+  source {{ gs.netflow.source_interface }}
+{% endif %}
+
+{% if gs.telemetry is defined and gs.telemetry.enabled %}
+feature telemetry
+telemetry
+{% for collector in gs.telemetry.gnmi_collectors %}
+  destination-profile GNMI-{{ loop.index }}
+    destination {{ collector.ip }} port {{ collector.port }} protocol gRPC encoding GPB
+{% endfor %}
+{% endif %}
+
+{% if gs.backup is defined and gs.backup.config_archive.enabled %}
+archive
+  path {{ gs.backup.config_archive.protocol }}://{{ gs.backup.config_archive.username }}@{{ gs.backup.config_archive.destination }}{{ gs.backup.config_archive.path }}
+{% endif %}
+{% endif %}

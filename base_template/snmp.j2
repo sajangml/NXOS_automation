@@ -20,7 +20,7 @@ snmp-server globalEnforcePriv
 ! ---------- SNMP USERS ----------
 {% if snmp.users is defined %}
 {% for user in snmp.users %}
-snmp-server user {{ user.name }} {{ user.role }} auth {{ user.auth }} {{ env['snmp_' + user.name + '_auth_key'] | default('***') }} priv {{ user.priv }} {{ env['snmp_' + user.name + '_priv_key'] | default('***') }} {{ user.secret_suffix | default('localizedV2key') }}
+snmp-server user {{ user.name }} {{ user.role }} auth {{ user.auth }} {{ user.auth_password | default(env['snmp_' + user.name + '_auth_key'] | default('***')) }} priv {{ user.priv }} {{ user.priv_password | default(env['snmp_' + user.name + '_priv_key'] | default('***')) }} {{ user.secret_suffix | default('localizedV2key') }}
 {% endfor %}
 {% endif %}
 

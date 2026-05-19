@@ -36,17 +36,24 @@ def mgmt_ip(subnet: str, offset: int) -> str:
     return f"{network.network_address + offset}/{network.prefixlen}"
 
 
+def subnet_ip(subnet: str, offset: int, prefixlen=32) -> str:
+    network = ip_network(subnet, strict=False)
+    return f"{network.network_address + offset}/{prefixlen}"
+
+
 def p2p(site_id: int, pod_id: int, link_index: int):
     base = link_index * 2
-    return f"10.{site_id}.{pod_id}.{base}/31", f"10.{site_id}.{pod_id}.{base + 1}/31"
+    return f"172.{16 + site_id}.{pod_id}.{base}/31", f"172.{16 + site_id}.{pod_id}.{base + 1}/31"
 
 
 def interpod_p2p(site_id: int, link_index: int):
     base = link_index * 2
-    return f"10.{site_id}.200.{base}/31", f"10.{site_id}.200.{base + 1}/31"
+    return f"172.{16 + site_id}.200.{base}/31", f"172.{16 + site_id}.200.{base + 1}/31"
 
 
-def build_topology(topology: dict):
+def build_topology(topology: dict, env_vars: dict | None = None):
+    env_vars = env_vars or {}
+    dc_overrides = env_vars.get("dc_overrides", {})
     devices = []
     interfaces = {}
     super_spines_per_pod = int(topology.get("super_spines_per_pod", 2))
@@ -57,6 +64,9 @@ def build_topology(topology: dict):
     for site in topology.get("sites", []):
         site_id = int(site["site_id"])
         site_name = site["name"].upper()
+        site_override = dc_overrides.get(site_name.lower(), {})
+        management_subnet = site_override.get("management_subnet", site["management_subnet"])
+        loopbacks = site_override.get("loopbacks", {})
         site_devices = []
         pods_by_id = {int(pod["pod_id"]): pod for pod in site.get("pods", [])}
         super_spines_by_pod = {}
@@ -83,10 +93,10 @@ def build_topology(topology: dict):
                     "pod_id": pod_id,
                     "type": "super_spine",
                     "role": "super_spine",
-                    "mgmt_ip": mgmt_ip(site["management_subnet"], pod_offset + 10 + ss_id),
-                    "mgmt_gw": mgmt_ip(site["management_subnet"], 1).split("/", 1)[0],
-                    "loopback0": f"10.{site_id}.{pod_id}.1{ss_id}/32",
-                    "router_id": f"10.{site_id}.{pod_id}.1{ss_id}",
+                    "mgmt_ip": mgmt_ip(management_subnet, pod_offset + 10 + ss_id),
+                    "mgmt_gw": mgmt_ip(management_subnet, 1).split("/", 1)[0],
+                    "loopback0": subnet_ip(loopbacks.get("super_spine", f"10.{site_id}.{pod_id}.10/24"), pod_offset + ss_id),
+                    "router_id": subnet_ip(loopbacks.get("super_spine", f"10.{site_id}.{pod_id}.10/24"), pod_offset + ss_id).split("/", 1)[0],
                     "bgp_asn": spine_asn,
                     "super_spine_id": ss_id,
                     "stp_priority": 4096,
@@ -108,10 +118,10 @@ def build_topology(topology: dict):
                     "pod_id": pod_id,
                     "type": "spine",
                     "role": "spine",
-                    "mgmt_ip": mgmt_ip(site["management_subnet"], pod_offset + 20 + spine_id),
-                    "mgmt_gw": mgmt_ip(site["management_subnet"], 1).split("/", 1)[0],
-                    "loopback0": f"10.{site_id}.{pod_id}.2{spine_id}/32",
-                    "router_id": f"10.{site_id}.{pod_id}.2{spine_id}",
+                    "mgmt_ip": mgmt_ip(management_subnet, pod_offset + 20 + spine_id),
+                    "mgmt_gw": mgmt_ip(management_subnet, 1).split("/", 1)[0],
+                    "loopback0": subnet_ip(loopbacks.get("spine", f"10.{site_id}.{pod_id}.20/24"), pod_offset + spine_id),
+                    "router_id": subnet_ip(loopbacks.get("spine", f"10.{site_id}.{pod_id}.20/24"), pod_offset + spine_id).split("/", 1)[0],
                     "bgp_asn": spine_asn,
                     "spine_id": spine_id,
                     "stp_priority": 8192,
@@ -137,11 +147,11 @@ def build_topology(topology: dict):
                     "type": "leaf",
                     "role": "border_leaf" if is_border else "leaf",
                     "border_gateway": is_border,
-                    "mgmt_ip": mgmt_ip(site["management_subnet"], pod_offset + 30 + leaf_id),
-                    "mgmt_gw": mgmt_ip(site["management_subnet"], 1).split("/", 1)[0],
-                    "loopback0": f"10.{site_id}.{pod_id}.3{leaf_id}/32",
+                    "mgmt_ip": mgmt_ip(management_subnet, pod_offset + 30 + leaf_id),
+                    "mgmt_gw": mgmt_ip(management_subnet, 1).split("/", 1)[0],
+                    "loopback0": subnet_ip(loopbacks.get("leaf", f"10.{site_id}.{pod_id}.30/24"), pod_offset + leaf_id),
                     "loopback1": f"10.{site_id}.{pod_id}.13{leaf_id}/32",
-                    "router_id": f"10.{site_id}.{pod_id}.3{leaf_id}",
+                    "router_id": subnet_ip(loopbacks.get("leaf", f"10.{site_id}.{pod_id}.30/24"), pod_offset + leaf_id).split("/", 1)[0],
                     "bgp_asn": leaf_asn,
                     "vtep_id": (site_id * 1000) + (pod_id * 100) + leaf_id,
                     "leaf_id": leaf_id,
@@ -409,7 +419,7 @@ env_vars = load_yaml(env_path / "env_vars.yaml")
 topology = load_yaml(env_path / "topology.yaml")
 
 if topology:
-    device_data, generated_interfaces = build_topology(topology)
+    device_data, generated_interfaces = build_topology(topology, env_vars)
 else:
     device_data = load_yaml(env_path / "device_vars.yaml")
     generated_interfaces = {}

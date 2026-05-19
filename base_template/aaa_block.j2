@@ -32,6 +32,13 @@ aaa group server radius {{ radius.group_name }}
 ! ---------- AAA AUTHENTICATION / ACCOUNTING ----------
 aaa authentication login default group {{ aaa.authentication.login_default }}
 aaa authentication login console group {{ aaa.authentication.login_console }}
+{% if aaa.authentication.enable_default is defined %}
+aaa authentication enable default group {{ aaa.authentication.enable_default }}
+{% endif %}
+{% if aaa.authorization is defined %}
+aaa authorization exec default group {{ aaa.authorization.exec_default }}
+aaa authorization commands default group {{ aaa.authorization.commands_default }}
+{% endif %}
 aaa accounting default group {{ aaa.accounting_default }}
 
 {% if aaa.on_success_log -%}

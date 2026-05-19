@@ -19,6 +19,11 @@ vrf context {{ mgmt.vrf | default(env.mgmt_vrf | default('management')) }}
 
 {% if dns_servers is defined and dns_servers %}
 ip name-server {{ dns_servers | join(' ') }} use-vrf {{ mgmt.vrf | default(env.mgmt_vrf | default('management')) }}
+{% elif env.global_services.dns is defined %}
+ip name-server {{ env.global_services.dns.servers.primary }} {{ env.global_services.dns.servers.secondary }} use-vrf {{ env.global_services.dns.vrf | default(mgmt.vrf | default(env.mgmt_vrf | default('management'))) }}
+{% for domain in env.global_services.dns.search_domains | default([]) %}
+ip domain-list {{ domain }}
+{% endfor %}
 {% elif dns_primary is defined and dns_primary %}
 ip name-server {{ dns_primary }}{% if dns_secondary is defined and dns_secondary %} {{ dns_secondary }}{% endif %} use-vrf {{ mgmt.vrf | default(env.mgmt_vrf | default('management')) }}
 {% endif %}

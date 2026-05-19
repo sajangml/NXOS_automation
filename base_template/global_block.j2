@@ -6,11 +6,20 @@ feature {{ feature }}
 fabric forwarding anycast-gateway-mac {{ env.fabric.overlay_anycast_gateway_mac }}
 
 ! ---- Domain & SSH ----
-ip domain-name {{ dns_domain | default(system.domain_name) }}
+ip domain-name {{ dns_domain | default(system.domain_name, true) }}
+{% if system.timezone is defined %}
+clock timezone {{ system.timezone }}
+{% endif %}
+{% if system.disable_ip_domain_lookup | default(false) %}
+no ip domain-lookup
+{% else %}
 ip domain-lookup
+{% endif %}
 feature ssh
 ssh login-attempts {{ system.ssh_login_attempts | default(5) }}
-ssh source-interface {{ env.mgmt_source_interface | default('mgmt0') }}
+ssh source-interface {{ env.global_services.ssh.source_interface | default(env.mgmt_source_interface | default('mgmt0')) }}
+ssh key rsa 2048
+ip ssh version {{ env.global_services.ssh.version | default(2) }}
 
 system memory-threshold minor {{ system.memory_thresholds.minor | default(96) }}
 system memory-threshold severe {{ system.memory_thresholds.severe | default(97) }}
