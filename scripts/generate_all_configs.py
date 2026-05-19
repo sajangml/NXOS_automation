@@ -240,7 +240,7 @@ builds_root = base_dir / "output_builds"
 output_dir = builds_root / env_name.upper()
 output_dir.mkdir(parents=True, exist_ok=True)
 
-for old_config in output_dir.glob("*.cfg"):
+for old_config in output_dir.rglob("*.cfg"):
     old_config.unlink()
 
 print(f"\nOutput directory: {output_dir}")
@@ -265,8 +265,10 @@ for device in device_data.get("devices", []):
         **common_data,
     )
 
-    outfile = output_dir / f"{hostname}.cfg"
+    site_output_dir = output_dir / device.get("site", "UNASSIGNED").upper()
+    site_output_dir.mkdir(parents=True, exist_ok=True)
+    outfile = site_output_dir / f"{hostname}.cfg"
     outfile.write_text(rendered, encoding="utf-8")
-    print(f"Saved: {outfile.name}")
+    print(f"Saved: {device.get('site', 'UNASSIGNED').upper()}\\{outfile.name}")
 
 print(f"\nAll configs generated successfully for {env_name.upper()} in {output_dir}")

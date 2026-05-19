@@ -78,7 +78,9 @@ environments/spineleaf/topology.yaml
 environments/spineleaf/           Source-of-truth YAML for the demo fabric
 NXOS_AUTOMATION/                  Inventory, helpers, collection, sanity, and diff modules
 scripts/generate_all_configs.py
-output_builds/SPINELEAF/          Generated NX-OS configs
+output_builds/SPINELEAF/DC1/      Generated DC1 NX-OS configs
+output_builds/SPINELEAF/DC2/      Generated DC2 NX-OS configs
+output_builds/SPINELEAF/DC3/      Generated DC3 NX-OS configs
 ```
 
 ## Quick Start
@@ -90,4 +92,4 @@ pip install -r requirements.txt
 python .\scripts\generate_all_configs.py spineleaf
 ```
 
-Generated configs are written to `output_builds/SPINELEAF/`. The same run also refreshes `NXOS_AUTOMATION/inventory/hosts.yaml` from `topology.yaml`.
+Generated configs are written under `output_builds/SPINELEAF/DC1`, `DC2`, and `DC3`. The same run also refreshes `NXOS_AUTOMATION/inventory/hosts.yaml` from `topology.yaml`.
