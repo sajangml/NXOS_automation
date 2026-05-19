@@ -391,5 +391,3 @@ python -m venv .venv
 pip install -r requirements.txt
 python .\scripts\generate_all_configs.py spineleaf
 ```
-
-The same run also refreshes `NXOS_AUTOMATION/inventory/hosts.yaml` from `topology.yaml`.

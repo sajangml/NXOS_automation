@@ -405,29 +405,6 @@ def build_topology(topology: dict, env_vars: dict | None = None):
     return {"devices": devices}, interfaces
 
 
-def write_inventory_hosts(path: Path, devices: list[dict], env_name: str):
-    hosts = {}
-    for device in devices:
-        group = device["role"]
-        hosts[device["hostname"]] = {
-            "hostname": str(device["mgmt_ip"]).split("/", 1)[0],
-            "platform": "nxos",
-            "groups": [group],
-            "data": {
-                "env": env_name,
-                "role": device["role"],
-                "site": device["site"],
-                "pod": device["pod"],
-                "fabric_id": device["fabric_id"],
-                "border_gateway": device.get("border_gateway", False),
-                "platform_model": device.get("platform"),
-                "asic": device.get("asic"),
-                "rack_role": device.get("rack_role"),
-            },
-        }
-    path.write_text(yaml.safe_dump(hosts, sort_keys=False), encoding="utf-8")
-
-
 if len(sys.argv) < 2:
     print("Usage: python scripts/generate_all_configs.py <environment>")
     sys.exit(1)
@@ -453,12 +430,6 @@ for device in device_data.get("devices", []):
 common_data = render_yaml_with_env(env_path / "vars_common_template.yaml", env_vars)
 interfaces_data = load_yaml(env_path / "interfaces.yaml")
 interfaces_data.update(generated_interfaces)
-
-write_inventory_hosts(
-    base_dir / "NXOS_AUTOMATION" / "inventory" / "hosts.yaml",
-    device_data.get("devices", []),
-    env_name,
-)
 
 template_dir = base_dir / "base_template"
 jinja_env = Environment(
