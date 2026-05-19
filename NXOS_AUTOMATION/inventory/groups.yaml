@@ -10,16 +10,32 @@ spineleaf:
     environment: SPINELEAF
     baseline_path: "output_builds/SPINELEAF/"
 
+super_spine:
+  groups: [spineleaf]
+  data:
+    role: super_spine
+    topology_tier: super_spine
+    expected_spine_count: 4
+
 spine:
   groups: [spineleaf]
   data:
     role: spine
     topology_tier: spine
     expected_leaf_count: 8
+    expected_super_spine_count: 2
 
 leaf:
   groups: [spineleaf]
   data:
     role: leaf
     topology_tier: leaf
-    expected_spine_count: 2
+    expected_spine_count: 4
+
+border_leaf:
+  groups: [leaf]
+  data:
+    role: border_leaf
+    topology_tier: leaf
+    expected_spine_count: 4
+    expected_xr_count: 2

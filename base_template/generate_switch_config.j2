@@ -3,7 +3,11 @@
 ! Hostname: {{ device.hostname }}
 ! Fabric ID: {{ device.fabric_id }}
 ! Role: {{ device.role | upper }}
+! Site: {{ device.site }} / {{ device.pod }}
 ! Management IP: {{ device.mgmt_ip }}
+! Design Note: {{ device.design_note | default('NX-OS fabric device') }}
+! Corrected Rule: Super-spines do not connect directly to XR/core.
+! Border Rule: Leaf 7 and Leaf 8 provide XR/core handoff using Eth1/53-Eth1/54.
 ! ======================================================
 
 hostname {{ device.hostname }}

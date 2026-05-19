@@ -1,6 +1,10 @@
-fabric_name: NXOS-MULTISITE-FABRIC
-spines_per_pod: 2
+fabric_name: NXOS-MULTISITE-SUPERSPINE-FABRIC
+super_spines_per_pod: 2
+spines_per_pod: 4
 leaves_per_pod: 8
+servers_per_leaf: 10
+xr_routers_per_site: 2
+border_leaf_ids: [7, 8]
 sites:
   - name: DC1
     site_id: 1

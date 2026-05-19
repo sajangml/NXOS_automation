@@ -6,7 +6,7 @@ spanning-tree port type edge default
 {% if stp.bpduguard_default %}
 spanning-tree port type edge bpduguard default
 {% endif %}
-{% if device.role | lower == 'spine' %}
+{% if device.role | lower in ['spine', 'super_spine'] %}
 spanning-tree vlan {{ env.fabric.vlan_range }} priority {{ stp.priorities.spine }}
 {% else %}
 spanning-tree vlan {{ env.fabric.vlan_range }} priority {{ device.stp_priority | default(stp.priorities.leaf) }}

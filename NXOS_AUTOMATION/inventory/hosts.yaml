@@ -1,203 +1,29 @@
-dc1-pod1-leaf01:
-  hostname: 192.0.2.21
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC1
-    pod: pod1
-    fabric_id: DC1-P1-LEF01
-dc1-pod1-leaf02:
-  hostname: 192.0.2.22
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC1
-    pod: pod1
-    fabric_id: DC1-P1-LEF02
-dc1-pod1-leaf03:
-  hostname: 192.0.2.23
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC1
-    pod: pod1
-    fabric_id: DC1-P1-LEF03
-dc1-pod1-leaf04:
-  hostname: 192.0.2.24
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC1
-    pod: pod1
-    fabric_id: DC1-P1-LEF04
-dc1-pod1-leaf05:
-  hostname: 192.0.2.25
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC1
-    pod: pod1
-    fabric_id: DC1-P1-LEF05
-dc1-pod1-leaf06:
-  hostname: 192.0.2.26
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC1
-    pod: pod1
-    fabric_id: DC1-P1-LEF06
-dc1-pod1-leaf07:
-  hostname: 192.0.2.27
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC1
-    pod: pod1
-    fabric_id: DC1-P1-LEF07
-dc1-pod1-leaf08:
-  hostname: 192.0.2.28
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC1
-    pod: pod1
-    fabric_id: DC1-P1-LEF08
-dc1-pod1-spine01:
+DC1-P1-SS01:
   hostname: 192.0.2.11
   platform: nxos
   groups:
-  - spine
+  - super_spine
   data:
     env: spineleaf
-    role: spine
+    role: super_spine
     site: DC1
     pod: pod1
-    fabric_id: DC1-P1-SPN01
-dc1-pod1-spine02:
+    fabric_id: DC1-P1-SS01
+    border_gateway: false
+DC1-P1-SS02:
   hostname: 192.0.2.12
   platform: nxos
   groups:
-  - spine
+  - super_spine
   data:
     env: spineleaf
-    role: spine
+    role: super_spine
     site: DC1
     pod: pod1
-    fabric_id: DC1-P1-SPN02
-dc1-pod2-leaf01:
-  hostname: 192.0.2.51
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC1
-    pod: pod2
-    fabric_id: DC1-P2-LEF01
-dc1-pod2-leaf02:
-  hostname: 192.0.2.52
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC1
-    pod: pod2
-    fabric_id: DC1-P2-LEF02
-dc1-pod2-leaf03:
-  hostname: 192.0.2.53
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC1
-    pod: pod2
-    fabric_id: DC1-P2-LEF03
-dc1-pod2-leaf04:
-  hostname: 192.0.2.54
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC1
-    pod: pod2
-    fabric_id: DC1-P2-LEF04
-dc1-pod2-leaf05:
-  hostname: 192.0.2.55
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC1
-    pod: pod2
-    fabric_id: DC1-P2-LEF05
-dc1-pod2-leaf06:
-  hostname: 192.0.2.56
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC1
-    pod: pod2
-    fabric_id: DC1-P2-LEF06
-dc1-pod2-leaf07:
-  hostname: 192.0.2.57
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC1
-    pod: pod2
-    fabric_id: DC1-P2-LEF07
-dc1-pod2-leaf08:
-  hostname: 192.0.2.58
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC1
-    pod: pod2
-    fabric_id: DC1-P2-LEF08
-dc1-pod2-spine01:
-  hostname: 192.0.2.41
+    fabric_id: DC1-P1-SS02
+    border_gateway: false
+DC1-P1-SP01:
+  hostname: 192.0.2.21
   platform: nxos
   groups:
   - spine
@@ -205,10 +31,167 @@ dc1-pod2-spine01:
     env: spineleaf
     role: spine
     site: DC1
+    pod: pod1
+    fabric_id: DC1-P1-SP01
+    border_gateway: false
+DC1-P1-SP02:
+  hostname: 192.0.2.22
+  platform: nxos
+  groups:
+  - spine
+  data:
+    env: spineleaf
+    role: spine
+    site: DC1
+    pod: pod1
+    fabric_id: DC1-P1-SP02
+    border_gateway: false
+DC1-P1-SP03:
+  hostname: 192.0.2.23
+  platform: nxos
+  groups:
+  - spine
+  data:
+    env: spineleaf
+    role: spine
+    site: DC1
+    pod: pod1
+    fabric_id: DC1-P1-SP03
+    border_gateway: false
+DC1-P1-SP04:
+  hostname: 192.0.2.24
+  platform: nxos
+  groups:
+  - spine
+  data:
+    env: spineleaf
+    role: spine
+    site: DC1
+    pod: pod1
+    fabric_id: DC1-P1-SP04
+    border_gateway: false
+DC1-P1-LF01:
+  hostname: 192.0.2.31
+  platform: nxos
+  groups:
+  - leaf
+  data:
+    env: spineleaf
+    role: leaf
+    site: DC1
+    pod: pod1
+    fabric_id: DC1-P1-LF01
+    border_gateway: false
+DC1-P1-LF02:
+  hostname: 192.0.2.32
+  platform: nxos
+  groups:
+  - leaf
+  data:
+    env: spineleaf
+    role: leaf
+    site: DC1
+    pod: pod1
+    fabric_id: DC1-P1-LF02
+    border_gateway: false
+DC1-P1-LF03:
+  hostname: 192.0.2.33
+  platform: nxos
+  groups:
+  - leaf
+  data:
+    env: spineleaf
+    role: leaf
+    site: DC1
+    pod: pod1
+    fabric_id: DC1-P1-LF03
+    border_gateway: false
+DC1-P1-LF04:
+  hostname: 192.0.2.34
+  platform: nxos
+  groups:
+  - leaf
+  data:
+    env: spineleaf
+    role: leaf
+    site: DC1
+    pod: pod1
+    fabric_id: DC1-P1-LF04
+    border_gateway: false
+DC1-P1-LF05:
+  hostname: 192.0.2.35
+  platform: nxos
+  groups:
+  - leaf
+  data:
+    env: spineleaf
+    role: leaf
+    site: DC1
+    pod: pod1
+    fabric_id: DC1-P1-LF05
+    border_gateway: false
+DC1-P1-LF06:
+  hostname: 192.0.2.36
+  platform: nxos
+  groups:
+  - leaf
+  data:
+    env: spineleaf
+    role: leaf
+    site: DC1
+    pod: pod1
+    fabric_id: DC1-P1-LF06
+    border_gateway: false
+DC1-P1-LF07:
+  hostname: 192.0.2.37
+  platform: nxos
+  groups:
+  - border_leaf
+  data:
+    env: spineleaf
+    role: border_leaf
+    site: DC1
+    pod: pod1
+    fabric_id: DC1-P1-LF07
+    border_gateway: true
+DC1-P1-LF08:
+  hostname: 192.0.2.38
+  platform: nxos
+  groups:
+  - border_leaf
+  data:
+    env: spineleaf
+    role: border_leaf
+    site: DC1
+    pod: pod1
+    fabric_id: DC1-P1-LF08
+    border_gateway: true
+DC1-P2-SS01:
+  hostname: 192.0.2.111
+  platform: nxos
+  groups:
+  - super_spine
+  data:
+    env: spineleaf
+    role: super_spine
+    site: DC1
     pod: pod2
-    fabric_id: DC1-P2-SPN01
-dc1-pod2-spine02:
-  hostname: 192.0.2.42
+    fabric_id: DC1-P2-SS01
+    border_gateway: false
+DC1-P2-SS02:
+  hostname: 192.0.2.112
+  platform: nxos
+  groups:
+  - super_spine
+  data:
+    env: spineleaf
+    role: super_spine
+    site: DC1
+    pod: pod2
+    fabric_id: DC1-P2-SS02
+    border_gateway: false
+DC1-P2-SP01:
+  hostname: 192.0.2.121
   platform: nxos
   groups:
   - spine
@@ -217,207 +200,166 @@ dc1-pod2-spine02:
     role: spine
     site: DC1
     pod: pod2
-    fabric_id: DC1-P2-SPN02
-dc2-pod1-leaf01:
-  hostname: 198.51.100.21
+    fabric_id: DC1-P2-SP01
+    border_gateway: false
+DC1-P2-SP02:
+  hostname: 192.0.2.122
+  platform: nxos
+  groups:
+  - spine
+  data:
+    env: spineleaf
+    role: spine
+    site: DC1
+    pod: pod2
+    fabric_id: DC1-P2-SP02
+    border_gateway: false
+DC1-P2-SP03:
+  hostname: 192.0.2.123
+  platform: nxos
+  groups:
+  - spine
+  data:
+    env: spineleaf
+    role: spine
+    site: DC1
+    pod: pod2
+    fabric_id: DC1-P2-SP03
+    border_gateway: false
+DC1-P2-SP04:
+  hostname: 192.0.2.124
+  platform: nxos
+  groups:
+  - spine
+  data:
+    env: spineleaf
+    role: spine
+    site: DC1
+    pod: pod2
+    fabric_id: DC1-P2-SP04
+    border_gateway: false
+DC1-P2-LF01:
+  hostname: 192.0.2.131
   platform: nxos
   groups:
   - leaf
   data:
     env: spineleaf
     role: leaf
-    site: DC2
-    pod: pod1
-    fabric_id: DC2-P1-LEF01
-dc2-pod1-leaf02:
-  hostname: 198.51.100.22
+    site: DC1
+    pod: pod2
+    fabric_id: DC1-P2-LF01
+    border_gateway: false
+DC1-P2-LF02:
+  hostname: 192.0.2.132
   platform: nxos
   groups:
   - leaf
   data:
     env: spineleaf
     role: leaf
-    site: DC2
-    pod: pod1
-    fabric_id: DC2-P1-LEF02
-dc2-pod1-leaf03:
-  hostname: 198.51.100.23
+    site: DC1
+    pod: pod2
+    fabric_id: DC1-P2-LF02
+    border_gateway: false
+DC1-P2-LF03:
+  hostname: 192.0.2.133
   platform: nxos
   groups:
   - leaf
   data:
     env: spineleaf
     role: leaf
-    site: DC2
-    pod: pod1
-    fabric_id: DC2-P1-LEF03
-dc2-pod1-leaf04:
-  hostname: 198.51.100.24
+    site: DC1
+    pod: pod2
+    fabric_id: DC1-P2-LF03
+    border_gateway: false
+DC1-P2-LF04:
+  hostname: 192.0.2.134
   platform: nxos
   groups:
   - leaf
   data:
     env: spineleaf
     role: leaf
-    site: DC2
-    pod: pod1
-    fabric_id: DC2-P1-LEF04
-dc2-pod1-leaf05:
-  hostname: 198.51.100.25
+    site: DC1
+    pod: pod2
+    fabric_id: DC1-P2-LF04
+    border_gateway: false
+DC1-P2-LF05:
+  hostname: 192.0.2.135
   platform: nxos
   groups:
   - leaf
   data:
     env: spineleaf
     role: leaf
-    site: DC2
-    pod: pod1
-    fabric_id: DC2-P1-LEF05
-dc2-pod1-leaf06:
-  hostname: 198.51.100.26
+    site: DC1
+    pod: pod2
+    fabric_id: DC1-P2-LF05
+    border_gateway: false
+DC1-P2-LF06:
+  hostname: 192.0.2.136
   platform: nxos
   groups:
   - leaf
   data:
     env: spineleaf
     role: leaf
-    site: DC2
-    pod: pod1
-    fabric_id: DC2-P1-LEF06
-dc2-pod1-leaf07:
-  hostname: 198.51.100.27
+    site: DC1
+    pod: pod2
+    fabric_id: DC1-P2-LF06
+    border_gateway: false
+DC1-P2-LF07:
+  hostname: 192.0.2.137
   platform: nxos
   groups:
-  - leaf
+  - border_leaf
   data:
     env: spineleaf
-    role: leaf
-    site: DC2
-    pod: pod1
-    fabric_id: DC2-P1-LEF07
-dc2-pod1-leaf08:
-  hostname: 198.51.100.28
+    role: border_leaf
+    site: DC1
+    pod: pod2
+    fabric_id: DC1-P2-LF07
+    border_gateway: true
+DC1-P2-LF08:
+  hostname: 192.0.2.138
   platform: nxos
   groups:
-  - leaf
+  - border_leaf
   data:
     env: spineleaf
-    role: leaf
-    site: DC2
-    pod: pod1
-    fabric_id: DC2-P1-LEF08
-dc2-pod1-spine01:
+    role: border_leaf
+    site: DC1
+    pod: pod2
+    fabric_id: DC1-P2-LF08
+    border_gateway: true
+DC2-P1-SS01:
   hostname: 198.51.100.11
   platform: nxos
   groups:
-  - spine
+  - super_spine
   data:
     env: spineleaf
-    role: spine
+    role: super_spine
     site: DC2
     pod: pod1
-    fabric_id: DC2-P1-SPN01
-dc2-pod1-spine02:
+    fabric_id: DC2-P1-SS01
+    border_gateway: false
+DC2-P1-SS02:
   hostname: 198.51.100.12
   platform: nxos
   groups:
-  - spine
+  - super_spine
   data:
     env: spineleaf
-    role: spine
+    role: super_spine
     site: DC2
     pod: pod1
-    fabric_id: DC2-P1-SPN02
-dc2-pod2-leaf01:
-  hostname: 198.51.100.51
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC2
-    pod: pod2
-    fabric_id: DC2-P2-LEF01
-dc2-pod2-leaf02:
-  hostname: 198.51.100.52
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC2
-    pod: pod2
-    fabric_id: DC2-P2-LEF02
-dc2-pod2-leaf03:
-  hostname: 198.51.100.53
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC2
-    pod: pod2
-    fabric_id: DC2-P2-LEF03
-dc2-pod2-leaf04:
-  hostname: 198.51.100.54
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC2
-    pod: pod2
-    fabric_id: DC2-P2-LEF04
-dc2-pod2-leaf05:
-  hostname: 198.51.100.55
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC2
-    pod: pod2
-    fabric_id: DC2-P2-LEF05
-dc2-pod2-leaf06:
-  hostname: 198.51.100.56
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC2
-    pod: pod2
-    fabric_id: DC2-P2-LEF06
-dc2-pod2-leaf07:
-  hostname: 198.51.100.57
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC2
-    pod: pod2
-    fabric_id: DC2-P2-LEF07
-dc2-pod2-leaf08:
-  hostname: 198.51.100.58
-  platform: nxos
-  groups:
-  - leaf
-  data:
-    env: spineleaf
-    role: leaf
-    site: DC2
-    pod: pod2
-    fabric_id: DC2-P2-LEF08
-dc2-pod2-spine01:
-  hostname: 198.51.100.41
+    fabric_id: DC2-P1-SS02
+    border_gateway: false
+DC2-P1-SP01:
+  hostname: 198.51.100.21
   platform: nxos
   groups:
   - spine
@@ -425,10 +367,167 @@ dc2-pod2-spine01:
     env: spineleaf
     role: spine
     site: DC2
+    pod: pod1
+    fabric_id: DC2-P1-SP01
+    border_gateway: false
+DC2-P1-SP02:
+  hostname: 198.51.100.22
+  platform: nxos
+  groups:
+  - spine
+  data:
+    env: spineleaf
+    role: spine
+    site: DC2
+    pod: pod1
+    fabric_id: DC2-P1-SP02
+    border_gateway: false
+DC2-P1-SP03:
+  hostname: 198.51.100.23
+  platform: nxos
+  groups:
+  - spine
+  data:
+    env: spineleaf
+    role: spine
+    site: DC2
+    pod: pod1
+    fabric_id: DC2-P1-SP03
+    border_gateway: false
+DC2-P1-SP04:
+  hostname: 198.51.100.24
+  platform: nxos
+  groups:
+  - spine
+  data:
+    env: spineleaf
+    role: spine
+    site: DC2
+    pod: pod1
+    fabric_id: DC2-P1-SP04
+    border_gateway: false
+DC2-P1-LF01:
+  hostname: 198.51.100.31
+  platform: nxos
+  groups:
+  - leaf
+  data:
+    env: spineleaf
+    role: leaf
+    site: DC2
+    pod: pod1
+    fabric_id: DC2-P1-LF01
+    border_gateway: false
+DC2-P1-LF02:
+  hostname: 198.51.100.32
+  platform: nxos
+  groups:
+  - leaf
+  data:
+    env: spineleaf
+    role: leaf
+    site: DC2
+    pod: pod1
+    fabric_id: DC2-P1-LF02
+    border_gateway: false
+DC2-P1-LF03:
+  hostname: 198.51.100.33
+  platform: nxos
+  groups:
+  - leaf
+  data:
+    env: spineleaf
+    role: leaf
+    site: DC2
+    pod: pod1
+    fabric_id: DC2-P1-LF03
+    border_gateway: false
+DC2-P1-LF04:
+  hostname: 198.51.100.34
+  platform: nxos
+  groups:
+  - leaf
+  data:
+    env: spineleaf
+    role: leaf
+    site: DC2
+    pod: pod1
+    fabric_id: DC2-P1-LF04
+    border_gateway: false
+DC2-P1-LF05:
+  hostname: 198.51.100.35
+  platform: nxos
+  groups:
+  - leaf
+  data:
+    env: spineleaf
+    role: leaf
+    site: DC2
+    pod: pod1
+    fabric_id: DC2-P1-LF05
+    border_gateway: false
+DC2-P1-LF06:
+  hostname: 198.51.100.36
+  platform: nxos
+  groups:
+  - leaf
+  data:
+    env: spineleaf
+    role: leaf
+    site: DC2
+    pod: pod1
+    fabric_id: DC2-P1-LF06
+    border_gateway: false
+DC2-P1-LF07:
+  hostname: 198.51.100.37
+  platform: nxos
+  groups:
+  - border_leaf
+  data:
+    env: spineleaf
+    role: border_leaf
+    site: DC2
+    pod: pod1
+    fabric_id: DC2-P1-LF07
+    border_gateway: true
+DC2-P1-LF08:
+  hostname: 198.51.100.38
+  platform: nxos
+  groups:
+  - border_leaf
+  data:
+    env: spineleaf
+    role: border_leaf
+    site: DC2
+    pod: pod1
+    fabric_id: DC2-P1-LF08
+    border_gateway: true
+DC2-P2-SS01:
+  hostname: 198.51.100.111
+  platform: nxos
+  groups:
+  - super_spine
+  data:
+    env: spineleaf
+    role: super_spine
+    site: DC2
     pod: pod2
-    fabric_id: DC2-P2-SPN01
-dc2-pod2-spine02:
-  hostname: 198.51.100.42
+    fabric_id: DC2-P2-SS01
+    border_gateway: false
+DC2-P2-SS02:
+  hostname: 198.51.100.112
+  platform: nxos
+  groups:
+  - super_spine
+  data:
+    env: spineleaf
+    role: super_spine
+    site: DC2
+    pod: pod2
+    fabric_id: DC2-P2-SS02
+    border_gateway: false
+DC2-P2-SP01:
+  hostname: 198.51.100.121
   platform: nxos
   groups:
   - spine
@@ -437,119 +536,214 @@ dc2-pod2-spine02:
     role: spine
     site: DC2
     pod: pod2
-    fabric_id: DC2-P2-SPN02
-dc3-pod1-leaf01:
-  hostname: 203.0.113.21
+    fabric_id: DC2-P2-SP01
+    border_gateway: false
+DC2-P2-SP02:
+  hostname: 198.51.100.122
+  platform: nxos
+  groups:
+  - spine
+  data:
+    env: spineleaf
+    role: spine
+    site: DC2
+    pod: pod2
+    fabric_id: DC2-P2-SP02
+    border_gateway: false
+DC2-P2-SP03:
+  hostname: 198.51.100.123
+  platform: nxos
+  groups:
+  - spine
+  data:
+    env: spineleaf
+    role: spine
+    site: DC2
+    pod: pod2
+    fabric_id: DC2-P2-SP03
+    border_gateway: false
+DC2-P2-SP04:
+  hostname: 198.51.100.124
+  platform: nxos
+  groups:
+  - spine
+  data:
+    env: spineleaf
+    role: spine
+    site: DC2
+    pod: pod2
+    fabric_id: DC2-P2-SP04
+    border_gateway: false
+DC2-P2-LF01:
+  hostname: 198.51.100.131
   platform: nxos
   groups:
   - leaf
   data:
     env: spineleaf
     role: leaf
-    site: DC3
-    pod: pod1
-    fabric_id: DC3-P1-LEF01
-dc3-pod1-leaf02:
-  hostname: 203.0.113.22
+    site: DC2
+    pod: pod2
+    fabric_id: DC2-P2-LF01
+    border_gateway: false
+DC2-P2-LF02:
+  hostname: 198.51.100.132
   platform: nxos
   groups:
   - leaf
   data:
     env: spineleaf
     role: leaf
-    site: DC3
-    pod: pod1
-    fabric_id: DC3-P1-LEF02
-dc3-pod1-leaf03:
-  hostname: 203.0.113.23
+    site: DC2
+    pod: pod2
+    fabric_id: DC2-P2-LF02
+    border_gateway: false
+DC2-P2-LF03:
+  hostname: 198.51.100.133
   platform: nxos
   groups:
   - leaf
   data:
     env: spineleaf
     role: leaf
-    site: DC3
-    pod: pod1
-    fabric_id: DC3-P1-LEF03
-dc3-pod1-leaf04:
-  hostname: 203.0.113.24
+    site: DC2
+    pod: pod2
+    fabric_id: DC2-P2-LF03
+    border_gateway: false
+DC2-P2-LF04:
+  hostname: 198.51.100.134
   platform: nxos
   groups:
   - leaf
   data:
     env: spineleaf
     role: leaf
-    site: DC3
-    pod: pod1
-    fabric_id: DC3-P1-LEF04
-dc3-pod1-leaf05:
-  hostname: 203.0.113.25
+    site: DC2
+    pod: pod2
+    fabric_id: DC2-P2-LF04
+    border_gateway: false
+DC2-P2-LF05:
+  hostname: 198.51.100.135
   platform: nxos
   groups:
   - leaf
   data:
     env: spineleaf
     role: leaf
-    site: DC3
-    pod: pod1
-    fabric_id: DC3-P1-LEF05
-dc3-pod1-leaf06:
-  hostname: 203.0.113.26
+    site: DC2
+    pod: pod2
+    fabric_id: DC2-P2-LF05
+    border_gateway: false
+DC2-P2-LF06:
+  hostname: 198.51.100.136
   platform: nxos
   groups:
   - leaf
   data:
     env: spineleaf
     role: leaf
-    site: DC3
-    pod: pod1
-    fabric_id: DC3-P1-LEF06
-dc3-pod1-leaf07:
-  hostname: 203.0.113.27
+    site: DC2
+    pod: pod2
+    fabric_id: DC2-P2-LF06
+    border_gateway: false
+DC2-P2-LF07:
+  hostname: 198.51.100.137
   platform: nxos
   groups:
-  - leaf
+  - border_leaf
   data:
     env: spineleaf
-    role: leaf
-    site: DC3
-    pod: pod1
-    fabric_id: DC3-P1-LEF07
-dc3-pod1-leaf08:
-  hostname: 203.0.113.28
+    role: border_leaf
+    site: DC2
+    pod: pod2
+    fabric_id: DC2-P2-LF07
+    border_gateway: true
+DC2-P2-LF08:
+  hostname: 198.51.100.138
   platform: nxos
   groups:
-  - leaf
+  - border_leaf
   data:
     env: spineleaf
-    role: leaf
-    site: DC3
-    pod: pod1
-    fabric_id: DC3-P1-LEF08
-dc3-pod1-spine01:
+    role: border_leaf
+    site: DC2
+    pod: pod2
+    fabric_id: DC2-P2-LF08
+    border_gateway: true
+DC3-P1-SS01:
   hostname: 203.0.113.11
   platform: nxos
   groups:
-  - spine
+  - super_spine
   data:
     env: spineleaf
-    role: spine
+    role: super_spine
     site: DC3
     pod: pod1
-    fabric_id: DC3-P1-SPN01
-dc3-pod1-spine02:
+    fabric_id: DC3-P1-SS01
+    border_gateway: false
+DC3-P1-SS02:
   hostname: 203.0.113.12
   platform: nxos
   groups:
+  - super_spine
+  data:
+    env: spineleaf
+    role: super_spine
+    site: DC3
+    pod: pod1
+    fabric_id: DC3-P1-SS02
+    border_gateway: false
+DC3-P1-SP01:
+  hostname: 203.0.113.21
+  platform: nxos
+  groups:
   - spine
   data:
     env: spineleaf
     role: spine
     site: DC3
     pod: pod1
-    fabric_id: DC3-P1-SPN02
-dc3-pod2-leaf01:
-  hostname: 203.0.113.51
+    fabric_id: DC3-P1-SP01
+    border_gateway: false
+DC3-P1-SP02:
+  hostname: 203.0.113.22
+  platform: nxos
+  groups:
+  - spine
+  data:
+    env: spineleaf
+    role: spine
+    site: DC3
+    pod: pod1
+    fabric_id: DC3-P1-SP02
+    border_gateway: false
+DC3-P1-SP03:
+  hostname: 203.0.113.23
+  platform: nxos
+  groups:
+  - spine
+  data:
+    env: spineleaf
+    role: spine
+    site: DC3
+    pod: pod1
+    fabric_id: DC3-P1-SP03
+    border_gateway: false
+DC3-P1-SP04:
+  hostname: 203.0.113.24
+  platform: nxos
+  groups:
+  - spine
+  data:
+    env: spineleaf
+    role: spine
+    site: DC3
+    pod: pod1
+    fabric_id: DC3-P1-SP04
+    border_gateway: false
+DC3-P1-LF01:
+  hostname: 203.0.113.31
   platform: nxos
   groups:
   - leaf
@@ -557,10 +751,11 @@ dc3-pod2-leaf01:
     env: spineleaf
     role: leaf
     site: DC3
-    pod: pod2
-    fabric_id: DC3-P2-LEF01
-dc3-pod2-leaf02:
-  hostname: 203.0.113.52
+    pod: pod1
+    fabric_id: DC3-P1-LF01
+    border_gateway: false
+DC3-P1-LF02:
+  hostname: 203.0.113.32
   platform: nxos
   groups:
   - leaf
@@ -568,10 +763,11 @@ dc3-pod2-leaf02:
     env: spineleaf
     role: leaf
     site: DC3
-    pod: pod2
-    fabric_id: DC3-P2-LEF02
-dc3-pod2-leaf03:
-  hostname: 203.0.113.53
+    pod: pod1
+    fabric_id: DC3-P1-LF02
+    border_gateway: false
+DC3-P1-LF03:
+  hostname: 203.0.113.33
   platform: nxos
   groups:
   - leaf
@@ -579,10 +775,11 @@ dc3-pod2-leaf03:
     env: spineleaf
     role: leaf
     site: DC3
-    pod: pod2
-    fabric_id: DC3-P2-LEF03
-dc3-pod2-leaf04:
-  hostname: 203.0.113.54
+    pod: pod1
+    fabric_id: DC3-P1-LF03
+    border_gateway: false
+DC3-P1-LF04:
+  hostname: 203.0.113.34
   platform: nxos
   groups:
   - leaf
@@ -590,10 +787,11 @@ dc3-pod2-leaf04:
     env: spineleaf
     role: leaf
     site: DC3
-    pod: pod2
-    fabric_id: DC3-P2-LEF04
-dc3-pod2-leaf05:
-  hostname: 203.0.113.55
+    pod: pod1
+    fabric_id: DC3-P1-LF04
+    border_gateway: false
+DC3-P1-LF05:
+  hostname: 203.0.113.35
   platform: nxos
   groups:
   - leaf
@@ -601,10 +799,11 @@ dc3-pod2-leaf05:
     env: spineleaf
     role: leaf
     site: DC3
-    pod: pod2
-    fabric_id: DC3-P2-LEF05
-dc3-pod2-leaf06:
-  hostname: 203.0.113.56
+    pod: pod1
+    fabric_id: DC3-P1-LF05
+    border_gateway: false
+DC3-P1-LF06:
+  hostname: 203.0.113.36
   platform: nxos
   groups:
   - leaf
@@ -612,32 +811,59 @@ dc3-pod2-leaf06:
     env: spineleaf
     role: leaf
     site: DC3
-    pod: pod2
-    fabric_id: DC3-P2-LEF06
-dc3-pod2-leaf07:
-  hostname: 203.0.113.57
+    pod: pod1
+    fabric_id: DC3-P1-LF06
+    border_gateway: false
+DC3-P1-LF07:
+  hostname: 203.0.113.37
   platform: nxos
   groups:
-  - leaf
+  - border_leaf
   data:
     env: spineleaf
-    role: leaf
+    role: border_leaf
     site: DC3
-    pod: pod2
-    fabric_id: DC3-P2-LEF07
-dc3-pod2-leaf08:
-  hostname: 203.0.113.58
+    pod: pod1
+    fabric_id: DC3-P1-LF07
+    border_gateway: true
+DC3-P1-LF08:
+  hostname: 203.0.113.38
   platform: nxos
   groups:
-  - leaf
+  - border_leaf
   data:
     env: spineleaf
-    role: leaf
+    role: border_leaf
+    site: DC3
+    pod: pod1
+    fabric_id: DC3-P1-LF08
+    border_gateway: true
+DC3-P2-SS01:
+  hostname: 203.0.113.111
+  platform: nxos
+  groups:
+  - super_spine
+  data:
+    env: spineleaf
+    role: super_spine
     site: DC3
     pod: pod2
-    fabric_id: DC3-P2-LEF08
-dc3-pod2-spine01:
-  hostname: 203.0.113.41
+    fabric_id: DC3-P2-SS01
+    border_gateway: false
+DC3-P2-SS02:
+  hostname: 203.0.113.112
+  platform: nxos
+  groups:
+  - super_spine
+  data:
+    env: spineleaf
+    role: super_spine
+    site: DC3
+    pod: pod2
+    fabric_id: DC3-P2-SS02
+    border_gateway: false
+DC3-P2-SP01:
+  hostname: 203.0.113.121
   platform: nxos
   groups:
   - spine
@@ -646,9 +872,10 @@ dc3-pod2-spine01:
     role: spine
     site: DC3
     pod: pod2
-    fabric_id: DC3-P2-SPN01
-dc3-pod2-spine02:
-  hostname: 203.0.113.42
+    fabric_id: DC3-P2-SP01
+    border_gateway: false
+DC3-P2-SP02:
+  hostname: 203.0.113.122
   platform: nxos
   groups:
   - spine
@@ -657,4 +884,125 @@ dc3-pod2-spine02:
     role: spine
     site: DC3
     pod: pod2
-    fabric_id: DC3-P2-SPN02
+    fabric_id: DC3-P2-SP02
+    border_gateway: false
+DC3-P2-SP03:
+  hostname: 203.0.113.123
+  platform: nxos
+  groups:
+  - spine
+  data:
+    env: spineleaf
+    role: spine
+    site: DC3
+    pod: pod2
+    fabric_id: DC3-P2-SP03
+    border_gateway: false
+DC3-P2-SP04:
+  hostname: 203.0.113.124
+  platform: nxos
+  groups:
+  - spine
+  data:
+    env: spineleaf
+    role: spine
+    site: DC3
+    pod: pod2
+    fabric_id: DC3-P2-SP04
+    border_gateway: false
+DC3-P2-LF01:
+  hostname: 203.0.113.131
+  platform: nxos
+  groups:
+  - leaf
+  data:
+    env: spineleaf
+    role: leaf
+    site: DC3
+    pod: pod2
+    fabric_id: DC3-P2-LF01
+    border_gateway: false
+DC3-P2-LF02:
+  hostname: 203.0.113.132
+  platform: nxos
+  groups:
+  - leaf
+  data:
+    env: spineleaf
+    role: leaf
+    site: DC3
+    pod: pod2
+    fabric_id: DC3-P2-LF02
+    border_gateway: false
+DC3-P2-LF03:
+  hostname: 203.0.113.133
+  platform: nxos
+  groups:
+  - leaf
+  data:
+    env: spineleaf
+    role: leaf
+    site: DC3
+    pod: pod2
+    fabric_id: DC3-P2-LF03
+    border_gateway: false
+DC3-P2-LF04:
+  hostname: 203.0.113.134
+  platform: nxos
+  groups:
+  - leaf
+  data:
+    env: spineleaf
+    role: leaf
+    site: DC3
+    pod: pod2
+    fabric_id: DC3-P2-LF04
+    border_gateway: false
+DC3-P2-LF05:
+  hostname: 203.0.113.135
+  platform: nxos
+  groups:
+  - leaf
+  data:
+    env: spineleaf
+    role: leaf
+    site: DC3
+    pod: pod2
+    fabric_id: DC3-P2-LF05
+    border_gateway: false
+DC3-P2-LF06:
+  hostname: 203.0.113.136
+  platform: nxos
+  groups:
+  - leaf
+  data:
+    env: spineleaf
+    role: leaf
+    site: DC3
+    pod: pod2
+    fabric_id: DC3-P2-LF06
+    border_gateway: false
+DC3-P2-LF07:
+  hostname: 203.0.113.137
+  platform: nxos
+  groups:
+  - border_leaf
+  data:
+    env: spineleaf
+    role: border_leaf
+    site: DC3
+    pod: pod2
+    fabric_id: DC3-P2-LF07
+    border_gateway: true
+DC3-P2-LF08:
+  hostname: 203.0.113.138
+  platform: nxos
+  groups:
+  - border_leaf
+  data:
+    env: spineleaf
+    role: border_leaf
+    site: DC3
+    pod: pod2
+    fabric_id: DC3-P2-LF08
+    border_gateway: true
