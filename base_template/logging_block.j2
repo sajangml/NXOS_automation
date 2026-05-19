@@ -1,0 +1,25 @@
+{# ============================================================ #}
+{# LOGGING CONFIGURATION BLOCK                                  #}
+{# ============================================================ #}
+
+! ======================================================
+! Centralized Logging (Syslog over TLS)
+! ======================================================
+
+! Enable highly accurate timestamps for event tracking
+logging timestamp milliseconds
+
+! Set local monitor logging level
+logging monitor 6
+
+! Configure the local logfile buffer size for retention
+logging logfile log_file 6 size 4096000
+
+! Define the source interface so syslog traffic originates from OOB management
+logging source-interface mgmt0
+
+! Disable strict OCSP checking for the secure logging connection
+no logging secure ocsp strict
+
+! Forward logs to the Splunk collector via TLS (secure) using the management VRF
+logging server 10.127.127.10 6 secure use-vrf management

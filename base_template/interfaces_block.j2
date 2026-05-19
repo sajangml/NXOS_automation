@@ -41,9 +41,6 @@ interface {{ pc.name }}
   description {{ pc.description | default(device.hostname ~ '_to_' ~ pc.peer_name | default('peer')) }}
   switchport
   switchport mode {{ pc.mode | default('trunk') }}
-{% if pc.trunk_allowed_vlans is defined %}
-  switchport trunk allowed vlan {{ pc.trunk_allowed_vlans }}
-{% endif %}
 {% if pc.mtu is defined %}
   mtu {{ pc.mtu }}
 {% endif %}
@@ -65,15 +62,15 @@ interface {{ eth.name }}
 {% if eth.mode | default('access') == 'routed' %}
   no switchport
   ip address {{ eth.ip_address }}
+{% if eth.isis_underlay | default(false) %}
+  ip router isis FABRIC-UNDERLAY
+  isis network point-to-point
+  isis bfd
+  ip pim sparse-mode
+{% endif %}
 {% else %}
   switchport
   switchport mode {{ eth.mode | default('access') }}
-{% if eth.mode | default('access') == 'access' and eth.access_vlan is defined %}
-  switchport access vlan {{ eth.access_vlan }}
-{% endif %}
-{% if eth.mode | default('access') == 'trunk' and eth.trunk_allowed_vlans is defined %}
-  switchport trunk allowed vlan {{ eth.trunk_allowed_vlans }}
-{% endif %}
 {% endif %}
 {% if eth.mtu is defined %}
   mtu {{ eth.mtu }}

@@ -1,0 +1,10 @@
+! ======================================================
+! ROUTING POLICY CONFIGURATION
+! ======================================================
+
+{% if device.border_gateway %}
+ip prefix-list {{ device.site }}-INFRA seq 10 permit 10.{{ device.site_id }}.0.0/16 le 24
+
+route-map RM-{{ device.site }}-OUT permit 10
+  match ip address prefix-list {{ device.site }}-INFRA
+{% endif %}

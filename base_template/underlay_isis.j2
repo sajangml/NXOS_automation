@@ -1,0 +1,16 @@
+! ======================================================
+! IS-IS Underlay
+! ======================================================
+feature isis
+feature bfd
+
+router isis FABRIC-UNDERLAY
+  net {{ device.isis_net }}
+  is-type level-2
+  log-adjacency-changes
+  address-family ipv4 unicast
+    maximum-paths 64
+
+interface loopback0
+  ip router isis FABRIC-UNDERLAY
+  isis passive-interface level-2

@@ -1,0 +1,59 @@
+{# ============================================================ #}
+{# DEVICE HARDENING & CONTROL PLANE PROTECTION                  #}
+{# ============================================================ #}
+
+! ======================================================
+! 1. Control Plane Policing (CoPP)
+! ======================================================
+{% if copp_profile %}
+copp profile {{ copp_profile }}
+{% endif %}
+
+! ======================================================
+! 2. Password Hardening and AES Encryption
+! ======================================================
+{% if password_strength_check %}
+password strength-check
+{% endif %}
+{% if password_encryption_aes %}
+feature password encryption aes
+{% endif %}
+{% if password_minimum_length is defined %}
+password minimum-length {{ password_minimum_length }}
+{% endif %}
+
+! ======================================================
+! 3. Traffic Storm Control
+! ======================================================
+{% if storm_control is defined and interfaces is defined and interfaces.ethernet is defined %}
+{% for intf in interfaces.ethernet %}
+{% if intf.mode == 'access' %}
+interface {{ intf.name }}
+  storm-control broadcast level {{ storm_control.broadcast_level | default('5.0') }}
+  storm-control unicast level {{ storm_control.unicast_level | default('5.0') }}
+  storm-control action {{ storm_control.action | default('trap') }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+! ======================================================
+! 4. Disabling Insecure Services
+! ======================================================
+no feature telnet
+feature ssh
+
+! ======================================================
+! 5. Port Security (Optional Layer 2 Hardening)
+! ======================================================
+{% if port_security is defined and port_security %}
+feature port-security
+{% if interfaces is defined and interfaces.ethernet is defined %}
+{% for intf in interfaces.ethernet %}
+{% if intf.mode == 'access' %}
+interface {{ intf.name }}
+  switchport port-security
+  switchport port-security violation shutdown
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endif %}

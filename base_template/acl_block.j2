@@ -1,22 +1,167 @@
-! ---------- MANAGEMENT ACLS ----------
-ip access-list MGMT-IN
-{% for entry in acls.mgmt_in %}
-{% if entry.remark is defined %}
-  {{ entry.seq }} remark {{ entry.remark }}
-{% elif entry.permit is defined %}
-  {{ entry.seq }} permit {{ entry.permit }}
-{% elif entry.deny is defined %}
-  {{ entry.seq }} deny {{ entry.deny }}
-{% endif %}
-{% endfor %}
+{# ============================================================ #}
+{# BASELINE LAYER 2 & MANAGEMENT ACLS                           #}
+{# ============================================================ #}
 
-ip access-list MGMT-OUT
-{% for entry in acls.mgmt_out %}
-{% if entry.remark is defined %}
-  {{ entry.seq }} remark {{ entry.remark }}
-{% elif entry.permit is defined %}
-  {{ entry.seq }} permit {{ entry.permit }}
-{% elif entry.deny is defined %}
-  {{ entry.seq }} deny {{ entry.deny }}
-{% endif %}
+{% set gs = env.global_services %}
+! ======================================================
+! Management Access Control (Object Groups)
+! ======================================================
+{% if security.ssh_sources is defined %}
+object-group ip address ssh_sources
+{% for source in security.ssh_sources %}
+  {{ loop.index * 10 }} {{ source.subnet }}
 {% endfor %}
+{% endif %}
+
+{% if security.monitoring_sources is defined %}
+object-group ip address monitor_sources
+{% for source in security.monitoring_sources %}
+  {{ loop.index * 10 }} {{ source.subnet }}
+{% endfor %}
+{% endif %}
+
+! ======================================================
+! Inbound Management ACL (mgmt_acl_in)
+! ======================================================
+ip access-list mgmt_acl_in
+  statistics per-entry
+  10 remark ### SSH from authorised sources
+  20 permit tcp addrgroup ssh_sources any eq 22
+  30 remark ### SNMPv3 polling from LogicMonitor collectors
+  40 permit udp addrgroup monitor_sources any eq 161
+  50 remark ### NTP response traffic
+{% set ns = namespace(seq=60) %}
+{% for ntp in gs.ntp.servers %}
+  {{ ns.seq }} permit udp {{ ntp.ip }}/32 eq 123 any
+  {% set ns.seq = ns.seq + 10 %}
+{% endfor %}
+  {{ ns.seq }} remark ### DNS response traffic
+  {% set ns.seq = ns.seq + 10 %}
+{% if gs.dns.servers.primary is defined %}
+  {{ ns.seq }} permit udp {{ gs.dns.servers.primary }}/32 eq 53 any
+  {% set ns.seq = ns.seq + 10 %}
+{% endif %}
+{% if gs.dns.servers.secondary is defined %}
+  {{ ns.seq }} permit udp {{ gs.dns.servers.secondary }}/32 eq 53 any
+  {% set ns.seq = ns.seq + 10 %}
+{% endif %}
+  {{ ns.seq }} remark ### ICMP reachability monitoring from LogicMonitor collectors
+  {% set ns.seq = ns.seq + 10 %}
+  {{ ns.seq }} permit icmp addrgroup monitor_sources any echo
+  {% set ns.seq = ns.seq + 10 %}
+  {{ ns.seq }} permit icmp addrgroup monitor_sources any echo-reply
+  {% set ns.seq = ns.seq + 10 %}
+  {{ ns.seq }} permit icmp addrgroup monitor_sources any time-exceeded
+  {% set ns.seq = ns.seq + 10 %}
+  {{ ns.seq }} permit icmp addrgroup monitor_sources any unreachable
+  {% set ns.seq = ns.seq + 10 %}
+  {{ ns.seq }} remark ### RADIUS response traffic
+  {% set ns.seq = ns.seq + 10 %}
+{% for rad in gs.aaa.radius.servers %}
+  {{ ns.seq }} permit udp {{ rad.ip }}/32 eq 1812 any
+  {% set ns.seq = ns.seq + 10 %}
+  {{ ns.seq }} permit udp {{ rad.ip }}/32 eq 1813 any
+  {% set ns.seq = ns.seq + 10 %}
+{% endfor %}
+  {{ ns.seq }} remark ### return traffic for switch-initiated TCP sessions
+  {% set ns.seq = ns.seq + 10 %}
+  {{ ns.seq }} permit tcp any any established
+  {% set ns.seq = ns.seq + 10 %}
+  {{ ns.seq }} remark ### default deny - all other inbound traffic denied
+  {% set ns.seq = ns.seq + 10 %}
+  {{ ns.seq }} deny ip any any log
+
+! ======================================================
+! Outbound Management ACL (mgmt_acl_out)
+! ======================================================
+ip access-list mgmt_acl_out
+  statistics per-entry
+  10 remark ### SNMP traps to Splunk and LogicMonitor
+{% set ns_out = namespace(seq=20) %}
+{% for trap in gs.snmp.trap_receivers %}
+  {{ ns_out.seq }} permit udp any {{ trap.ip }}/32 eq 162
+  {% set ns_out.seq = ns_out.seq + 10 %}
+{% endfor %}
+  {{ ns_out.seq }} remark ### SNMPv3 polling responses to LogicMonitor collectors
+  {% set ns_out.seq = ns_out.seq + 10 %}
+  {{ ns_out.seq }} permit udp any eq 161 addrgroup monitor_sources
+  {% set ns_out.seq = ns_out.seq + 10 %}
+  {{ ns_out.seq }} remark ### ICMP reachability responses to LogicMonitor collectors
+  {% set ns_out.seq = ns_out.seq + 10 %}
+  {{ ns_out.seq }} permit icmp any addrgroup monitor_sources echo-reply
+  {% set ns_out.seq = ns_out.seq + 10 %}
+  {{ ns_out.seq }} permit icmp any addrgroup monitor_sources unreachable
+  {% set ns_out.seq = ns_out.seq + 10 %}
+  {{ ns_out.seq }} permit icmp any addrgroup monitor_sources time-exceeded
+  {% set ns_out.seq = ns_out.seq + 10 %}
+  {{ ns_out.seq }} remark ### Syslog over TLS to Splunk
+  {% set ns_out.seq = ns_out.seq + 10 %}
+{% for syslog in gs.syslog.servers %}
+  {{ ns_out.seq }} permit tcp any {{ syslog.ip }}/32 eq {{ syslog.port | default(6514) }}
+  {% set ns_out.seq = ns_out.seq + 10 %}
+{% endfor %}
+  {{ ns_out.seq }} remark ### RADIUS authentication
+  {% set ns_out.seq = ns_out.seq + 10 %}
+{% for rad in gs.aaa.radius.servers %}
+  {{ ns_out.seq }} permit udp any {{ rad.ip }}/32 eq 1812
+  {% set ns_out.seq = ns_out.seq + 10 %}
+{% endfor %}
+  {{ ns_out.seq }} remark ### RADIUS accounting
+  {% set ns_out.seq = ns_out.seq + 10 %}
+{% for rad in gs.aaa.radius.servers %}
+  {{ ns_out.seq }} permit udp any {{ rad.ip }}/32 eq 1813
+  {% set ns_out.seq = ns_out.seq + 10 %}
+{% endfor %}
+  {{ ns_out.seq }} remark ### NTP to time server
+  {% set ns_out.seq = ns_out.seq + 10 %}
+{% for ntp in gs.ntp.servers %}
+  {{ ns_out.seq }} permit udp any {{ ntp.ip }}/32 eq 123
+  {% set ns_out.seq = ns_out.seq + 10 %}
+{% endfor %}
+  {{ ns_out.seq }} remark ### DNS resolution
+  {% set ns_out.seq = ns_out.seq + 10 %}
+{% if gs.dns.servers.primary is defined %}
+  {{ ns_out.seq }} permit udp any {{ gs.dns.servers.primary }}/32 eq 53
+  {% set ns_out.seq = ns_out.seq + 10 %}
+  {{ ns_out.seq }} permit tcp any {{ gs.dns.servers.primary }}/32 eq 53
+  {% set ns_out.seq = ns_out.seq + 10 %}
+{% endif %}
+{% if gs.dns.servers.secondary is defined %}
+  {{ ns_out.seq }} permit udp any {{ gs.dns.servers.secondary }}/32 eq 53
+  {% set ns_out.seq = ns_out.seq + 10 %}
+  {{ ns_out.seq }} permit tcp any {{ gs.dns.servers.secondary }}/32 eq 53
+  {% set ns_out.seq = ns_out.seq + 10 %}
+{% endif %}
+{% if gs.smart_licensing.enabled and gs.smart_licensing.server is defined %}
+  {{ ns_out.seq }} remark ### Smart Licensing HTTPS to CSLU
+  {% set ns_out.seq = ns_out.seq + 10 %}
+  {{ ns_out.seq }} permit tcp any {{ gs.smart_licensing.server }}/32 eq 443
+  {% set ns_out.seq = ns_out.seq + 10 %}
+{% endif %}
+  {{ ns_out.seq }} remark ### return traffic for inbound TCP sessions
+  {% set ns_out.seq = ns_out.seq + 10 %}
+  {{ ns_out.seq }} permit tcp any any established
+  {% set ns_out.seq = ns_out.seq + 10 %}
+  {{ ns_out.seq }} remark ### default deny - all other outbound traffic denied
+  {% set ns_out.seq = ns_out.seq + 10 %}
+  {{ ns_out.seq }} deny ip any any
+
+! ======================================================
+! VTY SSH-only ACL
+! ======================================================
+ip access-list vty_acl_in
+  10 remark ### SSH from authorised sources only
+  20 permit tcp addrgroup ssh_sources any eq 22
+  30 remark ### default deny
+  40 deny ip any any log
+
+! ======================================================
+! Applying the ACLs to Interfaces and Lines
+! ======================================================
+interface mgmt0
+  ip access-group mgmt_acl_in in
+  ip access-group mgmt_acl_out out
+
+line console
+line vty
+  ip access-class vty_acl_in in

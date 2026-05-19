@@ -1,0 +1,55 @@
+
+{% if device.type == "leaf" %}
+! ======================================================
+! VXLAN Tenant Multicast-Assisted Overlay Virtualization
+! ======================================================
+
+{% for tenant in multicast_tenants %}
+vrf context {{ tenant.vrf }}
+  vni {{ tenant.l3_vni }}
+  rd auto
+  address-family ipv4 unicast
+    route-target both auto
+    route-target both auto evpn
+
+vlan {{ tenant.l3_vni_vlan }}
+  name L3VNI_{{ tenant.name | replace('-', '_') }}
+  vn-segment {{ tenant.l3_vni }}
+
+interface vlan {{ tenant.l3_vni_vlan }}
+  description L3VNI_{{ tenant.name | replace('-', '_') }}
+  vrf member {{ tenant.vrf }}
+  ip forward
+  no shutdown
+
+{% for vlan in tenant.vlans %}
+vlan {{ vlan.id }}
+  name {{ vlan.name }}
+  vn-segment {{ vlan.l2_vni }}
+
+interface vlan {{ vlan.id }}
+  description {{ vlan.name }}_ANYCAST_GW
+  vrf member {{ tenant.vrf }}
+  ip address {{ vlan.anycast_gw }}
+  fabric forwarding mode anycast-gateway
+  no shutdown
+{% endfor %}
+{% endfor %}
+
+interface nve1
+{% for tenant in multicast_tenants %}
+  member vni {{ tenant.l3_vni }} associate-vrf
+{% for vlan in tenant.vlans %}
+  member vni {{ vlan.l2_vni }}
+    mcast-group {{ vlan.mcast_group }}
+{% endfor %}
+{% endfor %}
+
+router bgp {{ device.bgp_asn }}
+{% for tenant in multicast_tenants %}
+  vrf {{ tenant.vrf }}
+    address-family ipv4 unicast
+      advertise l2vpn evpn
+{% endfor %}
+
+{% endif %}

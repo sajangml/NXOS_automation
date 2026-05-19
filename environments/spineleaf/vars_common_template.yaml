@@ -173,8 +173,30 @@ stp:
   bpduguard_default: true
   priorities: { spine: 4096, leaf: 24576, default: 32768 }
 
-vlans: { tag_native: true }
-features: [scp-server, lacp, lldp, bfd, bgp, interface-vlan, vn-segment-vlan-based, nv overlay]
+features: [scp-server, lacp, lldp, bfd, bgp, nv overlay, pim, msdp, interface-vlan]
 password_encryption_aes: true
 password_strength_check: true
 password_minimum_length: 14
+
+multicast_tenants:
+  - name: TENANT-A
+    vrf: TENANT-A
+    l3_vni: 50000
+    l3_vni_vlan: 999
+    vlans:
+      - id: 10
+        name: WEB_SERVERS
+        l2_vni: 30010
+        anycast_gw: 10.10.10.1/24
+        mcast_group: 239.1.1.10
+
+non_multicast_tenants:
+  - name: TENANT-B
+    vrf: TENANT-B
+    l3_vni: 50100
+    l3_vni_vlan: 1099
+    vlans:
+      - id: 110
+        name: APP_SERVERS
+        l2_vni: 30110
+        anycast_gw: 10.20.10.1/24

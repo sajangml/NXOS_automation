@@ -1,0 +1,47 @@
+
+! ======================================================
+! Multicast (PIM-SM / MSDP) Underlay Configuration
+! ======================================================
+
+{% if device.type == "super_spine" %}
+ip pim rp-address {{ device.multicast.anycast_rp }} group-list {{ device.multicast.group_range }}
+
+{% for peer in device.multicast.anycast_rp_peers %}
+ip pim anycast-rp {{ device.multicast.anycast_rp }} {{ peer }}
+{% endfor %}
+
+ip msdp originator-id loopback100
+
+! Intra-DC MSDP Mesh
+{% for peer in device.multicast.msdp_intra_peers %}
+ip msdp peer {{ peer }} connect-source loopback100
+{% endfor %}
+
+{% if device.multicast.is_inter_dc_speaker %}
+! Inter-DC MSDP Speaker Connections
+{% for peer in device.multicast.msdp_inter_peers %}
+ip msdp peer {{ peer }} connect-source loopback100
+{% endfor %}
+{% endif %}
+
+interface loopback100
+  description UNIQUE_RP_LOOPBACK
+  ip address {{ device.multicast.unique_rp }}/32
+  ip pim sparse-mode
+  ip router isis FABRIC-UNDERLAY
+  isis passive-interface level-2
+
+interface loopback254
+  description ANYCAST_RP_DC{{ device.site_id }}
+  ip address {{ device.multicast.anycast_rp }}/32
+  ip pim sparse-mode
+  ip router isis FABRIC-UNDERLAY
+  isis passive-interface level-2
+
+{% else %}
+ip pim rp-address {{ device.multicast.anycast_rp }} group-list {{ device.multicast.group_range }}
+
+{% endif %}
+
+interface loopback0
+  ip pim sparse-mode

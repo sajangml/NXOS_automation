@@ -1,19 +1,36 @@
 ! ---- System & Features ----
 {% for feature in features %}
+{% if feature == "nv overlay" %}
+{% if device.type == "leaf" %}
+feature nv overlay
+nv overlay evpn
+{% endif %}
+{% elif feature == "interface-vlan" %}
+{% if device.type == "leaf" %}
+feature interface-vlan
+{% endif %}
+{% elif feature == "msdp" %}
+{% if device.type == "super_spine" %}
+feature msdp
+{% endif %}
+{% else %}
 feature {{ feature }}
+{% endif %}
 {% endfor %}
 
+{% if device.type == "leaf" %}
 fabric forwarding anycast-gateway-mac {{ env.fabric.overlay_anycast_gateway_mac }}
+{% endif %}
 
 ! ---- System Clock & SSH ----
 {% if system.timezone is defined %}
 clock timezone {{ system.timezone }}
 {% endif %}
-feature ssh
 ssh login-attempts {{ system.ssh_login_attempts | default(5) }}
 ssh source-interface {{ env.global_services.ssh.source_interface | default(env.mgmt_source_interface | default('mgmt0')) }}
 ssh key rsa 2048
 ip ssh version {{ env.global_services.ssh.version | default(2) }}
+
 
 system memory-threshold minor {{ system.memory_thresholds.minor | default(96) }}
 system memory-threshold severe {{ system.memory_thresholds.severe | default(97) }}

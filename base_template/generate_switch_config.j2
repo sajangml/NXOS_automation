@@ -20,20 +20,22 @@ hostname {{ device.hostname }}
 {% include 'time_resolution_block.j2' -%}
 {% include 'aaa_block.j2' ignore missing with context -%}
 {% include 'snmp.j2' -%}
-{% include 'time_logging_block.j2' -%}
+{% include 'logging_block.j2' -%}
+{% include 'device_hardening_block.j2' -%}
 {% include 'global_services_block.j2' -%}
-{% include 'tcam_block.j2' -%}
-{% include 'qos_block.j2' -%}
-{% include 'stp_block.j2' -%}
-{% include 'mgmt_interface_block.j2' -%}
-{% include 'interfaces_block.j2' -%}
-{% include 'fabric_bgp_block.j2' -%}
-{% include 'acl_block.j2' -%}
+{% include 'tcam_block.j2' %}
+{% include 'underlay_isis.j2' %}
+{% include 'underlay_multicast.j2' %}
+{% include 'overlay_evpn_block.j2' %}
+{% include 'tenant_overlay_block.j2' %}
+{% include 'non_multicast_tenant_block.j2' %}
+{% include 'mgmt_interface_block.j2' %}
+{% include 'interfaces_block.j2' %}
+{% include 'routing_policy_block.j2' %}
+{% include 'fabric_bgp_block.j2' %}
+{% include 'acl_block.j2' %}
 
 boot nxos bootflash:/{{ boot.image }}
-{% if copp_profile %}
-copp profile {{ copp_profile }}
-{% endif %}
 
 ! ======================================================
 ! END OF CONFIG FOR {{ device.hostname }}

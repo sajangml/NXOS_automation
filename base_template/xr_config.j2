@@ -1,0 +1,62 @@
+! ======================================================
+! AUTO-GENERATED IOS-XR CONFIGURATION - DO NOT EDIT
+! Hostname: {{ device.hostname }}
+! Role: {{ device.role | upper }}
+! Management IP: {{ device.mgmt_ip }}
+! Design Note: {{ device.design_note }}
+! ======================================================
+
+hostname {{ device.hostname }}
+
+interface Loopback0
+  ipv4 address {{ device.loopback0 }}
+!
+interface MgmtEth0/RP0/CPU0/0
+  ipv4 address {{ device.mgmt_ip }}
+  no shutdown
+!
+
+{% for eth in interfaces[device.hostname].ethernet | default([]) %}
+interface {{ eth.name }}
+  description {{ eth.description }}
+  ipv4 address {{ eth.ip_address }}
+  mtu {{ eth.mtu | default(9216) }}
+  no shutdown
+!
+{% endfor %}
+
+prefix-set {{ device.site }}-INFRA
+  10.{{ device.site_id }}.0.0/16 le 24
+end-set
+!
+route-policy {{ device.site }}-IN
+  if destination in {{ device.site }}-INFRA then
+    pass
+  else
+    drop
+  endif
+end-policy
+!
+
+router bgp {{ device.bgp_asn }}
+  bgp router-id {{ device.router_id }}
+  address-family ipv4 unicast
+  !
+{% for nbr in device.bgp_neighbors | default([]) %}
+  neighbor {{ nbr.ip }}
+    remote-as {{ nbr.remote_as }}
+    description {{ nbr.description }}
+    bfd fast-detect
+    update-source {{ nbr.update_source }}
+    address-family ipv4 unicast
+      route-policy {{ device.site }}-IN in
+      send-community-ebgp
+      soft-reconfiguration inbound always
+    !
+  !
+{% endfor %}
+!
+
+! ======================================================
+! END OF CONFIG FOR {{ device.hostname }}
+! ======================================================

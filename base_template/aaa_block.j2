@@ -1,26 +1,51 @@
 {# ============================================================ #}
-{# AAA / RADIUS CONFIGURATION — Uses vars_common + env_vars     #}
+{# AAA / RADIUS CONFIGURATION                                   #}
 {# ============================================================ #}
 
-{% if radius is defined and aaa is defined %}
 
-! ---------- RADIUS SERVER CONFIG ----------
+
+! ======================================================
+! Local Users (Break-Glass and Service Accounts)
+! ======================================================
+{% if local_users is defined %}
+! Break-glass administrator account
+{% for user in local_users %}
+{% if user.role == 'network-admin' %}
+username {{ user.username }} password 5 {{ user.password_hash }} role {{ user.role }}
+{% if user.passphrase is defined %}
+username {{ user.username }} passphrase lifetime {{ user.passphrase.lifetime_days }} warntime {{ user.passphrase.warn_days }} gracetime {{ user.passphrase.grace_days }}
+{% endif %}
+{% endif %}
+{% endfor %}
+
+! Non-interactive service accounts for SNMP
+{% for user in local_users %}
+{% if user.role == 'network-operator' %}
+username {{ user.username }} password 5 {{ user.password_hash }} role {{ user.role }}
+{% if user.passphrase is defined %}
+username {{ user.username }} passphrase lifetime {{ user.passphrase.lifetime_days }} warntime {{ user.passphrase.warn_days }} gracetime {{ user.passphrase.grace_days }}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+! ======================================================
+! RADIUS Server & Group Configuration
+! ======================================================
+{% if radius is defined %}
 {% if radius.servers is defined and radius.servers %}
 {% for srv in radius.servers %}
 radius-server host {{ srv.ip }} key {{ srv.key }} authentication accounting
 {% endfor %}
 {% endif %}
-
 radius-server timeout {{ radius.timeout }}
 radius-server retransmit {{ radius.retransmit }}
 radius-server deadtime {{ radius.deadtime }}
-
 
 {% if radius.source_interface is defined %}
 ip radius source-interface {{ radius.source_interface }}
 {% endif %}
 
-! ---------- RADIUS GROUP ----------
 aaa group server radius {{ radius.group_name }}
 {% for srv in radius.servers %}
   server {{ srv.ip }}
@@ -28,19 +53,24 @@ aaa group server radius {{ radius.group_name }}
 {% if radius.servers and radius.servers[0].vrf is defined %}
   use-vrf {{ radius.servers[0].vrf }}
 {% endif %}
+exit
+{% endif %}
 
-! ---------- AAA AUTHENTICATION / ACCOUNTING ----------
+! ======================================================
+! AAA Authentication & Accounting Enforcement
+! ======================================================
+{% if aaa is defined %}
 aaa authentication login default group {{ aaa.authentication.login_default }}
 aaa authentication login console group {{ aaa.authentication.login_console }}
-{% if aaa.authentication.enable_default is defined %}
-aaa authentication enable default group {{ aaa.authentication.enable_default }}
-{% endif %}
-{% if aaa.authorization is defined %}
-aaa authorization exec default group {{ aaa.authorization.exec_default }}
-aaa authorization commands default group {{ aaa.authorization.commands_default }}
-{% endif %}
 aaa accounting default group {{ aaa.accounting_default }}
 
+! Prevent login if user lacks a defined role
+{% if aaa.user_default_role_disabled -%}
+no aaa user default-role
+{% endif %}
+
+! Command Accounting and Session Logging
+aaa accounting commands all default start-stop group {{ aaa.accounting_default }}
 {% if aaa.on_success_log -%}
 login on-success log
 {% endif -%}
@@ -50,15 +80,13 @@ login on-failure log
 {% if aaa.login_error_enable -%}
 aaa authentication login error-enable
 {% endif -%}
-{% if aaa.user_default_role_disabled -%}
-no aaa user default-role
 {% endif %}
 
-! ---------- COMMAND ACCOUNTING ----------
-aaa accounting commands all default start-stop group {{ aaa.accounting_default }}
-
-{% if password_encryption_aes %}
-feature password encryption aes
-{% endif %}
-
+! ======================================================
+! Login Banner
+! ======================================================
+{% if banner is defined %}
+banner motd ^C
+{{ banner | trim }}
+^C
 {% endif %}

@@ -1,0 +1,93 @@
+
+! ---------- FABRIC LOOPBACKS ----------
+interface loopback0
+  description {{ device.fabric_id }} router-id
+  ip address {{ device.loopback0 }}
+
+{% if device.type == "leaf" %}
+interface loopback1
+  description {{ device.fabric_id }} VTEP source
+  ip address {{ device.loopback1 }}
+
+interface nve1
+  description VXLAN_VTEP_INTERFACE
+  no shutdown
+  source-interface loopback1
+  host-reachability protocol bgp
+{% endif %}
+
+! ---------- EVPN OVERLAY ----------
+router bgp {{ device.bgp_asn }}
+  router-id {{ device.router_id }}
+{% if device.type == "leaf" %}
+  address-family ipv4 unicast
+    maximum-paths 8
+  address-family l2vpn evpn
+    retain route-target all
+
+{% for nbr in device.evpn_rr_servers | default([]) %}
+  neighbor {{ nbr.ip }}
+    remote-as {{ nbr.remote_as }}
+    update-source loopback0
+    description {{ nbr.description }}
+    address-family l2vpn evpn
+      send-community both
+{% endfor %}
+
+{% elif device.type == "spine" %}
+  address-family l2vpn evpn
+    retain route-target all
+
+  template peer LEAF-EVPN-CLIENTS
+    remote-as {{ device.bgp_asn }}
+    update-source loopback0
+    address-family l2vpn evpn
+      send-community both
+      route-reflector-client
+
+  template peer SUPERSPINE-EVPN-RR
+    remote-as {{ device.bgp_asn }}
+    update-source loopback0
+    address-family l2vpn evpn
+      send-community both
+
+{% for nbr in device.evpn_rr_clients | default([]) %}
+  neighbor {{ nbr.ip }}
+    inherit peer LEAF-EVPN-CLIENTS
+    description {{ nbr.description }}
+{% endfor %}
+{% for nbr in device.evpn_rr_servers | default([]) %}
+  neighbor {{ nbr.ip }}
+    inherit peer SUPERSPINE-EVPN-RR
+    description {{ nbr.description }}
+{% endfor %}
+
+{% elif device.type == "super_spine" %}
+  address-family l2vpn evpn
+    retain route-target all
+
+  template peer SPINE-EVPN-CLIENTS
+    remote-as {{ device.bgp_asn }}
+    update-source loopback0
+    address-family l2vpn evpn
+      send-community both
+      route-reflector-client
+
+  template peer REMOTE-POD-SS-RR
+    remote-as {{ device.bgp_asn }}
+    update-source loopback0
+    address-family l2vpn evpn
+      send-community both
+
+{% for nbr in device.evpn_rr_clients | default([]) %}
+  neighbor {{ nbr.ip }}
+    inherit peer SPINE-EVPN-CLIENTS
+    description {{ nbr.description }}
+{% endfor %}
+{% for nbr in device.evpn_rr_peers | default([]) %}
+  neighbor {{ nbr.ip }}
+    inherit peer REMOTE-POD-SS-RR
+    description {{ nbr.description }}
+{% endfor %}
+
+{% endif %}
