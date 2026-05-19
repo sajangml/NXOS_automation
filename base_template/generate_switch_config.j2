@@ -8,6 +8,7 @@
 ! Design Note: {{ device.design_note | default('NX-OS fabric device') }}
 ! Corrected Rule: Super-spines do not connect directly to XR/core.
 ! Border Rule: Leaf 7 and Leaf 8 provide XR/core handoff using Eth1/53-Eth1/54.
+! Inter-DC XR Ring: DC1-XR connects to DC2-XR, DC2-XR connects to DC3-XR, and DC3-XR connects back to DC1-XR.
 ! ======================================================
 
 hostname {{ device.hostname }}

@@ -16,28 +16,28 @@ Traffic flow is:
 
 ```text
 Server
-  ↓
+  |
 Leaf
-  ↓
+  |
 Spine
-  ↓
+  |
 Super-Spine
-  ↓
+  |
 Border Leaf 7 / Leaf 8
-  ↓
+  |
 Cisco XR Core / DCI Router
-  ↓
+  |
 DC2 / DC3
 ```
 
-The corrected rule is:
+Corrected rule:
 
 ```text
 Super-spines do not connect directly to XR.
 Border Leaf 7 and Leaf 8 connect to XR/core.
 ```
 
-## DC1 Device Count
+## Per-DC Device Count
 
 | Layer           | Devices |
 | --------------- | ------: |
@@ -49,122 +49,190 @@ Border Leaf 7 and Leaf 8 connect to XR/core.
 | Servers         |     160 |
 | XR/Core Routers |       2 |
 
-## DC1 POD1 Server-to-Leaf Connectivity
+## DC1 Server-to-Leaf
 
-| Source Device     | Source Port | Destination Device | Destination Port |
-| ----------------- | ----------- | ------------------ | ---------------- |
-| DC1-P1-SRV001-010 | NIC1        | DC1-P1-LF01        | Eth1/1-Eth1/10   |
-| DC1-P1-SRV011-020 | NIC1        | DC1-P1-LF02        | Eth1/1-Eth1/10   |
-| DC1-P1-SRV021-030 | NIC1        | DC1-P1-LF03        | Eth1/1-Eth1/10   |
-| DC1-P1-SRV031-040 | NIC1        | DC1-P1-LF04        | Eth1/1-Eth1/10   |
-| DC1-P1-SRV041-050 | NIC1        | DC1-P1-LF05        | Eth1/1-Eth1/10   |
-| DC1-P1-SRV051-060 | NIC1        | DC1-P1-LF06        | Eth1/1-Eth1/10   |
-| DC1-P1-SRV061-070 | NIC1        | DC1-P1-LF07        | Eth1/1-Eth1/10   |
-| DC1-P1-SRV071-080 | NIC1        | DC1-P1-LF08        | Eth1/1-Eth1/10   |
+| Pod    | Leaf        | Leaf Ports   | Servers           |
+| ------ | ----------- | ------------ | ----------------- |
+| DC1-P1 | DC1-P1-LF01 | Eth1/1-1/10  | DC1-P1-SRV001-010 |
+| DC1-P1 | DC1-P1-LF02 | Eth1/1-1/10  | DC1-P1-SRV011-020 |
+| DC1-P1 | DC1-P1-LF03 | Eth1/1-1/10  | DC1-P1-SRV021-030 |
+| DC1-P1 | DC1-P1-LF04 | Eth1/1-1/10  | DC1-P1-SRV031-040 |
+| DC1-P1 | DC1-P1-LF05 | Eth1/1-1/10  | DC1-P1-SRV041-050 |
+| DC1-P1 | DC1-P1-LF06 | Eth1/1-1/10  | DC1-P1-SRV051-060 |
+| DC1-P1 | DC1-P1-LF07 | Eth1/1-1/10  | DC1-P1-SRV061-070 |
+| DC1-P1 | DC1-P1-LF08 | Eth1/1-1/10  | DC1-P1-SRV071-080 |
+| DC1-P2 | DC1-P2-LF01 | Eth1/1-1/10  | DC1-P2-SRV081-090 |
+| DC1-P2 | DC1-P2-LF02 | Eth1/1-1/10  | DC1-P2-SRV091-100 |
+| DC1-P2 | DC1-P2-LF03 | Eth1/1-1/10  | DC1-P2-SRV101-110 |
+| DC1-P2 | DC1-P2-LF04 | Eth1/1-1/10  | DC1-P2-SRV111-120 |
+| DC1-P2 | DC1-P2-LF05 | Eth1/1-1/10  | DC1-P2-SRV121-130 |
+| DC1-P2 | DC1-P2-LF06 | Eth1/1-1/10  | DC1-P2-SRV131-140 |
+| DC1-P2 | DC1-P2-LF07 | Eth1/1-1/10  | DC1-P2-SRV141-150 |
+| DC1-P2 | DC1-P2-LF08 | Eth1/1-1/10  | DC1-P2-SRV151-160 |
 
-## DC1 POD2 Server-to-Leaf Connectivity
+## DC2 Server-to-Leaf
 
-| Source Device     | Source Port | Destination Device | Destination Port |
-| ----------------- | ----------- | ------------------ | ---------------- |
-| DC1-P2-SRV081-090 | NIC1        | DC1-P2-LF01        | Eth1/1-Eth1/10   |
-| DC1-P2-SRV091-100 | NIC1        | DC1-P2-LF02        | Eth1/1-Eth1/10   |
-| DC1-P2-SRV101-110 | NIC1        | DC1-P2-LF03        | Eth1/1-Eth1/10   |
-| DC1-P2-SRV111-120 | NIC1        | DC1-P2-LF04        | Eth1/1-Eth1/10   |
-| DC1-P2-SRV121-130 | NIC1        | DC1-P2-LF05        | Eth1/1-Eth1/10   |
-| DC1-P2-SRV131-140 | NIC1        | DC1-P2-LF06        | Eth1/1-Eth1/10   |
-| DC1-P2-SRV141-150 | NIC1        | DC1-P2-LF07        | Eth1/1-Eth1/10   |
-| DC1-P2-SRV151-160 | NIC1        | DC1-P2-LF08        | Eth1/1-Eth1/10   |
+| Pod    | Leaf        | Leaf Ports   | Servers           |
+| ------ | ----------- | ------------ | ----------------- |
+| DC2-P1 | DC2-P1-LF01 | Eth1/1-1/10  | DC2-P1-SRV001-010 |
+| DC2-P1 | DC2-P1-LF02 | Eth1/1-1/10  | DC2-P1-SRV011-020 |
+| DC2-P1 | DC2-P1-LF03 | Eth1/1-1/10  | DC2-P1-SRV021-030 |
+| DC2-P1 | DC2-P1-LF04 | Eth1/1-1/10  | DC2-P1-SRV031-040 |
+| DC2-P1 | DC2-P1-LF05 | Eth1/1-1/10  | DC2-P1-SRV041-050 |
+| DC2-P1 | DC2-P1-LF06 | Eth1/1-1/10  | DC2-P1-SRV051-060 |
+| DC2-P1 | DC2-P1-LF07 | Eth1/1-1/10  | DC2-P1-SRV061-070 |
+| DC2-P1 | DC2-P1-LF08 | Eth1/1-1/10  | DC2-P1-SRV071-080 |
+| DC2-P2 | DC2-P2-LF01 | Eth1/1-1/10  | DC2-P2-SRV081-090 |
+| DC2-P2 | DC2-P2-LF02 | Eth1/1-1/10  | DC2-P2-SRV091-100 |
+| DC2-P2 | DC2-P2-LF03 | Eth1/1-1/10  | DC2-P2-SRV101-110 |
+| DC2-P2 | DC2-P2-LF04 | Eth1/1-1/10  | DC2-P2-SRV111-120 |
+| DC2-P2 | DC2-P2-LF05 | Eth1/1-1/10  | DC2-P2-SRV121-130 |
+| DC2-P2 | DC2-P2-LF06 | Eth1/1-1/10  | DC2-P2-SRV131-140 |
+| DC2-P2 | DC2-P2-LF07 | Eth1/1-1/10  | DC2-P2-SRV141-150 |
+| DC2-P2 | DC2-P2-LF08 | Eth1/1-1/10  | DC2-P2-SRV151-160 |
 
-## DC1 POD1 Leaf-to-Spine Connectivity
+## DC3 Server-to-Leaf
 
-Every leaf connects to all four spines in the same pod:
+| Pod    | Leaf        | Leaf Ports   | Servers           |
+| ------ | ----------- | ------------ | ----------------- |
+| DC3-P1 | DC3-P1-LF01 | Eth1/1-1/10  | DC3-P1-SRV001-010 |
+| DC3-P1 | DC3-P1-LF02 | Eth1/1-1/10  | DC3-P1-SRV011-020 |
+| DC3-P1 | DC3-P1-LF03 | Eth1/1-1/10  | DC3-P1-SRV021-030 |
+| DC3-P1 | DC3-P1-LF04 | Eth1/1-1/10  | DC3-P1-SRV031-040 |
+| DC3-P1 | DC3-P1-LF05 | Eth1/1-1/10  | DC3-P1-SRV041-050 |
+| DC3-P1 | DC3-P1-LF06 | Eth1/1-1/10  | DC3-P1-SRV051-060 |
+| DC3-P1 | DC3-P1-LF07 | Eth1/1-1/10  | DC3-P1-SRV061-070 |
+| DC3-P1 | DC3-P1-LF08 | Eth1/1-1/10  | DC3-P1-SRV071-080 |
+| DC3-P2 | DC3-P2-LF01 | Eth1/1-1/10  | DC3-P2-SRV081-090 |
+| DC3-P2 | DC3-P2-LF02 | Eth1/1-1/10  | DC3-P2-SRV091-100 |
+| DC3-P2 | DC3-P2-LF03 | Eth1/1-1/10  | DC3-P2-SRV101-110 |
+| DC3-P2 | DC3-P2-LF04 | Eth1/1-1/10  | DC3-P2-SRV111-120 |
+| DC3-P2 | DC3-P2-LF05 | Eth1/1-1/10  | DC3-P2-SRV121-130 |
+| DC3-P2 | DC3-P2-LF06 | Eth1/1-1/10  | DC3-P2-SRV131-140 |
+| DC3-P2 | DC3-P2-LF07 | Eth1/1-1/10  | DC3-P2-SRV141-150 |
+| DC3-P2 | DC3-P2-LF08 | Eth1/1-1/10  | DC3-P2-SRV151-160 |
 
-| Leaf Port | Spine |
-| --------- | ----- |
-| Eth1/49   | SP01  |
-| Eth1/50   | SP02  |
-| Eth1/51   | SP03  |
-| Eth1/52   | SP04  |
+## Leaf-to-Spine Port Mapping
 
-Spine destination ports follow the leaf ID. For example, `DC1-P1-LF01` connects to `Eth1/1` on every spine, `DC1-P1-LF02` connects to `Eth1/2`, and `DC1-P1-LF08` connects to `Eth1/8`.
+Same for DC1, DC2, and DC3 in both pods.
 
-## DC1 POD2 Leaf-to-Spine Connectivity
+| Leaf Port | Destination |
+| --------- | ----------- |
+| Eth1/49   | SP01        |
+| Eth1/50   | SP02        |
+| Eth1/51   | SP03        |
+| Eth1/52   | SP04        |
 
-Same pattern as POD1:
+Spine-side mapping:
 
-| Leaf Port | Spine |
-| --------- | ----- |
-| Eth1/49   | SP01  |
-| Eth1/50   | SP02  |
-| Eth1/51   | SP03  |
-| Eth1/52   | SP04  |
+| Leaf | SP01 Port | SP02 Port | SP03 Port | SP04 Port |
+| ---- | --------- | --------- | --------- | --------- |
+| LF01 | Eth1/1    | Eth1/1    | Eth1/1    | Eth1/1    |
+| LF02 | Eth1/2    | Eth1/2    | Eth1/2    | Eth1/2    |
+| LF03 | Eth1/3    | Eth1/3    | Eth1/3    | Eth1/3    |
+| LF04 | Eth1/4    | Eth1/4    | Eth1/4    | Eth1/4    |
+| LF05 | Eth1/5    | Eth1/5    | Eth1/5    | Eth1/5    |
+| LF06 | Eth1/6    | Eth1/6    | Eth1/6    | Eth1/6    |
+| LF07 | Eth1/7    | Eth1/7    | Eth1/7    | Eth1/7    |
+| LF08 | Eth1/8    | Eth1/8    | Eth1/8    | Eth1/8    |
 
-Spine destination ports follow the leaf ID.
+## Spine-to-Super-Spine Port Mapping
 
-## DC1 POD1 Spine-to-Super-Spine Connectivity
+Same for DC1, DC2, and DC3 in both pods.
 
-| Source Device | Source Port | Destination Device | Destination Port |
-| ------------- | ----------- | ------------------ | ---------------- |
-| DC1-P1-SP01   | Eth1/49     | DC1-P1-SS01        | Eth1/1           |
-| DC1-P1-SP01   | Eth1/50     | DC1-P1-SS02        | Eth1/1           |
-| DC1-P1-SP02   | Eth1/49     | DC1-P1-SS01        | Eth1/2           |
-| DC1-P1-SP02   | Eth1/50     | DC1-P1-SS02        | Eth1/2           |
-| DC1-P1-SP03   | Eth1/49     | DC1-P1-SS01        | Eth1/3           |
-| DC1-P1-SP03   | Eth1/50     | DC1-P1-SS02        | Eth1/3           |
-| DC1-P1-SP04   | Eth1/49     | DC1-P1-SS01        | Eth1/4           |
-| DC1-P1-SP04   | Eth1/50     | DC1-P1-SS02        | Eth1/4           |
+| Spine | Spine Port | Super-Spine | Super-Spine Port |
+| ----- | ---------- | ----------- | ---------------- |
+| SP01  | Eth1/49    | SS01        | Eth1/1           |
+| SP01  | Eth1/50    | SS02        | Eth1/1           |
+| SP02  | Eth1/49    | SS01        | Eth1/2           |
+| SP02  | Eth1/50    | SS02        | Eth1/2           |
+| SP03  | Eth1/49    | SS01        | Eth1/3           |
+| SP03  | Eth1/50    | SS02        | Eth1/3           |
+| SP04  | Eth1/49    | SS01        | Eth1/4           |
+| SP04  | Eth1/50    | SS02        | Eth1/4           |
 
-## DC1 POD2 Spine-to-Super-Spine Connectivity
+## DC1 Pod-to-Pod Super-Spine
 
-| Source Device | Source Port | Destination Device | Destination Port |
-| ------------- | ----------- | ------------------ | ---------------- |
-| DC1-P2-SP01   | Eth1/49     | DC1-P2-SS01        | Eth1/1           |
-| DC1-P2-SP01   | Eth1/50     | DC1-P2-SS02        | Eth1/1           |
-| DC1-P2-SP02   | Eth1/49     | DC1-P2-SS01        | Eth1/2           |
-| DC1-P2-SP02   | Eth1/50     | DC1-P2-SS02        | Eth1/2           |
-| DC1-P2-SP03   | Eth1/49     | DC1-P2-SS01        | Eth1/3           |
-| DC1-P2-SP03   | Eth1/50     | DC1-P2-SS02        | Eth1/3           |
-| DC1-P2-SP04   | Eth1/49     | DC1-P2-SS01        | Eth1/4           |
-| DC1-P2-SP04   | Eth1/50     | DC1-P2-SS02        | Eth1/4           |
+| Source      | Port    | Destination | Port    |
+| ----------- | ------- | ----------- | ------- |
+| DC1-P1-SS01 | Eth1/49 | DC1-P2-SS01 | Eth1/49 |
+| DC1-P1-SS01 | Eth1/50 | DC1-P2-SS02 | Eth1/49 |
+| DC1-P1-SS02 | Eth1/49 | DC1-P2-SS01 | Eth1/50 |
+| DC1-P1-SS02 | Eth1/50 | DC1-P2-SS02 | Eth1/50 |
 
-## DC1 Pod-to-Pod Super-Spine Connectivity
+## DC2 Pod-to-Pod Super-Spine
 
-| Source Device | Source Port | Destination Device | Destination Port |
-| ------------- | ----------- | ------------------ | ---------------- |
-| DC1-P1-SS01   | Eth1/49     | DC1-P2-SS01        | Eth1/49          |
-| DC1-P1-SS01   | Eth1/50     | DC1-P2-SS02        | Eth1/49          |
-| DC1-P1-SS02   | Eth1/49     | DC1-P2-SS01        | Eth1/50          |
-| DC1-P1-SS02   | Eth1/50     | DC1-P2-SS02        | Eth1/50          |
+| Source      | Port    | Destination | Port    |
+| ----------- | ------- | ----------- | ------- |
+| DC2-P1-SS01 | Eth1/49 | DC2-P2-SS01 | Eth1/49 |
+| DC2-P1-SS01 | Eth1/50 | DC2-P2-SS02 | Eth1/49 |
+| DC2-P1-SS02 | Eth1/49 | DC2-P2-SS01 | Eth1/50 |
+| DC2-P1-SS02 | Eth1/50 | DC2-P2-SS02 | Eth1/50 |
 
-## DC1 Border Leaf to XR/Core Connectivity
+## DC3 Pod-to-Pod Super-Spine
 
-Recommended: dual-home each border leaf to both XR routers.
+| Source      | Port    | Destination | Port    |
+| ----------- | ------- | ----------- | ------- |
+| DC3-P1-SS01 | Eth1/49 | DC3-P2-SS01 | Eth1/49 |
+| DC3-P1-SS01 | Eth1/50 | DC3-P2-SS02 | Eth1/49 |
+| DC3-P1-SS02 | Eth1/49 | DC3-P2-SS01 | Eth1/50 |
+| DC3-P1-SS02 | Eth1/50 | DC3-P2-SS02 | Eth1/50 |
 
-| Source Device | Source Port | Destination Device | Destination Port | Function           |
-| ------------- | ----------- | ------------------ | ---------------- | ------------------ |
-| DC1-P1-LF07   | Eth1/53     | DC1-XR01           | Hu0/0/0/10       | Border/Core uplink |
-| DC1-P1-LF07   | Eth1/54     | DC1-XR02           | Hu0/0/0/10       | Border/Core uplink |
-| DC1-P1-LF08   | Eth1/53     | DC1-XR01           | Hu0/0/0/11       | Border/Core uplink |
-| DC1-P1-LF08   | Eth1/54     | DC1-XR02           | Hu0/0/0/11       | Border/Core uplink |
-| DC1-P2-LF07   | Eth1/53     | DC1-XR01           | Hu0/0/0/12       | Border/Core uplink |
-| DC1-P2-LF07   | Eth1/54     | DC1-XR02           | Hu0/0/0/12       | Border/Core uplink |
-| DC1-P2-LF08   | Eth1/53     | DC1-XR01           | Hu0/0/0/13       | Border/Core uplink |
-| DC1-P2-LF08   | Eth1/54     | DC1-XR02           | Hu0/0/0/13       | Border/Core uplink |
+## DC1 Border Leafs to XR/Core
 
-## DC1 XR-to-DCI Connectivity
+| Border Leaf | Port    | XR Router | XR Port    |
+| ----------- | ------- | --------- | ---------- |
+| DC1-P1-LF07 | Eth1/53 | DC1-XR01  | Hu0/0/0/10 |
+| DC1-P1-LF07 | Eth1/54 | DC1-XR02  | Hu0/0/0/10 |
+| DC1-P1-LF08 | Eth1/53 | DC1-XR01  | Hu0/0/0/11 |
+| DC1-P1-LF08 | Eth1/54 | DC1-XR02  | Hu0/0/0/11 |
+| DC1-P2-LF07 | Eth1/53 | DC1-XR01  | Hu0/0/0/12 |
+| DC1-P2-LF07 | Eth1/54 | DC1-XR02  | Hu0/0/0/12 |
+| DC1-P2-LF08 | Eth1/53 | DC1-XR01  | Hu0/0/0/13 |
+| DC1-P2-LF08 | Eth1/54 | DC1-XR02  | Hu0/0/0/13 |
 
-| Source Device | Source Port | Destination Device | Destination Port |
+## DC2 Border Leafs to XR/Core
+
+| Border Leaf | Port    | XR Router | XR Port    |
+| ----------- | ------- | --------- | ---------- |
+| DC2-P1-LF07 | Eth1/53 | DC2-XR01  | Hu0/0/0/10 |
+| DC2-P1-LF07 | Eth1/54 | DC2-XR02  | Hu0/0/0/10 |
+| DC2-P1-LF08 | Eth1/53 | DC2-XR01  | Hu0/0/0/11 |
+| DC2-P1-LF08 | Eth1/54 | DC2-XR02  | Hu0/0/0/11 |
+| DC2-P2-LF07 | Eth1/53 | DC2-XR01  | Hu0/0/0/12 |
+| DC2-P2-LF07 | Eth1/54 | DC2-XR02  | Hu0/0/0/12 |
+| DC2-P2-LF08 | Eth1/53 | DC2-XR01  | Hu0/0/0/13 |
+| DC2-P2-LF08 | Eth1/54 | DC2-XR02  | Hu0/0/0/13 |
+
+## DC3 Border Leafs to XR/Core
+
+| Border Leaf | Port    | XR Router | XR Port    |
+| ----------- | ------- | --------- | ---------- |
+| DC3-P1-LF07 | Eth1/53 | DC3-XR01  | Hu0/0/0/10 |
+| DC3-P1-LF07 | Eth1/54 | DC3-XR02  | Hu0/0/0/10 |
+| DC3-P1-LF08 | Eth1/53 | DC3-XR01  | Hu0/0/0/11 |
+| DC3-P1-LF08 | Eth1/54 | DC3-XR02  | Hu0/0/0/11 |
+| DC3-P2-LF07 | Eth1/53 | DC3-XR01  | Hu0/0/0/12 |
+| DC3-P2-LF07 | Eth1/54 | DC3-XR02  | Hu0/0/0/12 |
+| DC3-P2-LF08 | Eth1/53 | DC3-XR01  | Hu0/0/0/13 |
+| DC3-P2-LF08 | Eth1/54 | DC3-XR02  | Hu0/0/0/13 |
+
+## Inter-DC XR Port Mapping
+
+| Source Router | Source Port | Destination Router | Destination Port |
 | ------------- | ----------- | ------------------ | ---------------- |
 | DC1-XR01      | Hu0/0/0/0   | DC2-XR01           | Hu0/0/0/0        |
-| DC1-XR01      | Hu0/0/0/1   | DC3-XR01           | Hu0/0/0/0        |
 | DC1-XR02      | Hu0/0/0/0   | DC2-XR02           | Hu0/0/0/0        |
-| DC1-XR02      | Hu0/0/0/1   | DC3-XR02           | Hu0/0/0/0        |
+| DC2-XR01      | Hu0/0/0/1   | DC3-XR01           | Hu0/0/0/1        |
+| DC2-XR02      | Hu0/0/0/1   | DC3-XR02           | Hu0/0/0/1        |
+| DC3-XR01      | Hu0/0/0/2   | DC1-XR01           | Hu0/0/0/1        |
+| DC3-XR02      | Hu0/0/0/2   | DC1-XR02           | Hu0/0/0/1        |
+
+DC2 and DC3 follow the same internal port convention as DC1; only the device prefix changes.
 
 ## Important Design Note
 
-Leaf 7 and Leaf 8 are no longer just normal compute leafs. They are border gateway leafs.
-
-So they have three roles:
+Leaf 7 and Leaf 8 are border gateway leafs.
 
 | Role                     | Ports           |
 | ------------------------ | --------------- |
@@ -184,7 +252,7 @@ output_builds/SPINELEAF/DC2/
 output_builds/SPINELEAF/DC3/
 ```
 
-With this design, each DC has 28 NX-OS configs:
+Each DC has 28 NX-OS configs:
 
 - 4 super-spines
 - 8 spines
