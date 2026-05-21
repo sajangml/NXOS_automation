@@ -1,0 +1,18 @@
+---
+- name: Add New Tenant Lifecycle Phase 1 - Generate Configs
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Generate updated fabric configurations locally
+      ansible.builtin.command: python ../scripts/generate_all_configs.py spineleaf
+      args:
+        chdir: "{{ playbook_dir }}/../"
+      delegate_to: localhost
+      run_once: true
+      changed_when: true
+
+- name: Add New Tenant Lifecycle Phase 2-5 - Fabric Automation
+  hosts: spineleaf
+  gather_facts: no
+  roles:
+    - role: tenant_onboard

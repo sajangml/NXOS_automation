@@ -1,0 +1,8 @@
+---
+- import_tasks: pre_check.yml
+- import_tasks: deploy.yml
+- import_tasks: post_check.yml
+
+- name: Phase 5 - Commit configuration
+  cisco.nxos.nxos_command:
+    commands: copy running-config startup-config

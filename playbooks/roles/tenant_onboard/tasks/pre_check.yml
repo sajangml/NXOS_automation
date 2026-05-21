@@ -1,0 +1,16 @@
+---
+- name: Phase 2 - Pre-check - Ping switch
+  cisco.nxos.nxos_ping:
+    dest: 127.0.0.1
+    state: present
+  register: ping_result
+
+- name: Phase 2 - Pre-check - Gather existing VRFs
+  cisco.nxos.nxos_command:
+    commands: show vrf
+  register: pre_vrf_output
+
+- name: Phase 2 - Pre-check - Gather existing VNIs
+  cisco.nxos.nxos_command:
+    commands: show nve vni
+  register: pre_vni_output

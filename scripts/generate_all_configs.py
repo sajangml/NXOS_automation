@@ -583,6 +583,8 @@ for device in device_data.get("devices", []):
         device["snmp_engine_id"] = derive_snmp_engine_id(device["mgmt_ip"])
 
 common_data = render_yaml_with_env(env_path / "vars_common_template.yaml", env_vars)
+tenants_data = load_yaml(env_path / "tenants.yaml")
+common_data.update(tenants_data)
 interfaces_data = load_yaml(env_path / "interfaces.yaml")
 interfaces_data.update(generated_interfaces)
 

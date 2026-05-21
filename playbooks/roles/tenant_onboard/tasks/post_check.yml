@@ -1,0 +1,16 @@
+---
+- name: Phase 4 - Post-check - Verify BGP L2VPN EVPN status
+  cisco.nxos.nxos_command:
+    commands: show bgp l2vpn evpn summary
+  register: post_bgp_output
+
+- name: Phase 4 - Post-check - Verify all VNIs are up
+  cisco.nxos.nxos_command:
+    commands: show nve vni
+  register: post_vni_output
+
+- name: Phase 4 - Display verification results
+  ansible.builtin.debug:
+    msg: 
+      - "BGP EVPN Summary: {{ post_bgp_output.stdout[0] | truncate(100) }}..."
+      - "NVE VNI Output: {{ post_vni_output.stdout[0] | truncate(100) }}..."

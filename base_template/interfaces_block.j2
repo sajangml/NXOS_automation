@@ -63,8 +63,8 @@ interface {{ eth.name }}
   no switchport
   ip address {{ eth.ip_address }}
 {% if eth.isis_underlay | default(false) %}
+  medium p2p
   ip router isis FABRIC-UNDERLAY
-  isis network point-to-point
   isis bfd
   ip pim sparse-mode
 {% endif %}
